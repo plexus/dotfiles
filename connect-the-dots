@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo $DOTDIR
+
+find $DOTDIR -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\0' | \
+     xargs -0 -i'{}' ln -sf "$DOTDIR/{}" "$HOME"
