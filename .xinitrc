@@ -1,4 +1,4 @@
-stalonetray &
+trayer &
 nm-applet &
 xfce4-power-manager &
 xscreensaver &
