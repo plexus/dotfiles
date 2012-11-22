@@ -8,8 +8,10 @@ import XMonad.Util.EZConfig
 
 myManageHook = composeAll
    [ className =? "Firefox"   --> doShift "9"
-   --, className =? "Xmessage"  --> doFloat
-   , manageDocks
+   , className =? "trayer"     --> doShift "9"
+   , className =? "trayer"     --> doFloat
+--, className =? "Xmessage"  --> doFloat
+--   , manageDocks
    ]
 
 main :: IO ()

@@ -1,2 +1,15 @@
 # Should be handled by .Xmodmap
 # xmodmap ~/.Xmodmap
+trayer &
+nm-applet &
+xfce4-power-manager &
+xscreensaver &
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+ibus-daemon --xim &
+
+synclient TapButton2=2 &
+synclient TapButton3=3 &
