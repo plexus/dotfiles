@@ -1,0 +1,18 @@
+[user]
+    name = Arne Brasseur
+    email = arne.brasseur@rendaosolutions.com
+[color]
+    ui = auto
+[alias]
+    oneline = log --pretty=oneline
+    stat = log --stat
+    s = status -s
+    co = checkout
+[core]
+    editor = emacsclient
+[push]
+    default = simple
+[include]
+    path = .gitsecrets
+
+
