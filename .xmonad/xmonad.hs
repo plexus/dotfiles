@@ -6,12 +6,15 @@ import XMonad
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 
+-- use xprop | grep WM_CLASS to find the className
+
 myManageHook = composeAll
    [ className =? "Firefox"   --> doShift "9"
    , className =? "trayer"     --> doShift "9"
    , className =? "trayer"     --> doFloat
---, className =? "Xmessage"  --> doFloat
---   , manageDocks
+   , className =? "Emacs"     --> doShift "3:emacs"     
+   --, className =? "Xmessage"  --> doFloat
+   --, manageDocks
    ]
 
 main :: IO ()
