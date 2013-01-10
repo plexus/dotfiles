@@ -4,5 +4,21 @@ DOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo $DOTDIR
 
-find $DOTDIR -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\0' | \
-     xargs -0 -i'{}' ln -sf "$DOTDIR/{}" "$HOME"
+find $DOTDIR -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\n' | \
+    while read dotfile; do
+      if [[ -L "$HOME/$dotfile" ]]; then
+	  target=`readlink -f $HOME/$dotfile`
+	  if [[ "$target" != "$DOTDIR/$dotfile" ]]; then
+	      echo -e "WARN\t$dotfile \t symlink points elsewhere -> $target"
+	  else
+	      echo -e "OK\t$dotfile \t already linked"
+	  fi
+      else
+	  if [[ -e "$HOME/$dotfile" ]]; then
+	      echo -e "WARN\t$dotfile \t can't create symlink, regular file is in the way."
+	  else
+	      echo -e "OK\t$dotfile \t creating link"
+	      ln -s "$DOTDIR/$dotfile" "$HOME"
+	  fi
+      fi
+    done
