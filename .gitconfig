@@ -8,6 +8,8 @@
     stat = log --stat
     s = status -s
     co = checkout
+    contributors = shortlog -n -s --no-merges
+    tree = log --graph --oneline --all
 [core]
     editor = emacsclient
 [push]
