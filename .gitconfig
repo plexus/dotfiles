@@ -1,18 +1,27 @@
 [user]
-    name = Arne Brasseur
-    email = arne.brasseur@rendaosolutions.com
+	name = Arne Brasseur
+	email = arne@arnebrasseur.net
 [color]
-    ui = auto
+	ui = auto
 [alias]
-    oneline = log --pretty=oneline
-    stat = log --stat
-    s = status -s
-    co = checkout
+	oneline = log --pretty=oneline
+	stat = log --stat
+	s = status -s
+	co = checkout
 [core]
-    editor = emacsclient
+	editor = emacsclient
 [push]
-    default = simple
+	default = simple
 [include]
-    path = .gitsecrets
+	path = .gitsecrets
 
 
+[diff]
+	renames = copies
+	mnemonicprefix = true   # Use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation.
+[branch]
+	autosetupmerge = true   # When branching off a remote branch, automatically let the local branch track the remote branch.
+[rerere]
+	enabled = true          # Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+[merge]
+	stat = true             # Always show a diffstat at the end of a merge
