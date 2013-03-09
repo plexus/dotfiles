@@ -1,5 +1,7 @@
 -- -*- haskell -*-
 
+-- mod-q to reload
+
 -- http://www.nepherte.be/step-by-step-configuration-of-xmonad/
 -- http://joeyh.name/blog/entry/xmonad_layouts_for_netbooks/
 
@@ -40,7 +42,7 @@ myManageHook = composeAll
 main :: IO ()
 main = do
     xmonad $ defaultConfig
-     { terminal    = "lxterminal"
+     { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
      , borderWidth = 1
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
