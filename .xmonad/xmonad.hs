@@ -15,16 +15,16 @@ import XMonad.Layout.Gaps
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = tall ||| wide ||| Full 
+defaultLayout = tall ||| wide ||| Full
   where
     tall = Tall 1 (3/100) (1/2)
     wide = Mirror $ Tall 1 (3/100) (1/2)
 
 gapLayout = gaps [(D,26)] $ -- gap at the bottom (L,R,D,U) for trayer
-            defaultLayout 
+            defaultLayout
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-PerWorkspace.html
-myLayoutHook = onWorkspace "9" gapLayout $ 
+myLayoutHook = onWorkspace "9" gapLayout $
                defaultLayout
 
 -- use xprop | grep WM_CLASS to find the className
@@ -48,11 +48,8 @@ main = do
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig
      , layoutHook  = myLayoutHook
-                     
+
      }
      `additionalKeys`
      [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")
      ]
- 
-
-
