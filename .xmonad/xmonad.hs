@@ -13,9 +13,14 @@ import XMonad.Util.EZConfig
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
 
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.StackTile
+
+import qualified XMonad.StackSet as W
+
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = tall ||| wide ||| Full
+defaultLayout = wide ||| tall ||| Full ||| StackTile 1 (3/100) (1/2)
   where
     tall = Tall 1 (3/100) (1/2)
     wide = Mirror $ Tall 1 (3/100) (1/2)
@@ -48,8 +53,11 @@ main = do
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig
      , layoutHook  = myLayoutHook
-
      }
-     `additionalKeys`
-     [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")
-     ]
+     -- `additionalKeysP`
+     -- [ ("M-j", windows $ W.greedyView "3")
+     -- , ("S-x", spawn "xclock")
+     -- ]
+
+     -- `additionalKeys`
+     -- [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")]
