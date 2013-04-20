@@ -23,8 +23,9 @@ clear Mod2
 clear Mod3
 clear Mod4
 
-keycode 66 = Control_L
-keycode 37 = Hyper_L
+keycode 66  = Control_L
+keycode 37  = Hyper_L
+keycode 105 = Hyper_L
 
 add Control = Control_L Control_R
 add Mod1    = Alt_R Alt_L Meta_R Meta_L
