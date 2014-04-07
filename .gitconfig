@@ -14,6 +14,7 @@ contributors = shortlog -n -s --no-merges
 tree = log --graph --oneline --all
 stashbase = !git stash && git rebase $1 && git stash apply
 atelog = !git log --pretty=\"format:%at %H\" | sort | sed \"s/.* //\" | git log --stdin
+    short = log --pretty=format:\"%h %ar [%an] %s\"
 
 [core]
 editor = emacsclient
@@ -37,6 +38,7 @@ enabled = true          # Enable the recording of resolved conflicts, so that id
 [merge]
 stat = true             # Always show a diffstat at the end of a merge
 conflictstyle = diff3
+defaultToUpstream = true
 
 #[url "https://"]
 #insteadOf = git://

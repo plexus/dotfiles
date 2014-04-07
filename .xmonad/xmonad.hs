@@ -15,12 +15,16 @@ import XMonad.Layout.Gaps
 
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.StackTile
+import XMonad.Layout.Grid
 
 import qualified XMonad.StackSet as W
 
+-- For full screen in Chromium
+import XMonad.Hooks.EwmhDesktops
+
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = wide ||| tall ||| Full ||| StackTile 1 (3/100) (1/2)
+defaultLayout = wide ||| tall ||| Grid ||| Full ||| StackTile 1 (3/100) (1/2)
   where
     tall = Tall 1 (3/100) (1/2)
     wide = Mirror $ Tall 1 (3/100) (1/2)
@@ -35,8 +39,9 @@ myLayoutHook = onWorkspace "9" gapLayout $
 -- use xprop | grep WM_CLASS to find the className
 
 myManageHook = composeAll
-   [ className =? "Firefox"   --> doShift "9"
-   , className =? "trayer"    --> doShift "9"
+   [ -- className =? "Firefox"   --> doShift "9"
+     --,
+     className =? "trayer"    --> doShift "9"
    , className =? "trayer"    --> doFloat
    , className =? "Emacs"     --> doShift "3:emacs"
    , resource  =? "desktop_window" --> doIgnore
@@ -50,14 +55,17 @@ main = do
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
      , borderWidth = 1
+     , focusedBorderColor = "#E00078"
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig
      , layoutHook  = myLayoutHook
+     , handleEventHook = fullscreenEventHook
      }
-     -- `additionalKeysP`
-     -- [ ("M-j", windows $ W.greedyView "3")
-     -- , ("S-x", spawn "xclock")
-     -- ]
+     `additionalKeysP`
+     [-- ("M-j", windows $ W.greedyView "3")
+      ("C-.", spawn "suspend_record")
+     , ("C-,", spawn "resume_record")
+     ]
 
      -- `additionalKeys`
      -- [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")]
