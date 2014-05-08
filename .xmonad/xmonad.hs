@@ -66,6 +66,9 @@ main = do
       ("C-.", spawn "suspend_record")
      , ("C-,", spawn "resume_record")
      ]
+     `additionalKeys`
+     [ ((controlMask, xK_Print), spawn "sleep 1; scrot")
+     , ((0, xK_Print), spawn "scrot")
+     ]
 
-     -- `additionalKeys`
      -- [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")]
