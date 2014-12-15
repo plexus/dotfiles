@@ -24,10 +24,11 @@ import XMonad.Hooks.EwmhDesktops
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = wide ||| tall ||| Grid ||| Full ||| StackTile 1 (3/100) (1/2)
+defaultLayout = wide ||| tall ||| Grid ||| Full ||| StackTile 1 (3/100) (1/2) ||| stack_mirror
   where
     tall = Tall 1 (3/100) (1/2)
     wide = Mirror $ Tall 1 (3/100) (1/2)
+    stack_mirror = Mirror $ StackTile 1 (3/100) (1/2)
 
 gapLayout = gaps [(D,26)] $ -- gap at the bottom (L,R,D,U) for trayer
             defaultLayout
@@ -54,7 +55,7 @@ main = do
     xmonad $ defaultConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
-     , borderWidth = 1
+     , borderWidth = 0
      , focusedBorderColor = "#E00078"
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig
@@ -67,7 +68,8 @@ main = do
      , ("C-,", spawn "resume_record")
      ]
      `additionalKeys`
-     [ ((controlMask, xK_Print), spawn "sleep 1; scrot")
+     [-- ((controlMask, xK_Print), spawn "sleep 1; scrot")
+       ((controlMask, xK_Print), spawn "xdotool click 1")
      , ((0, xK_Print), spawn "scrot")
      ]
 

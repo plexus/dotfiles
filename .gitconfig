@@ -1,44 +1,44 @@
 [user]
-name = Arne Brasseur
-email = arne@arnebrasseur.net
+	name = Arne Brasseur
+	email = arne@arnebrasseur.net
 
 [color]
-ui = auto
+	ui = auto
 
 [alias]
-oneline = log --pretty=oneline
-stat = log --stat
-s = status -s
-co = checkout
-contributors = shortlog -n -s --no-merges
-tree = log --graph --oneline --all
-stashbase = !git stash && git rebase $1 && git stash apply
-atelog = !git log --pretty=\"format:%at %H\" | sort | sed \"s/.* //\" | git log --stdin
-    short = log --pretty=format:\"%h %ar [%an] %s\"
+	oneline = log --pretty=oneline
+	stat = log --stat
+	s = status -s
+	co = checkout
+	contributors = shortlog -n -s --no-merges
+	tree = log --graph --oneline --all
+	stashbase = !git stash && git rebase $1 && git stash apply
+	atelog = !git log --pretty=\"format:%at %H\" | sort | sed \"s/.* //\" | git log --stdin
+	short = log --pretty=format:\"%h %ar [%an] %s\"
 
 [core]
-editor = emacsclient
+	editor = emacsclient
 
 [push]
-default = simple
+	default = simple        # Only push the current branch instead of all matching branches when doing a plain "git push"
 
 [include]
-path = .gitsecrets
+	path = .gitsecrets
 
 [diff]
-renames = copies
-mnemonicprefix = true   # Use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation.
+	renames = copies
+	mnemonicprefix = true   # Use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation.
 
 [branch]
-autosetupmerge = true   # When branching off a remote branch, automatically let the local branch track the remote branch.
+	autosetupmerge = true   # When branching off a remote branch, automatically let the local branch track the remote branch.
 
 [rerere]
-enabled = true          # Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+	enabled = false          # Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
 
 [merge]
-stat = true             # Always show a diffstat at the end of a merge
-conflictstyle = diff3
-defaultToUpstream = true
+	stat = true             # Always show a diffstat at the end of a merge
+	conflictstyle = diff3
+	defaultToUpstream = true
 
-#[url "https://"]
-#insteadOf = git://
+	#[url "https://"]
+	#insteadOf = git://
