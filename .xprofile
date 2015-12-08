@@ -1,4 +1,9 @@
 # Loaded before X resources and .xsessionrc
 # see http://askubuntu.com/questions/150487/what-happens-under-the-covers-to-log-me-in-and-start-up-the-unity-graphics-user
 
-setxkbmap -option "compose:ralt"
+# setxkbmap -option "compose:ralt"
+
+# export GTK_IM_MODULE=ibus
+# export QT4_IM_MODULE=ibus
+# export QT_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus

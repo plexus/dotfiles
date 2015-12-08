@@ -15,6 +15,7 @@
 	stashbase = !git stash && git rebase $1 && git stash apply
 	atelog = !git log --pretty=\"format:%at %H\" | sort | sed \"s/.* //\" | git log --stdin
 	short = log --pretty=format:\"%h %ar [%an] %s\"
+        branchname = rev-parse --abbrev-ref HEAD
 
 [core]
 	editor = emacsclient

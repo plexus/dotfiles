@@ -1,17 +1,20 @@
 # Should be handled by .Xmodmap
+
+# Handled with xkb now, see notes
 # xmodmap ~/.Xmodmap
-trayer &
-nm-applet &
-xfce4-power-manager &
-xscreensaver &
 
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+# trayer &
+# m-applet &
+# xfce4-power-manager &
+# xscreensaver &
 
-ibus-daemon --xim &
+# export GTK_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus
+# export QT_IM_MODULE=ibus
+
+# ibus-daemon --xim &
 
 synclient TapButton2=2 &
 synclient TapButton3=3 &
-xsetroot -solid rgb:5/5/5
+# xsetroot -solid rgb:5/5/5
 synclient HorizTwoFingerScroll=1 &

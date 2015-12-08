@@ -1,0 +1,77 @@
+# Setup notes
+
+Info on more things to (re)configure on a new system.
+
+## Chinese input with Fcitx (15.10)
+
+install
+
+```
+fcitx fcitx-pinyin fcitx-sunpinyin fcitx-googlepinyin fcitx-anthy fcitx-mozc fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4
+```
+
+run `im-config`, choose `fcitx`
+
+log out, in (restart X), now you can configure your input methods
+
+## Caps / Hyper / Compose
+
+This used to be done with xmodmap, and the xmodmap dotfile is still there
+because it doesn't hurt (might still help on old systems). However newer systems
+have the problem that XKB will override the xmodmap settings.
+
+The fix, in /usr/share/X11/xkb/symbols/us add this section (I've added below the "euro" section since it relies on that)
+
+```
+partial alphanumeric_keys modifier_keys
+xkb_symbols "arne" {
+    // US with Euro symbol on the 5
+    include "us(euro)"
+    name[Group1]= "English (US, for Arne)";
+
+    // Capslock = Ctrl
+    include "capslock(ctrl_modifier)"
+
+    // Right alt = compose
+    include "compose(ralt)"
+
+    // The old control keys are now Hyper keys
+    key <LCTL> { [ Hyper_L ] };
+    key <RCTL> { [ Hyper_R ] };
+    modifier_map Mod3 { <LCTL>, <RCTL> };
+};
+```
+
+in /usr/share/X11/xkb/rules/evdev.xml add an extra "arne" variant under the us layout
+
+```
+    <layout>
+      <configItem>
+        <name>us</name>
+        <!-- snip -->
+      </configItem>
+      <variantList>
+
+        <!-- START NEW SECTION -->
+        <variant>
+          <configItem>
+            <name>arne</name>
+            <description>English (US, for Arne)</description>
+          </configItem>
+        </variant>
+        <!-- END NEW SECTION -->
+```
+
+You'll have to `sudo dpkg-reconfigure xkb-data` and log in/out again, but now you can select this custom keyboard in the fcitx config.
+
+## Packages
+
+```
+build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser
+```
+
+possibly
+
+```
+redis-server zsnes
+```

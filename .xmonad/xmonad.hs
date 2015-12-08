@@ -13,6 +13,9 @@ import XMonad.Util.EZConfig
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
 
+
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.StackTile
 import XMonad.Layout.Grid
@@ -20,11 +23,11 @@ import XMonad.Layout.Grid
 import qualified XMonad.StackSet as W
 
 -- For full screen in Chromium
-import XMonad.Hooks.EwmhDesktops
+-- import XMonad.Hooks.EwmhDesktops
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = wide ||| tall ||| Grid ||| Full ||| StackTile 1 (3/100) (1/2) ||| stack_mirror
+defaultLayout = wide ||| tall ||| Grid ||| noBorders Full ||| StackTile 1 (3/100) (1/2) ||| stack_mirror
   where
     tall = Tall 1 (3/100) (1/2)
     wide = Mirror $ Tall 1 (3/100) (1/2)
@@ -55,7 +58,7 @@ main = do
     xmonad $ defaultConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
-     , borderWidth = 0
+     , borderWidth = 1
      , focusedBorderColor = "#E00078"
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig
