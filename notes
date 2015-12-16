@@ -67,11 +67,53 @@ You'll have to `sudo dpkg-reconfigure xkb-data` and log in/out again, but now yo
 ## Packages
 
 ```
-build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser
+build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser tmux htop zsh
 ```
 
 possibly
 
 ```
-redis-server zsnes
+redis-server zsnes dzen
+```
+
+fonts
+
+```
+fonts-arphic-bkai00mp
+fonts-arphic-bsmi00lp
+fonts-arphic-gbsn00lp
+fonts-arphic-gkai00mp
+fonts-arphic-ukai
+fonts-arphic-uming
+fonts-babelstone-han
+ttf-mscorefonts-installer
+fonts-opensymbol
+fonts-wqy-zenhei
+ttf-anonymous-pro
+fonts-inconsolata
+
+
+ttf-unifont
+ttf-engadget
+ttf-essays1743
+ttf-femkeklaver
+ttf-goudybookletter
+ttf-staypuft
+ttf-summersby
+ttf-radisnoir
+ttf-bitstream-vera
+ttf-adf-accanthis
+ttf-adf-baskervald
+ttf-adf-berenis
+ttf-adf-gillius
+ttf-adf-ikarius
+ttf-adf-irianis
+ttf-adf-libris
+ttf-adf-mekanus
+ttf-adf-oldania
+ttf-adf-romande
+ttf-adf-switzera
+ttf-adf-tribun
+ttf-adf-universalis
+ttf-adf-verana
 ```
