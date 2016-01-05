@@ -16,6 +16,8 @@ log out, in (restart X), now you can configure your input methods
 
 ## Caps / Hyper / Compose
 
+More info: https://wiki.archlinux.org/index.php/X_KeyBoard_extension
+
 This used to be done with xmodmap, and the xmodmap dotfile is still there
 because it doesn't hurt (might still help on old systems). However newer systems
 have the problem that XKB will override the xmodmap settings.
@@ -67,13 +69,16 @@ You'll have to `sudo dpkg-reconfigure xkb-data` and log in/out again, but now yo
 ## Packages
 
 ```
-build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser tmux htop zsh
+build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser tmux htop zsh silversearcher-ag
 ```
 
 possibly
 
 ```
 redis-server zsnes dzen
+network-manager-vpnc
+libmysqlclient-dev mysql-client
+compizconfig-settings-manager
 ```
 
 fonts
@@ -117,3 +122,12 @@ ttf-adf-tribun
 ttf-adf-universalis
 ttf-adf-verana
 ```
+
+## Manual installation
+
+* ruby-build
+* phantomjs (still needed from source)
+* nvm / node
+* hub
+* leiningen
+* ngrok

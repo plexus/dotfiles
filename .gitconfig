@@ -16,6 +16,7 @@
 	atelog = !git log --pretty=\"format:%at %H\" | sort | sed \"s/.* //\" | git log --stdin
 	short = log --pretty=format:\"%h %ar [%an] %s\"
         branchname = rev-parse --abbrev-ref HEAD
+	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
 
 [core]
 	editor = emacsclient
