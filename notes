@@ -69,7 +69,11 @@ You'll have to `sudo dpkg-reconfigure xkb-data` and log in/out again, but now yo
 ## Packages
 
 ```
-build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev maven2 agave pavucontrol apt-file scrot ant gparted p7zip gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin lame chromium-browser tmux htop zsh silversearcher-ag
+build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev 
+maven2 agave pavucontrol apt-file scrot ant gparted p7zip 
+gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 
+pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin 
+lame chromium-browser tmux htop zsh silversearcher-ag vim
 ```
 
 possibly
@@ -79,6 +83,12 @@ redis-server zsnes dzen
 network-manager-vpnc
 libmysqlclient-dev mysql-client
 compizconfig-settings-manager
+```
+
+To compile emacs
+
+```
+autoconf automake texinfo libgtk2.0-dev libxpm-dev libjpeg-dev libtiff5-dev libgif-dev libtinfo-dev
 ```
 
 fonts
@@ -131,3 +141,4 @@ ttf-adf-verana
 * hub
 * leiningen
 * ngrok
+* emacs
