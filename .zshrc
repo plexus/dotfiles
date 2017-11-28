@@ -21,7 +21,7 @@ fi
 # prevent sub-shells (i.e. tmux) from repeating what's already done
 if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
     source /usr/local/share/chruby/chruby.sh
-    chruby ruby-2.3.0
+    chruby ruby-2.4.2
 
     # Needs to run before $PREFIX is set or nvm will complain
     source ~/.nvm/nvm.sh
@@ -42,7 +42,7 @@ if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
     export PLEXUS_INIT_DONE="OK"
 fi
 
-prompt giddie
+prompt adam1
 
 # Allow redirection to overwrite files.
 setopt CLOBBER
@@ -105,6 +105,6 @@ fi
 
 ### START-Keychain ###
 # Let  re-use ssh-agent and/or gpg-agent between logins
-#/usr/bin/keychain $HOME/.ssh/plexus-ticketsolve $HOME/.ssh/id_rsa
-#source $HOME/.keychain/$(echo -n `hostname`)-sh
+/usr/bin/keychain $HOME/.ssh/id_rsa
+source $HOME/.keychain/$(echo -n `hostname`)-sh
 ### End-Keychain ###

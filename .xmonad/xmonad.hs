@@ -58,7 +58,7 @@ main = do
     xmonad $ defaultConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
-     , borderWidth = 1
+     , borderWidth = 0
      , focusedBorderColor = "#E00078"
      , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
      , manageHook  = myManageHook <+> manageHook defaultConfig

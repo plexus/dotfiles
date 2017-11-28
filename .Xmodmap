@@ -16,6 +16,9 @@
 ! keycode 206 = NoSymbol Super_L NoSymbol Super_L
 
 ! First clear all modifiers, caps lock & control
+
+! ======================
+
 clear Lock
 clear Control
 clear Mod1
@@ -31,6 +34,8 @@ add Control = Control_L Control_R
 add Mod1    = Alt_R Alt_L Meta_R Meta_L
 add Mod3    = Hyper_L
 add Mod4    = Super_L Super_R
+
+! ======================
 
 ! clear mod1
 ! clear mod4
