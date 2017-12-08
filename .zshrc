@@ -38,7 +38,7 @@ if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
     export HISTFILE="$HOME/.zhistory"
     export PREFIX="/home/arne/opt"
     export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify"
-    export PATH=$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools
+    export PATH=$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin
     export PLEXUS_INIT_DONE="OK"
 fi
 

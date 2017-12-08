@@ -66,6 +66,21 @@ in /usr/share/X11/xkb/rules/evdev.xml add an extra "arne" variant under the us l
 
 You'll have to `sudo dpkg-reconfigure xkb-data` and log in/out again, but now you can select this custom keyboard in the fcitx config.
 
+## Compose key
+
+To just get the compose key, you can do this, more info on the [ArchLinux wiki](https://wiki.archlinux.org/index.php/Keyboard_configuration_in_Xorg#Configuring_compose_key)
+
+```
+setxkbmap -option compose:ralt
+```
+
+Also interesting to have a look at the possible options
+
+```
+grep "compose:" /usr/share/X11/xkb/rules/base.lst
+```
+
+
 ## Packages
 
 ```

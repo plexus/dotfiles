@@ -58,3 +58,11 @@ add Mod4    = Super_L Super_R
 
 ! keycode 66 = Super_L
 ! clear Lock
+
+! Undo
+! -----
+
+clear Mod3
+keycode 37  = Control_L
+keycode 105 = Control_L
+add control = Control_L
