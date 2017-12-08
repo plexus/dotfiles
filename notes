@@ -80,6 +80,12 @@ Also interesting to have a look at the possible options
 grep "compose:" /usr/share/X11/xkb/rules/base.lst
 ```
 
+Some other interesting options
+
+- eurosign:e
+- terminate:ctrl_alt_bksp 
+- caps:ctrl_modifier /  ctrl:nocaps (same thing?)
+- grp:* -> switch to alternative layout. How does this play with fcitx?
 
 ## Packages
 
