@@ -13,7 +13,6 @@ import XMonad.Util.EZConfig
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
 
-
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
@@ -69,6 +68,11 @@ main = do
      [-- ("M-j", windows $ W.greedyView "3")
       ("C-.", spawn "suspend_record")
      , ("C-,", spawn "resume_record")
+     , ("<XF86MonBrightnessUp>", spawn "xbacklight +2")
+     , ("<XF86MonBrightnessDown>", spawn "xbacklight -2")
+     , ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 1%+")
+     , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 1%-")
+     , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
      ]
      `additionalKeys`
      [-- ((controlMask, xK_Print), spawn "sleep 1; scrot")
