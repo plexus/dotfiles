@@ -14,15 +14,15 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
 
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
+-- import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.StackTile
 import XMonad.Layout.Grid
 
 import qualified XMonad.StackSet as W
 
--- For full screen in Chromium
--- import XMonad.Hooks.EwmhDesktops
+-- For full screen in Chromium / wmctrl compatibility
+import XMonad.Hooks.EwmhDesktops
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
@@ -54,7 +54,7 @@ myManageHook = composeAll
 
 main :: IO ()
 main = do
-    xmonad $ defaultConfig
+    xmonad $ ewmh $ defaultConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
      , borderWidth = 0
@@ -68,8 +68,8 @@ main = do
      [-- ("M-j", windows $ W.greedyView "3")
       ("C-.", spawn "suspend_record")
      , ("C-,", spawn "resume_record")
-     , ("<XF86MonBrightnessUp>", spawn "xbacklight +2")
-     , ("<XF86MonBrightnessDown>", spawn "xbacklight -2")
+     , ("<XF86MonBrightnessUp>", spawn "xbacklight +5")
+     , ("<XF86MonBrightnessDown>", spawn "xbacklight -5")
      , ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 1%+")
      , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 1%-")
      , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
