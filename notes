@@ -83,17 +83,17 @@ grep "compose:" /usr/share/X11/xkb/rules/base.lst
 Some other interesting options
 
 - eurosign:e
-- terminate:ctrl_alt_bksp 
+- terminate:ctrl_alt_bksp
 - caps:ctrl_modifier /  ctrl:nocaps (same thing?)
 - grp:* -> switch to alternative layout. How does this play with fcitx?
 
 ## Packages
 
 ```
-build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev 
-maven2 agave pavucontrol apt-file scrot ant gparted p7zip 
-gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 
-pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin 
+build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev
+maven2 agave pavucontrol apt-file scrot ant gparted p7zip
+gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3
+pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin
 lame chromium-browser tmux htop zsh silversearcher-ag vim
 ```
 
@@ -173,4 +173,28 @@ ttf-adf-verana
 ```
 SUBSYSTEM=="input", GROUP="input", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0b33", ATTRS{idProduct}=="0020", MODE:="666", GROUP="plugdev", RUN="/bin/sh -c 'echo -n $kernel:1.0 > /sys/bus/usb/drivers/usbhid/unbind'"
+```
+
+## DNS
+
+https://www.ctrl.blog/entry/resolvconf-tutorial
+
+```
+sudo apt remove --purge resolvconf
+sudo sed 's/^dns/# dns/' -i /etc/NetworkManager/NetworkManager.conf
+```
+
+To recompile network-manager so it ignores devices created by docker:
+
+```
+sudo apt-get build-dep network-manager
+cd /tmp
+apt-get source network-manager
+cd network-manager-1.2.6
+cd debian/patches
+wget https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1458322/+attachment/4914082/+files/hide_unmanaged_interfaces.patch
+cd -
+dpkg-buildpackage -b -uc -us
+cd /tmp
+sudo dpkg -i *.deb
 ```

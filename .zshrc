@@ -108,3 +108,5 @@ fi
 /usr/bin/keychain $HOME/.ssh/id_rsa
 source $HOME/.keychain/$(echo -n `hostname`)-sh
 ### End-Keychain ###
+
+export ANSIBLE_NOCOWS=1

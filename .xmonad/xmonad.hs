@@ -32,7 +32,7 @@ defaultLayout = wide ||| tall ||| Grid ||| noBorders Full ||| StackTile 1 (3/100
     wide = Mirror $ Tall 1 (3/100) (1/2)
     stack_mirror = Mirror $ StackTile 1 (3/100) (1/2)
 
-gapLayout = gaps [(D,26)] $ -- gap at the bottom (L,R,D,U) for trayer
+gapLayout = gaps [(U,30)] $ -- gap at the bottom (L,R,D,U) for trayer
             defaultLayout
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-PerWorkspace.html
@@ -44,9 +44,11 @@ myLayoutHook = onWorkspace "9" gapLayout $
 myManageHook = composeAll
    [ -- className =? "Firefox"   --> doShift "9"
      --,
-     className =? "trayer"    --> doShift "9"
-   , className =? "trayer"    --> doFloat
-   , className =? "Emacs"     --> doShift "3:emacs"
+     className =? "trayer"         --> doShift "9"
+   , className =? "trayer"         --> doFloat
+   , className =? "xfce4-panel"    --> doShift "9"
+   , className =? "xfce4-panel"    --> doFloat
+   , className =? "Emacs"          --> doShift "3:emacs"
    , resource  =? "desktop_window" --> doIgnore
    , className =? "Xmessage"       --> doFloat
    --, manageDocks

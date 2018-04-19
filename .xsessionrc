@@ -1,10 +1,7 @@
-# Should be handled by .Xmodmap
-
 # Handled with xkb now, see notes
 # xmodmap ~/.Xmodmap
 
 # trayer &
-# m-applet &
 # xfce4-power-manager &
 # xscreensaver &
 
@@ -16,9 +13,11 @@
 
 synclient TapButton2=2 &
 synclient TapButton3=3 &
-# xsetroot -solid rgb:5/5/5
 synclient HorizTwoFingerScroll=1 &
 
-xfce4-panel &
+# xsetroot -solid rgb:5/5/5
 
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+
+xfce4-panel &
+nm-applet &
