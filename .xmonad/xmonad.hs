@@ -46,8 +46,8 @@ myManageHook = composeAll
      --,
      className =? "trayer"         --> doShift "9"
    , className =? "trayer"         --> doFloat
-   , className =? "xfce4-panel"    --> doShift "9"
-   , className =? "xfce4-panel"    --> doFloat
+   , className =? "Xfce4-panel"    --> doShift "9"
+   , className =? "Xfce4-panel"    --> doFloat
    , className =? "Emacs"          --> doShift "3:emacs"
    , resource  =? "desktop_window" --> doIgnore
    , className =? "Xmessage"       --> doFloat

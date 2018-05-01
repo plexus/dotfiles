@@ -163,6 +163,7 @@ ttf-adf-verana
 * leiningen
 * ngrok
 * emacs
+* Cloudberry
 
 ## ShuttleXpress
 
@@ -198,3 +199,17 @@ dpkg-buildpackage -b -uc -us
 cd /tmp
 sudo dpkg -i *.deb
 ```
+
+## WWW browser
+
+```
+sudo update-alternatives --config x-www-browser
+```
+
+### Cloudberry
+
+Download: https://www.cloudberrylab.com/download-thanks.aspx?prod=cbbub1214
+
+Troubleshoot
+
+"/opt/local/CloudBerry Backup/bin/cbb" saveLog -p /tmp/cloudberry
