@@ -21,3 +21,4 @@ synclient HorizTwoFingerScroll=1 &
 
 xfce4-panel &
 nm-applet &
+setxkbmap -option compose:ralt -option caps:ctrl_modifier &
