@@ -110,3 +110,5 @@ source $HOME/.keychain/$(echo -n `hostname`)-sh
 ### End-Keychain ###
 
 export ANSIBLE_NOCOWS=1
+
+alias ed="rlwrap ed -p'> '"
