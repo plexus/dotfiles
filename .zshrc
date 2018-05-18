@@ -75,11 +75,12 @@ do
 done'
 
 function en {
-  if [[ "$1" =~ ':' ]]; then
-    emacsclient -n +${1//*:/} ${1//:*/}
-  else
-    emacsclient -n $1
-  fi
+    EMACSCLIENT=${EMACSCLIENT:-emacsclient}
+    if [[ "$1" =~ ':' ]]; then
+        ${=EMACSCLIENT} -n +${1//*:/} ${1//:*/}
+    else
+        ${=EMACSCLIENT} -n $1
+    fi
 }
 
 alias -g FF="| sed 's/\([^:]* \|^\)\([-\/a-zA-Z0-9_\.]\+:[0-9]\+\).*/\2/'"
