@@ -113,3 +113,6 @@ source $HOME/.keychain/$(echo -n `hostname`)-sh
 export ANSIBLE_NOCOWS=1
 
 alias ed="rlwrap ed -p'> '"
+
+export GOPATH=~/tmp/gocode
+export PATH=$PATH:~/tmp/gocode/bin

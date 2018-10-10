@@ -213,3 +213,11 @@ Download: https://www.cloudberrylab.com/download-thanks.aspx?prod=cbbub1214
 Troubleshoot
 
 "/opt/local/CloudBerry Backup/bin/cbb" saveLog -p /tmp/cloudberry
+
+## XMonad
+
+Elaborate xmonad config for inspiration: https://github.com/randomthought/xmonad-config
+
+## Wifi
+
+NetworkManager stores wifi credentials in /etc/NetworkManager/system-connections/ with a mask of 0600.

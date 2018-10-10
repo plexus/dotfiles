@@ -51,6 +51,8 @@ myManageHook = composeAll
    , className =? "Emacs"          --> doShift "3:emacs"
    , resource  =? "desktop_window" --> doIgnore
    , className =? "Xmessage"       --> doFloat
+   , className =? "Viewnior" --> doFloat
+   , className =? "java-lang-Thread" --> doFloat
    --, manageDocks
    ]
 
@@ -70,8 +72,8 @@ main = do
      [-- ("M-j", windows $ W.greedyView "3")
       ("C-.", spawn "suspend_record")
      , ("C-,", spawn "resume_record")
-     , ("<XF86MonBrightnessUp>", spawn "xbacklight +5")
-     , ("<XF86MonBrightnessDown>", spawn "xbacklight -5")
+     , ("<XF86MonBrightnessUp>", spawn "ruby /home/arne/bin/backlight +5")
+     , ("<XF86MonBrightnessDown>", spawn "ruby /home/arne/bin/backlight -5")
      , ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 1%+")
      , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 1%-")
      , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")

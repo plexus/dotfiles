@@ -15,7 +15,7 @@ synclient TapButton2=2 &
 synclient TapButton3=3 &
 synclient HorizTwoFingerScroll=1 &
 
-# xsetroot -solid rgb:5/5/5
+xsetroot -solid rgb:50/50/50
 
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
