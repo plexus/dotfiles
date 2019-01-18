@@ -1,31 +1,23 @@
-export ZPREZTO_HOME="${ZDOTDIR:-$HOME}/.zprezto"
-
-# Install ZPrezto if missing
-
-if [[ ! -d "$ZPREZTO_HOME" ]] ; then
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "$ZPREZTO_HOME"
-    setopt EXTENDED_GLOB
-    for rcfile in "$ZPREZTO_HOME}"/runcoms/^README.md(.N); do
-        ln -s "$rcfile" "${ZPREZTO_HOME}/.${rcfile:t}"
-    done
-fi
-
-# Source Zprezto
-
-if [[ -s "${ZPREZTO_HOME}/init.zsh" ]]; then
-  source "${ZPREZTO_HOME}/init.zsh"
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Customize to my needs
 
+source /usr/local/share/chruby/chruby.sh
+chruby ruby-2.5.1
+
+source ~/.nvm/nvm.sh
+unset PREFIX
+nvm use --silent stable
+export PREFIX=/home/arne/opt
+
 # prevent sub-shells (i.e. tmux) from repeating what's already done
 if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
-    source /usr/local/share/chruby/chruby.sh
-    chruby ruby-2.4.2
 
     # Needs to run before $PREFIX is set or nvm will complain
-    source ~/.nvm/nvm.sh
-    nvm use --silent 5
+    #nvm use --silent 5
 
     #source $HOME/github/choes/share/choes/choes.sh
     #source $HOME/github/choes/share/choes/choes-chruby.sh
@@ -105,7 +97,7 @@ if [ ! "$INSIDE_EMACS" = "" ]; then
 fi
 
 ### START-Keychain ###
-# Let  re-use ssh-agent and/or gpg-agent between logins
+# Let re-use ssh-agent and/or gpg-agent between logins
 /usr/bin/keychain $HOME/.ssh/id_rsa
 source $HOME/.keychain/$(echo -n `hostname`)-sh
 ### End-Keychain ###
@@ -116,3 +108,8 @@ alias ed="rlwrap ed -p'> '"
 
 export GOPATH=~/tmp/gocode
 export PATH=$PATH:~/tmp/gocode/bin
+# export EMACSCLIENT='emacsclient -s /tmp/arne/emacs1000/server'
+export EMACSCLIENT='emacsclient'
+
+# added by travis gem
+[ -f /home/arne/.travis/travis.sh ] && source /home/arne/.travis/travis.sh

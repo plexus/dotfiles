@@ -19,6 +19,9 @@ xsetroot -solid rgb:50/50/50
 
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
-xfce4-panel &
+# xfce4-panel &
+
+tint2 &
 nm-applet &
 setxkbmap -option compose:ralt -option caps:ctrl_modifier &
+dunst &

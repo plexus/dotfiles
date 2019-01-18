@@ -2,6 +2,87 @@
 
 Info on more things to (re)configure on a new system.
 
+## Packages
+
+```
+sudo apt-get install \
+build-essential inkscape openssl sox gimp mplayer ffmpeg gitg libxml2-dev libxml2 libxslt1-dev \
+maven pavucontrol apt-file scrot ant gparted p7zip \
+gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3 \
+ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk openjdk-11-jdk unrar pandoc gnutls-bin \
+lame chromium-browser tmux htop zsh silversearcher-ag vim \
+\
+autoconf automake texinfo libgtk2.0-dev libxpm-dev libjpeg-dev libtiff5-dev \
+libgif-dev libtinfo-dev libotf-dev libjansson-dev \
+libgtk-3-dev libgnutls28-dev libmagick++-dev \
+\
+qjackctl jackd jack-capture curl \
+libreoffice thunderbird rlwrap postgresql-10 openvpn graphviz golang \
+tint2 xscreensaver keychain powertop tree xterm \
+fonts-emojione\
+\
+xclip
+
+# trayer xfce4-panel xfce4-power-manager
+
+# For building the lambdaisland guides
+texlive texlive-latex-base texlive-latex-extra
+
+# notification server, see https://wiki.archlinux.org/index.php/Desktop_notifications
+dunst
+```
+
+possibly
+
+```
+redis-server zsnes dzen
+network-manager-vpnc
+libmysqlclient-dev mysql-client
+compizconfig-settings-manager
+```
+
+fonts
+
+```
+fonts-arphic-bkai00mp
+fonts-arphic-bsmi00lp
+fonts-arphic-gbsn00lp
+fonts-arphic-gkai00mp
+fonts-arphic-ukai
+fonts-arphic-uming
+fonts-babelstone-han
+ttf-mscorefonts-installer
+fonts-opensymbol
+fonts-wqy-zenhei
+ttf-anonymous-pro
+fonts-inconsolata
+
+
+ttf-unifont
+ttf-engadget
+ttf-essays1743
+ttf-femkeklaver
+ttf-goudybookletter
+ttf-staypuft
+ttf-summersby
+ttf-radisnoir
+ttf-bitstream-vera
+ttf-adf-accanthis
+ttf-adf-baskervald
+ttf-adf-berenis
+ttf-adf-gillius
+ttf-adf-ikarius
+ttf-adf-irianis
+ttf-adf-libris
+ttf-adf-mekanus
+ttf-adf-oldania
+ttf-adf-romande
+ttf-adf-switzera
+ttf-adf-tribun
+ttf-adf-universalis
+ttf-adf-verana
+```
+
 ## Chinese input with Fcitx (15.10)
 
 install
@@ -87,76 +168,12 @@ Some other interesting options
 - caps:ctrl_modifier /  ctrl:nocaps (same thing?)
 - grp:* -> switch to alternative layout. How does this play with fcitx?
 
-## Packages
-
-```
-build-essential inkscape openssl sox gimp mplayer2 ffmpeg gitg libxml2-dev libxml2 libxslt1-dev
-maven2 agave pavucontrol apt-file scrot ant gparted p7zip
-gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fluendo-mp3
-pdftk ssed colordiff openssh-server tofrodos cowsay bsdgames openjdk-8-jdk unrar pandoc gnutls-bin
-lame chromium-browser tmux htop zsh silversearcher-ag vim
-```
-
-possibly
-
-```
-redis-server zsnes dzen
-network-manager-vpnc
-libmysqlclient-dev mysql-client
-compizconfig-settings-manager
-```
-
-To compile emacs
-
-```
-autoconf automake texinfo libgtk2.0-dev libxpm-dev libjpeg-dev libtiff5-dev libgif-dev libtinfo-dev
-```
-
-fonts
-
-```
-fonts-arphic-bkai00mp
-fonts-arphic-bsmi00lp
-fonts-arphic-gbsn00lp
-fonts-arphic-gkai00mp
-fonts-arphic-ukai
-fonts-arphic-uming
-fonts-babelstone-han
-ttf-mscorefonts-installer
-fonts-opensymbol
-fonts-wqy-zenhei
-ttf-anonymous-pro
-fonts-inconsolata
-
-
-ttf-unifont
-ttf-engadget
-ttf-essays1743
-ttf-femkeklaver
-ttf-goudybookletter
-ttf-staypuft
-ttf-summersby
-ttf-radisnoir
-ttf-bitstream-vera
-ttf-adf-accanthis
-ttf-adf-baskervald
-ttf-adf-berenis
-ttf-adf-gillius
-ttf-adf-ikarius
-ttf-adf-irianis
-ttf-adf-libris
-ttf-adf-mekanus
-ttf-adf-oldania
-ttf-adf-romande
-ttf-adf-switzera
-ttf-adf-tribun
-ttf-adf-universalis
-ttf-adf-verana
-```
-
 ## Manual installation
 
-* ruby-build
+* ruby-install
+* chruby
+* firefox-nightly
+* zprezto
 * phantomjs (still needed from source)
 * nvm / node
 * hub
@@ -164,6 +181,7 @@ ttf-adf-verana
 * ngrok
 * emacs
 * Cloudberry
+* go get github.com/ericchiang/pup
 
 ## ShuttleXpress
 
@@ -174,6 +192,12 @@ ttf-adf-verana
 ```
 SUBSYSTEM=="input", GROUP="input", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0b33", ATTRS{idProduct}=="0020", MODE:="666", GROUP="plugdev", RUN="/bin/sh -c 'echo -n $kernel:1.0 > /sys/bus/usb/drivers/usbhid/unbind'"
+```
+
+reload:
+
+```
+sudo udevadm control --reload-rules
 ```
 
 ## DNS

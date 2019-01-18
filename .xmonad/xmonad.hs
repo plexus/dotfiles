@@ -18,6 +18,8 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.StackTile
 import XMonad.Layout.Grid
+import XMonad.Layout.LayoutBuilder
+import XMonad.Layout.Tabbed
 
 import qualified XMonad.StackSet as W
 
@@ -26,18 +28,30 @@ import XMonad.Hooks.EwmhDesktops
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
-defaultLayout = wide ||| tall ||| Grid ||| noBorders Full ||| StackTile 1 (3/100) (1/2) ||| stack_mirror
+wideLayout = Mirror $ Tall 1 (3/100) (1/2)
+
+defaultLayout = wideLayout ||| tall ||| Grid ||| noBorders Full ||| StackTile 1 (3/100) (1/2) ||| stack_mirror
   where
     tall = Tall 1 (3/100) (1/2)
-    wide = Mirror $ Tall 1 (3/100) (1/2)
     stack_mirror = Mirror $ StackTile 1 (3/100) (1/2)
 
 gapLayout = gaps [(U,30)] $ -- gap at the bottom (L,R,D,U) for trayer
             defaultLayout
 
+recordLayout = ( (layoutN 1              -- number of windows
+                   (absBox 0 0 1280 720) -- position & size
+                   Nothing               -- Possibly an alternative box that is
+                                         -- used when this layout handles all
+                                         -- windows that are left
+                   $ Full)
+                 $ (layoutN 1 (absBox 0 720 1280 (1080 - 720)) Nothing $ Full)
+                 $ (layoutAll (absBox 1280 0 (1920 - 1280) 1080) $ wideLayout))
+
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-PerWorkspace.html
-myLayoutHook = onWorkspace "9" gapLayout $
-               defaultLayout
+myLayoutHook = onWorkspace "9" gapLayout
+               $ onWorkspace "3:emacs" (defaultLayout ||| recordLayout)
+               $ onWorkspace "4" (simpleTabbed ||| defaultLayout)
+               $ defaultLayout
 
 -- use xprop | grep WM_CLASS to find the className
 
