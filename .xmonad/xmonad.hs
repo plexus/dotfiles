@@ -8,7 +8,7 @@
 module Main (main) where
 
 import XMonad
-import XMonad.Hooks.ManageDocks
+-- import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Gaps
@@ -24,7 +24,9 @@ import XMonad.Layout.Tabbed
 import qualified XMonad.StackSet as W
 
 -- For full screen in Chromium / wmctrl compatibility
-import XMonad.Hooks.EwmhDesktops
+-- import XMonad.Hooks.EwmhDesktops
+
+import XMonad.Config.Gnome
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
@@ -72,30 +74,32 @@ myManageHook = composeAll
 
 main :: IO ()
 main = do
-    xmonad $ ewmh $ defaultConfig
+    -- xmonad $ ewmh $ defaultConfig
+    xmonad $ gnomeConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
      , borderWidth = 0
      , focusedBorderColor = "#E00078"
-     , workspaces  = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
-     , manageHook  = myManageHook <+> manageHook defaultConfig
-     , layoutHook  = myLayoutHook
-     , handleEventHook = fullscreenEventHook
+     -- , workspaces = ["1:www","2:term","3:emacs","4","5","6","7","8","9","0","-:selenium","=:tmp"]
+     --, manageHook  = myManageHook <+> manageHook defaultConfig
+     --, layoutHook  = myLayoutHook
+     --, handleEventHook = fullscreenEventHook
      }
-     `additionalKeysP`
-     [-- ("M-j", windows $ W.greedyView "3")
-      ("C-.", spawn "suspend_record")
-     , ("C-,", spawn "resume_record")
-     , ("<XF86MonBrightnessUp>", spawn "ruby /home/arne/bin/backlight +5")
-     , ("<XF86MonBrightnessDown>", spawn "ruby /home/arne/bin/backlight -5")
-     , ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 1%+")
-     , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 1%-")
-     , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
-     ]
+     -- `additionalKeysP`
+     -- [-- ("M-j", windows $ W.greedyView "3")
+     --  ("C-.", spawn "suspend_record")
+     -- , ("C-,", spawn "resume_record")
+     -- , ("<XF86MonBrightnessUp>", spawn "ruby /home/arne/bin/backlight +5")
+     -- , ("<XF86MonBrightnessDown>", spawn "ruby /home/arne/bin/backlight -5")
+     -- , ("<XF86AudioRaiseVolume>", spawn "amixer -D pulse sset Master 1%+")
+     -- , ("<XF86AudioLowerVolume>", spawn "amixer -D pulse sset Master 1%-")
+     -- , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
+     -- ]
      `additionalKeys`
-     [-- ((controlMask, xK_Print), spawn "sleep 1; scrot")
-       ((controlMask, xK_Print), spawn "xdotool click 1")
-     , ((0, xK_Print), spawn "scrot")
-     ]
+     [((mod4Mask, xK_p), spawn "dmenu_run")]
+     -- [-- ((controlMask, xK_Print), spawn "sleep 1; scrot")
+     --   ((controlMask, xK_Print), spawn "xdotool click 1")
+     -- , ((0, xK_Print), spawn "scrot")
+     -- ]
 
      -- [((0, 0x1008ff2d), spawn "sh -c 'xscreensaver-command -l && sudo /usr/sbin/pm-suspend'")]
