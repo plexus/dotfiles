@@ -26,7 +26,7 @@ import qualified XMonad.StackSet as W
 -- For full screen in Chromium / wmctrl compatibility
 -- import XMonad.Hooks.EwmhDesktops
 
-import XMonad.Config.Gnome
+import XMonad.Config.Desktop
 
 -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Layout.html
 
@@ -74,8 +74,9 @@ myManageHook = composeAll
 
 main :: IO ()
 main = do
+    xmonad $ defaultConfig
     -- xmonad $ ewmh $ defaultConfig
-    xmonad $ gnomeConfig
+    -- xmonad $ desktopConfig
      { terminal    = "gnome-terminal"
      , modMask     = mod4Mask
      , borderWidth = 0
@@ -96,7 +97,9 @@ main = do
      -- , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
      -- ]
      `additionalKeys`
-     [((mod4Mask, xK_p), spawn "dmenu_run")]
+     [((mod4Mask, xK_p), spawn "dmenu_run")
+     --, ((mod4Mask .|. shiftMask, xK_q), io (exitWith ExitSuccess))
+     ]
      -- [-- ((controlMask, xK_Print), spawn "sleep 1; scrot")
      --   ((controlMask, xK_Print), spawn "xdotool click 1")
      -- , ((0, xK_Print), spawn "scrot")

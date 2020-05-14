@@ -31,7 +31,16 @@
  ("spacemacs-develop"            . ((user-emacs-directory . "~/emacs-profiles/spacemacs-develop")
                                     (env . (("SPACEMACSDIR" . "~/emacs-profiles/spacemacs-dir")))))
 
+ ("straight" . ((user-emacs-directory . "~/emacs-profiles/straight")
+                (custom-file . "~/emacs-profiles/straight/custom.el")
+                (straight? . t)))
+
+ ("reboot" . ((user-emacs-directory . "~/emacs-profiles/reboot")
+              (custom-file . "~/emacs-profiles/reboot/custom.el")))
+
  ("test" . ((user-emacs-directory . "~/emacs-profiles/test")))
+
+ ("eleven-hackaton" . ((user-emacs-directory . "~/emacs-profiles/eleven-hackaton")))
 
  ("nextjournal" . ((user-emacs-directory . "~/emacs-profiles/spacemacs-master")
                    (custom-file . "~/Nextjournal/custom.el")

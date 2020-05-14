@@ -8,8 +8,8 @@ fi
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-2.5.1
 
-source ~/.nvm/nvm.sh
 unset PREFIX
+source ~/.nvm/nvm.sh
 nvm use --silent stable
 export PREFIX=/home/arne/opt
 
@@ -30,9 +30,11 @@ if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
     export HISTFILE="$HOME/.zhistory"
     export PREFIX="/home/arne/opt"
     export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify"
-    export PATH=$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin
+    export PATH=/usr/lib/ccache:$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin
     export PLEXUS_INIT_DONE="OK"
 fi
+
+export PATH=/usr/lib/ccache:$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin:$HOME/.cargo/bin
 
 prompt adam1
 
@@ -113,3 +115,18 @@ export EMACSCLIENT='emacsclient'
 
 # added by travis gem
 [ -f /home/arne/.travis/travis.sh ] && source /home/arne/.travis/travis.sh
+
+# opam configuration
+test -r /home/arne/.opam/opam-init/init.zsh && . /home/arne/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
+
+
+# emacs
+export PATH="/install_dir/bin/:${PATH}"
+export LD_LIBRARY_PATH=/install_dir/lib
+export LIBRARY_PATH=/install_dir/lib

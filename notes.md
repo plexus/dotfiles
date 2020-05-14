@@ -26,7 +26,7 @@ xclip
 # trayer xfce4-panel xfce4-power-manager
 
 # For building the lambdaisland guides
-texlive texlive-latex-base texlive-latex-extra
+texlive-full
 
 # notification server, see https://wiki.archlinux.org/index.php/Desktop_notifications
 dunst
