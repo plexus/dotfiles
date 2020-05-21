@@ -36,7 +36,7 @@ fi
 
 export PATH=/usr/lib/ccache:$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin:$HOME/.cargo/bin
 
-prompt adam1
+# prompt adam1
 
 # Allow redirection to overwrite files.
 setopt CLOBBER
@@ -49,6 +49,8 @@ SAVEHIST=50000
 
 alias top=htop
 alias l='ls -1 --color'
+alias l='ls -1 --color'
+alias ls='ls --color'
 alias acs='apt-cache search'
 alias ai='sudo apt-get install'
 alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude TAGS --color=auto'
@@ -113,20 +115,18 @@ export PATH=$PATH:~/tmp/gocode/bin
 # export EMACSCLIENT='emacsclient -s /tmp/arne/emacs1000/server'
 export EMACSCLIENT='emacsclient'
 
-# added by travis gem
-[ -f /home/arne/.travis/travis.sh ] && source /home/arne/.travis/travis.sh
-
 # opam configuration
 test -r /home/arne/.opam/opam-init/init.zsh && . /home/arne/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-. $HOME/.asdf/asdf.sh
-
-. $HOME/.asdf/completions/asdf.bash
-
-
 # emacs
 export PATH="/install_dir/bin/:${PATH}"
 export LD_LIBRARY_PATH=/install_dir/lib
 export LIBRARY_PATH=/install_dir/lib
+
+fpath=($fpath "/home/arne/.zfunctions")
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship

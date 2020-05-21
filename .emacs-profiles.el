@@ -1,4 +1,5 @@
-(("default"                      . ((user-emacs-directory . "~/emacs-profiles/plexus")))
+(("default"                      . ((user-emacs-directory . "~/emacs-profiles/spacemacs-develop")
+				    (env . (("SPACEMACSDIR" . "~/emacs-profiles/marceline-in-space")))))
 
  ("spacemacs"                    . ((user-emacs-directory . "~/emacs-profiles/spacemacs-master")
                                     (env . (("SPACEMACSDIR" . "~/emacs-profiles/spacemacs-dir")))

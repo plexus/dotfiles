@@ -245,3 +245,11 @@ Elaborate xmonad config for inspiration: https://github.com/randomthought/xmonad
 ## Wifi
 
 NetworkManager stores wifi credentials in /etc/NetworkManager/system-connections/ with a mask of 0600.
+
+# Wayland / Gnome
+
+```
+gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
+
+```

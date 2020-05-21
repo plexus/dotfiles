@@ -25,3 +25,5 @@ tint2 &
 nm-applet &
 setxkbmap -option compose:ralt -option caps:ctrl_modifier &
 dunst &
+
+export SHELL=/bin/zsh
