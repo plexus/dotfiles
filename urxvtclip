@@ -1,0 +1,43 @@
+# script to copy/paste text in URXVT
+#
+# This emulates the gnome-terminal behavior: copy to PRIMARY on select,
+# copy/paste to/from CLIPBOARD with Shift-Control-C/V
+
+#!/usr/bin/env perl
+
+# sudo ln -s /home/arne/github/dotfiles/urxvtclip /usr/lib/x86_64-linux-gnu/urxvt/perl
+
+# .Xresources:
+# URxvt.keysym.Shift-Control-C: perl:urxvtclip:copy
+# URxvt.keysym.Shift-Control-V: perl:urxvtclip:paste
+# URxvt.perl-ext-common: default,urxvtclip,selection-to-clipboard
+
+sub on_sel_grab {
+    my $query = $_[0]->selection;
+    open (my $pipe,'| /usr/bin/xclip -in -selection primary') or die;
+    print $pipe $query;
+    close $pipe;
+}
+
+sub copy {
+    my $query = $_[0]->selection;
+    open (my $pipe,'| /usr/bin/xclip -in -selection clipboard') or die;
+    print $pipe $query;
+    close $pipe;
+}
+
+sub paste {
+    my ($self) = @_;
+    my $content = `/usr/bin/xclip -loop 1 -out -selection clipboard` ;
+    $self->tt_write ($content);
+}
+
+sub on_user_command {
+    my ($self, $cmd) = @_;
+    if ($cmd eq "urxvtclip:paste") {
+        $self->paste;
+    }
+    if ($cmd eq "urxvtclip:copy") {
+        $self->copy;
+    }
+}

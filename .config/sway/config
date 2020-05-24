@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term gnome-terminal
+set $term /home/arne/bin/urxvt
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -88,6 +88,8 @@ bindsym $mod+q reload
 
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym Print exec /home/arne/bin/screenshot
+
 #
 # Moving around:
 #
@@ -206,8 +208,7 @@ bindsym $mod+r mode "resize"
 
 input type:keyboard {
 #    xkb_layout us
-    xkb_options ctrl:nocaps
-#    xkb_options compose:rwin
+    xkb_options ctrl:nocaps,compose:ralt
 }
 
 #input * xkb_options ctrl:nocaps

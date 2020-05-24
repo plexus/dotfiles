@@ -42,12 +42,26 @@
  ;;   "clojars" {:url "https://repo.clojars.org/"}
  ;; }
  :aliases
- {:new {:extra-deps {seancorfield/clj-new {:mvn/version "0.7.7"}}
-        :main-opts ["-m" "clj-new.create"]}
-  :depot {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
-          :main-opts ["-m" "depot.outdated.main"]}
+ {:new     {:extra-deps {seancorfield/clj-new {:mvn/version "0.7.7"}}
+            :main-opts  ["-m" "clj-new.create"]}
+  :depot   {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
+            :main-opts  ["-m" "depot.outdated.main"]}
   :upgrade {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
-            :main-opts ["-m" "depot.outdated.main" "--write"]}
-  :httpd {:extra-deps {nasus {:mvn/version "0.1.5"}}
-          :main-opts ["-m" "http.server"]}
+            :main-opts  ["-m" "depot.outdated.main" "--write"]}
+  :httpd   {:extra-deps {nasus {:mvn/version "0.1.5"}}
+            :main-opts  ["-m" "http.server"]}
+  :vulcan  {:extra-deps
+            {omnyway-labs/vulcan
+             {:git/url "https://github.com/omnyway-labs/vulcan.git",
+              :sha     "31b449b979a4263c6ecbd1e1ec1b065391e3dc92"
+              :tag     "master"}},
+            :main-opts ["-m" "vulcan.main"],
+            :jvm-opts
+            ["-client"
+             "-XX:+UseSerialGC"
+             "-XX:CICompilerCount=1"
+             "-XX:+TieredCompilation"
+             "-Xshare:off"
+             "-Xverify:none"
+             "-XX:TieredStopAtLevel=1"]}
   }}
