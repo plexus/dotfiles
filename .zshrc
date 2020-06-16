@@ -118,7 +118,6 @@ export EMACSCLIENT='emacsclient'
 # opam configuration
 test -r /home/arne/.opam/opam-init/init.zsh && . /home/arne/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:/snap/bin"
 
 fpath=($fpath "/home/arne/.zfunctions")
 
@@ -130,4 +129,5 @@ export WORDCHARS="*?_-.[]~&;!#$%^(){}<>"
 
 # Android Studio
 export ANDROID_HOME=$HOME/opt/Android/Sdk
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:/snap/bin:/usr/local/bin"
 export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools

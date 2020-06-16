@@ -48,3 +48,5 @@
 	helper = cache
 [hub]
 	protocol = ssh
+[init]
+	templateDir = „~/.config/git/template“

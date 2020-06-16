@@ -1,16 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-function main() {
-    for dotfile in $(dotfiles) ; do
-        if [[ -L "$HOME/$dotfile" ]]; then
-            check_existing_symlink $dotfile
-        else
-            create_symlink_if_possible $dotfile
-        fi
-    done
+ok() {
+    echo -e "OK\t$1"
+}
+warn() {
+    echo -e "WARN\t$1"
 }
 
-function check_existing_symlink() {
+dotfiles() {
+    find `dotdir` -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\n'
+}
+
+dotdir() {
+    cd `dirname "${BASH_SOURCE[0]}"` && echo "`pwd`/$1"
+}
+
+create_symlink_if_possible() {
+    local dotfile=$1
+
+    if [[ -e "$HOME/$dotfile" ]]; then
+        warn "$dotfile \t can't create symlink, regular file is in the way."
+    else
+        ok "$dotfile \t creating link"
+        ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
+    fi
+}
+
+check_existing_symlink() {
     local dotfile=$1
     local target=$(readlink -f $HOME/$dotfile)
 
@@ -21,31 +37,35 @@ function check_existing_symlink() {
     fi
 }
 
-function create_symlink_if_possible() {
+handle_dotfile() {
     local dotfile=$1
 
-    if [[ -e "$HOME/$dotfile" ]]; then
-        warn "$dotfile \t can't create symlink, regular file is in the way."
+    if [[ -L "$HOME/$dotfile" ]]; then
+        check_existing_symlink $dotfile
     else
-        ok "$dotfile \t creating link"
-        ln -s "`dotdir $dotfile`" "$HOME"
+        create_symlink_if_possible $dotfile
     fi
 }
 
-function dotdir() {
-    cd `dirname "${BASH_SOURCE[0]}"` && echo "`pwd`/$1"
+handle_directory() {
+    local dir=$1;
+    echo "Recursing into " $dir
+    mkdir -p "$HOME/$dir"
+    for file in $(find `dotdir`/$dir -maxdepth 1 -not -wholename `dotdir`/$dir -printf '%f\n'); do
+        handle "${dir}/${file}"
+    done
 }
 
-function dotfiles() {
-    find `dotdir` -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\n'
+handle() {
+    local dotfile=$1
+
+    if [[ -f "${dotfile}" ]]; then
+        handle_dotfile "${dotfile}"
+    elif [[ -d "${dotfile}" ]]; then
+        handle_directory "${dotfile}"
+    fi
 }
 
-function warn() {
-    echo -e "WARN\t$1"
-}
-function ok()   {
-    echo -e "OK\t$1"
-}
-
-
-main
+for dotfile in $(dotfiles) ; do
+    handle "${dotfile}"
+done

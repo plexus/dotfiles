@@ -1,4 +1,5 @@
-URxvt.font:xft:Inconsolata for Powerline:style=Regular:size=22
+# URxvt.font:xft:Inconsolata for Powerline:style=Regular:size=22
+URxvt.font:xft:Iosevka Fixed SS14:style=Regular:size=22
 
 URxvt.foreground: #c5c8c6
 URxvt.background: #1d1f21
@@ -33,3 +34,5 @@ URxvt.iso14755: false
 URxvt.keysym.Shift-Control-C: perl:urxvtclip:copy
 URxvt.keysym.Shift-Control-V: perl:urxvtclip:paste
 URxvt.perl-ext-common: default,urxvtclip,selection-to-clipboard
+
+URxvt.visualBell:  true

@@ -2,6 +2,8 @@
 #
 # This emulates the gnome-terminal behavior: copy to PRIMARY on select,
 # copy/paste to/from CLIPBOARD with Shift-Control-C/V
+#
+# Also copies to clipboard with right click
 
 #!/usr/bin/env perl
 
@@ -12,24 +14,44 @@
 # URxvt.keysym.Shift-Control-V: perl:urxvtclip:paste
 # URxvt.perl-ext-common: default,urxvtclip,selection-to-clipboard
 
-sub on_sel_grab {
-    my $query = $_[0]->selection;
-    open (my $pipe,'| /usr/bin/xclip -in -selection primary') or die;
+
+sub copy_to_clipboard {
+    my ($self) = @_;
+    my $query = $self->selection;
+    open (my $pipe, '| /usr/bin/xsel --input --clipboard') or die;
     print $pipe $query;
     close $pipe;
 }
 
-sub copy {
-    my $query = $_[0]->selection;
-    open (my $pipe,'| /usr/bin/xclip -in -selection clipboard') or die;
+sub copy_to_primary {
+    my ($self) = @_;
+    my $query = $self->selection;
+    open (my $pipe, '| /usr/bin/xsel --input --primary') or die;
     print $pipe $query;
     close $pipe;
 }
 
 sub paste {
     my ($self) = @_;
-    my $content = `/usr/bin/xclip -loop 1 -out -selection clipboard` ;
-    $self->tt_write ($content);
+    my $str = `/usr/bin/xsel --output --clipboard`;
+    if ($? == 0) {
+        $self->tt_paste($str);
+    } else {
+        print STDERR "error running '$self->{paste_cmd}': $!\n";
+    }
+}
+
+sub on_sel_grab {
+    my ($self) = @_;
+    $self->copy_to_primary();
+}
+
+sub on_button_press {
+    my ($self, $event) = @_;
+    if ($event->{button} == 3) {
+        $self->copy_to_clipboard();
+        $self->scr_bell;
+    }
 }
 
 sub on_user_command {
@@ -37,7 +59,7 @@ sub on_user_command {
     if ($cmd eq "urxvtclip:paste") {
         $self->paste;
     }
-    if ($cmd eq "urxvtclip:copy") {
-        $self->copy;
-    }
+    # if ($cmd eq "urxvtclip:copy") {
+    #     $self->copy_to_clipboard;
+    # }
 }
