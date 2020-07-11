@@ -1,42 +1,19 @@
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+append_path () {if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then PATH="$PATH:$1" fi}
+prepend_path () {if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then PATH="$1:$PATH" fi}
 
-# Customize to my needs
-
-source /usr/local/share/chruby/chruby.sh
-chruby ruby-2.5.1
-
-unset PREFIX
-source ~/.nvm/nvm.sh
-nvm use --silent stable
 export PREFIX=/home/arne/opt
 
-# prevent sub-shells (i.e. tmux) from repeating what's already done
-if [[ -z "$PLEXUS_INIT_DONE" ]] ; then
+prepend_path $HOME/bin
+prepend_path $HOME/opt/bin
+prepend_path $HOME/.cargo/bin
 
-    # Needs to run before $PREFIX is set or nvm will complain
-    #nvm use --silent 5
+# For XMonad + Java apps
+export _JAVA_AWT_WM_NONREPARENTING=1
 
-    #source $HOME/github/choes/share/choes/choes.sh
-    #source $HOME/github/choes/share/choes/choes-chruby.sh
-
-    # For XMonad + Java apps
-    export _JAVA_AWT_WM_NONREPARENTING=1
-
-    export EDITOR=emacsclient
-    export LC_ALL=en_US.UTF-8
-    export HISTFILE="$HOME/.zhistory"
-    export PREFIX="/home/arne/opt"
-    export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify"
-    export PATH=/usr/lib/ccache:$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin
-    export PLEXUS_INIT_DONE="OK"
-fi
-
-export PATH=/usr/lib/ccache:$HOME/bin:$HOME/opt/bin:$PATH:$HOME/opt/android-sdk-linux/tools:$HOME/opt/android-sdk-linux/platform-tools:$HOME/opt/clojure-scripts/bin:$HOME/.cargo/bin
-
-# prompt adam1
+export EDITOR=emacsclient
+export LC_ALL=en_US.UTF-8
+export HISTFILE="$HOME/.zhistory"
+export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify"
 
 # Allow redirection to overwrite files.
 setopt CLOBBER
@@ -46,29 +23,23 @@ setopt SHARE_HISTORY
 
 HISTSIZE=50000
 SAVEHIST=50000
+export WORDCHARS="*?_-.[]~&;!#$%^(){}<>"
+
+export ANSIBLE_NOCOWS=1
 
 alias top=htop
-alias l='ls -1 --color'
 alias l='ls -1 --color'
 alias ls='ls --color'
 alias acs='apt-cache search'
 alias ai='sudo apt-get install'
 alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude TAGS --color=auto'
+alias ed="rlwrap ed -p'> '"
 
 alias churby=chruby
 alias gerp=grep
 alias nnn='ruby -e "puts ARGV.pop.codepoints.inject(:+)%97"'
 
 alias bx='bundle exec'
-
-alias -g SU=' | sort | uniq'
-alias -g EC=' |
-while read line
-do
-  echo $line >&2
-  echo ${line/*home/\/home} | sed "s/:\([0-9]\+\).*/:\1/" | read fn
-  emacsclient +${fn//*:/} ${fn//:*/}
-done'
 
 function en {
     EMACSCLIENT=${EMACSCLIENT:-emacsclient}
@@ -79,9 +50,8 @@ function en {
     fi
 }
 
-alias -g FF="| sed 's/\([^:]* \|^\)\([-\/a-zA-Z0-9_\.]\+:[0-9]\+\).*/\2/'"
 
-# Go to last opened directory when new terminal is opened
+### Go to last opened directory when new terminal is opened ###
 function store-current-path() {
   echo -n `pwd` >! /run/shm/current-path
 }
@@ -89,45 +59,55 @@ if [[ ! "$precmd_functions" == *store-current-path* ]]; then
     precmd_functions+=("store-current-path")
 fi
 [[ -e /run/shm/current-path ]] && cd `cat /run/shm/current-path`
-# end
+### /last opened directory ###
 
-if [ ! "$INSIDE_EMACS" = "" ]; then
-  function emacs-store-path() {
-    emacsclient --eval "(setq plexus-shell-extra-info \"$(echo -n `pwd`)\")" >> /dev/null
-  }
-  if [[ ! "$precmd_functions" == *emacs-store-path* ]]; then
-    precmd_functions+=("emacs-store-path")
-  fi
-fi
 
-### START-Keychain ###
+### SSH Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 /usr/bin/keychain $HOME/.ssh/id_rsa
 source $HOME/.keychain/$(echo -n `hostname`)-sh
-### End-Keychain ###
-
-export ANSIBLE_NOCOWS=1
-
-alias ed="rlwrap ed -p'> '"
-
-export GOPATH=~/tmp/gocode
-export PATH=$PATH:~/tmp/gocode/bin
-# export EMACSCLIENT='emacsclient -s /tmp/arne/emacs1000/server'
-export EMACSCLIENT='emacsclient'
-
-# opam configuration
-test -r /home/arne/.opam/opam-init/init.zsh && . /home/arne/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+### /SSH Keychain ###
 
 
-fpath=($fpath "/home/arne/.zfunctions")
+### Go ###
+export GOPATH="$HOME/tmp/gocode"
+append_path "$GOPATH/bin"
+### /Go ###
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
 
-export WORDCHARS="*?_-.[]~&;!#$%^(){}<>"
+### Spaceship ZSH prompt ###
+if [[ -f "$HOME/.zfunctions/prompt_spaceship_setup" ]]; then
+   fpath=($fpath "$HOME/.zfunctions")
+   export SPACESHIP_KUBECONTEXT_SHOW=false
+   autoload -U promptinit; promptinit
+   prompt spaceship
+else
+    echo "Spaceship prompt not found, try npm install -g spaceship-prompt"
+fi
+### /Spaceship ZSH prompt ###
 
-# Android Studio
-export ANDROID_HOME=$HOME/opt/Android/Sdk
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:/snap/bin:/usr/local/bin"
-export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+
+### Android Studio ###
+if [[ -d "$HOME/opt/Andriod" ]]; then
+    export ANDROID_HOME=$HOME/opt/Android/Sdk
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:/snap/bin:/usr/local/bin"
+    export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+fi
+### /Android Studio ###
+
+### Chruby ###
+if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
+    source /usr/local/share/chruby/chruby.sh
+    chruby $(chruby | tail -1 | sed 's/.* //')
+fi
+### End Chruby ###
+
+### NVM ###
+if [[ -f ~/.nvm/nvm.sh ]]; then
+    _PREFIX="$PREFIX"
+    unset PREFIX
+    source ~/.nvm/nvm.sh
+    nvm use --silent stable
+    export PREFIX="$_PREFIX"
+fi
+### End NVM
