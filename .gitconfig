@@ -49,4 +49,4 @@
 [hub]
 	protocol = ssh
 [init]
-	templateDir = „~/.config/git/template“
+	templateDir = /home/arne/github/dotfiles/git/template
