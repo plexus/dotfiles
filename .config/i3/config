@@ -178,7 +178,10 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 
-bindsym $mod+grave exec /home/arne/bin/sway_workspace_to_other_output
+#bindsym $mod+grave exec /home/arne/bin/sway_workspace_to_other_output
+
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
 
 #
 # Resizing containers:
@@ -222,8 +225,8 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    # status_command /home/arne/bin/sway_status_bar_command
-    status_command i3status
+    status_command /home/arne/bin/sway_status_bar_command
+    # status_command i3status
 
     colors {
         statusline #ffffff
@@ -235,3 +238,5 @@ bar {
 default_border none
 
 # include /etc/sway/config.d/*
+#
+exec ~/bin/monitor_setup

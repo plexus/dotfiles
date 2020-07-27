@@ -253,3 +253,10 @@ gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
 
 ```
+
+# General checklist when trying new environments
+
+- caps lock as control
+- tiling / xmonad style keys
+- compose key
+- dual screen

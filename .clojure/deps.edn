@@ -47,7 +47,7 @@
   :depot   {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
             :main-opts  ["-m" "depot.outdated.main"]}
   :upgrade {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
-            :main-opts  ["-m" "depot.outdated.main" "--write"]}
+            :main-opts  ["-m" "depot.outdated.main" "--write" "--every"]}
   :httpd   {:extra-deps {nasus {:mvn/version "0.1.5"}}
             :main-opts  ["-m" "http.server"]}
   :vulcan  {:extra-deps
