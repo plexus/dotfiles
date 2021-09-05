@@ -1,0 +1,10 @@
+#!/usr/bin/env bb
+
+(require '[babashka.process :refer [process]])
+
+(let [script (File/createTempFile "linux-install-" ".sh")]
+  (spit script
+        (slurp
+         (re-find #"https://download.clojure.org/install/linux-install-.*sh" (slurp "https://clojure.org/guides/getting_started"))))
+  @(process ["chmod" "+x" script] {:inherit :true})
+  @(process ["sudo" script] {:inherit :true}))

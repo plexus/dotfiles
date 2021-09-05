@@ -34,7 +34,7 @@
 
  ("straight" . ((user-emacs-directory . "~/emacs-profiles/straight")
                 (custom-file . "~/emacs-profiles/straight/custom.el")
-                (straight? . t)))
+                (straight-p . t)))
 
  ("reboot" . ((user-emacs-directory . "~/emacs-profiles/reboot")
               (custom-file . "~/emacs-profiles/reboot/custom.el")))
@@ -42,6 +42,9 @@
  ("test" . ((user-emacs-directory . "~/emacs-profiles/test")))
 
  ("eleven-hackaton" . ((user-emacs-directory . "~/emacs-profiles/eleven-hackaton")))
+
+ ("corgi" . ((user-emacs-directory . "~/emacs-profiles/corgi")
+		   (custom-file . "~/emacs-profiles/corgi/custom.el")))
 
  ("nextjournal" . ((user-emacs-directory . "~/emacs-profiles/spacemacs-master")
                    (custom-file . "~/Nextjournal/custom.el")

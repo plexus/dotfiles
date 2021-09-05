@@ -78,7 +78,7 @@ ttf-adf-mekanus
 ttf-adf-oldania
 ttf-adf-romande
 ttf-adf-switzera
-ttf-adf-tribun
+ttf-adf-tribus
 ttf-adf-universalis
 ttf-adf-verana
 ```

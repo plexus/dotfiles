@@ -1,0 +1,11 @@
+wine32
+watchman
+entr
+maim
+xdotool
+libpipewire-0.3-dev
+qtbase5-private-dev
+liquidsoap
+procyon-decompiler
+tuxboot
+libgsl25 libgsl-dev

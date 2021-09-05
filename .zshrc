@@ -31,7 +31,6 @@ alias top=htop
 alias l='ls -1 --color'
 alias ls='ls --color'
 alias acs='apt-cache search'
-alias ai='sudo apt-get install'
 alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude TAGS --color=auto'
 alias ed="rlwrap ed -p'> '"
 
@@ -40,6 +39,11 @@ alias gerp=grep
 alias nnn='ruby -e "puts ARGV.pop.codepoints.inject(:+)%97"'
 
 alias bx='bundle exec'
+
+function ai {
+    echo "$@" >> ~/github/dotfiles/extra_packages
+    sudo apt-get install "$@"
+}
 
 function en {
     EMACSCLIENT=${EMACSCLIENT:-emacsclient}
@@ -60,7 +64,6 @@ if [[ ! "$precmd_functions" == *store-current-path* ]]; then
 fi
 [[ -e /run/shm/current-path ]] && cd `cat /run/shm/current-path`
 ### /last opened directory ###
-
 
 ### SSH Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
@@ -103,6 +106,7 @@ fi
 ### End Chruby ###
 
 ### NVM ###
+nvm_on() {
 if [[ -f ~/.nvm/nvm.sh ]]; then
     _PREFIX="$PREFIX"
     unset PREFIX
@@ -110,4 +114,15 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
     nvm use --silent stable
     export PREFIX="$_PREFIX"
 fi
+}
 ### End NVM
+export PATH="$PATH:/home/arne/.nvm/versions/node/v14.2.0/bin"
+### alternative
+
+export RUNELEVEN_DIR=/home/arne/Eleven/runeleven
+
+export SPACESHIP_DIR_TRUNC_REPO=false
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# export SDKMAN_DIR="/home/arne/.sdkman"
+# [[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"

@@ -48,8 +48,6 @@
             :main-opts  ["-m" "depot.outdated.main"]}
   :upgrade {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
             :main-opts  ["-m" "depot.outdated.main" "--write" "--every"]}
-  :httpd   {:extra-deps {nasus {:mvn/version "0.1.5"}}
-            :main-opts  ["-m" "http.server"]}
   :vulcan  {:extra-deps
             {omnyway-labs/vulcan
              {:git/url "https://github.com/omnyway-labs/vulcan.git",
@@ -64,4 +62,8 @@
              "-Xshare:off"
              "-Xverify:none"
              "-XX:TieredStopAtLevel=1"]}
+  :portal {:extra-deps {djblue/portal {#_#_:mvn/version "0.6.3"
+                                       :git/url "https://github.com/djblue/portal"
+                                       :sha "651334d50cba6b573a31260452c24c73068760b2"}
+                        org.clojure/clojurescript {:mvn/version "1.10.758"}}}
   }}

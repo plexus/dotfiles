@@ -26,5 +26,5 @@
 # setxkbmap -option compose:ralt -option caps:ctrl_modifier &
 # dunst &
 
-export PATH=/home/arne/bin:$PATH
+export PATH=/home/arne/bin:/home/arne/opt/bin:$PATH
 export SHELL=/bin/zsh
