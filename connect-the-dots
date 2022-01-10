@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+ARG="$1"
+
 print_linking() {
     echo $'\e[34m[\e[33m⇠\e[34m]\e[0m' "$@"
+}
+
+print_forcing() {
+    echo $'\e[34m[\e[31m⇠\e[34m]\e[0m' "$@"
 }
 
 print_already_linked() {
@@ -46,11 +52,23 @@ check_existing_symlink() {
     fi
 }
 
+force_symlink() {
+    local dotfile=$1
+
+    print_forcing "$dotfile : forcing new symlink"
+    mv "$HOME/$dotfile" "$HOME/${dotfile}.bak"
+    ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
+}
+
 handle_dotfile() {
     local dotfile=$1
 
     if [[ -L "$HOME/$dotfile" ]]; then
-        check_existing_symlink $dotfile
+        if [[ "$ARG" == "-f" ]]; then
+            force_symlink $dotfile
+        else
+            check_existing_symlink $dotfile
+        fi
     else
         create_symlink_if_possible $dotfile
     fi
