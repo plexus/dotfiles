@@ -1,5 +1,10 @@
-(("default"                      . ((user-emacs-directory . "~/emacs-profiles/spacemacs-develop")
-				    (env . (("SPACEMACSDIR" . "~/emacs-profiles/marceline-in-space")))))
+(("default"                      . ((user-emacs-directory . "~/Gaiwan/corgi-init")
+				    (custom-file . "~/Gaiwan/corgi-init/custom.el")))
+
+ ("joanne"                       . ((user-emacs-directory . "~/emacs-profiles/joanne")
+                                    (custom-file . "~/Gaiwan/joanne/custom.el")))
+ ("sample"                       . ((user-emacs-directory . "~/github/lambdaisland/corgi/sample-config")
+                                    (custom-file . "~/github/lambdaisland/corgi/sample-config/custom.el")))
 
  ("spacemacs"                    . ((user-emacs-directory . "~/emacs-profiles/spacemacs-master")
                                     (env . (("SPACEMACSDIR" . "~/emacs-profiles/spacemacs-dir")))
@@ -44,7 +49,7 @@
  ("eleven-hackaton" . ((user-emacs-directory . "~/emacs-profiles/eleven-hackaton")))
 
  ("corgi" . ((user-emacs-directory . "~/emacs-profiles/corgi")
-		   (custom-file . "~/emacs-profiles/corgi/custom.el")))
+	     (custom-file . "~/emacs-profiles/corgi/custom.el")))
 
  ("nextjournal" . ((user-emacs-directory . "~/emacs-profiles/spacemacs-master")
                    (custom-file . "~/Nextjournal/custom.el")

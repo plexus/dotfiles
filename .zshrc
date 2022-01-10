@@ -12,15 +12,14 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 export EDITOR=emacsclient
 export LC_ALL=en_US.UTF-8
-export HISTFILE="$HOME/.zhistory"
 export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify"
 
 # Allow redirection to overwrite files.
 setopt CLOBBER
 
 # Share recent history between shells
+export HISTFILE="$HOME/.zhistory"
 setopt SHARE_HISTORY
-
 HISTSIZE=50000
 SAVEHIST=50000
 export WORDCHARS="*?_-.[]~&;!#$%^(){}<>"
@@ -124,5 +123,28 @@ export RUNELEVEN_DIR=/home/arne/Eleven/runeleven
 export SPACESHIP_DIR_TRUNC_REPO=false
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# export SDKMAN_DIR="/home/arne/.sdkman"
-# [[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/arne/.sdkman"
+[[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"
+# sdk use java 16.0.1.hs-adpt
+sdk use java 17-open
+
+spaceship_perry() {
+    local 'perry_instances'
+
+    perry_instances="$(cat /tmp/perry.instances)"
+    {
+        cd /home/arne/github/lambdaisland/perry
+        bin/perry summary > /tmp/perry.instances &
+    } 2>&1 > /dev/null
+
+    [[ -z "$perry_instances" ]] && return
+    spaceship::section "yellow" "[" "$perry_instances" "]"
+}
+
+# SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+
+export PATH=/home/arne/.rubies/ruby-3.0.3/bin:$PATH
+
+# fnm
+export PATH=/home/arne/.fnm:$PATH
+eval "`fnm env`"

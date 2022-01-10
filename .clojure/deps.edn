@@ -41,6 +41,14 @@
  ;;   "central" {:url "https://repo1.maven.org/maven2/"}
  ;;   "clojars" {:url "https://repo.clojars.org/"}
  ;; }
+
+ :mvn/repos
+ {"cs-mvn" {:url "s3://cs-mvn/release"}
+  "datomic-cloud" {:url "s3://datomic-releases-1fc2183a/maven/releases"}}
+
+ :deps {com.lambdaisland/classpath {:local/root "/home/arne/github/lambdaisland/classpath"}
+        com.github.jnr/jnr-posix {:mvn/version "3.1.14"}}
+
  :aliases
  {:new     {:extra-deps {seancorfield/clj-new {:mvn/version "0.7.7"}}
             :main-opts  ["-m" "clj-new.create"]}
