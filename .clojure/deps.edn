@@ -12,6 +12,7 @@
 {
  ;; Paths
  ;;   Directories in the current project to include in the classpath
+ ;; :paths []
 
  ;; :paths ["src"]
 
@@ -47,31 +48,47 @@
   "datomic-cloud" {:url "s3://datomic-releases-1fc2183a/maven/releases"}}
 
  :deps {com.lambdaisland/classpath {:local/root "/home/arne/github/lambdaisland/classpath"}
-        com.github.jnr/jnr-posix {:mvn/version "3.1.14"}}
+        openjdk/openjdk-17-docs {:local/root "/usr/share/doc/openjdk-17-jre-headless/api"}
+        #_#_        com.github.jnr/jnr-posix {:mvn/version "3.1.14"}}
 
  :aliases
- {:new     {:extra-deps {seancorfield/clj-new {:mvn/version "0.7.7"}}
-            :main-opts  ["-m" "clj-new.create"]}
-  :depot   {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
-            :main-opts  ["-m" "depot.outdated.main"]}
-  :upgrade {:extra-deps {Olical/depot {:local/root "/home/arne/github/depot"}}
-            :main-opts  ["-m" "depot.outdated.main" "--write" "--every"]}
-  :vulcan  {:extra-deps
-            {omnyway-labs/vulcan
-             {:git/url "https://github.com/omnyway-labs/vulcan.git",
-              :sha     "31b449b979a4263c6ecbd1e1ec1b065391e3dc92"
-              :tag     "master"}},
-            :main-opts ["-m" "vulcan.main"],
-            :jvm-opts
-            ["-client"
-             "-XX:+UseSerialGC"
-             "-XX:CICompilerCount=1"
-             "-XX:+TieredCompilation"
-             "-Xshare:off"
-             "-Xverify:none"
-             "-XX:TieredStopAtLevel=1"]}
-  :portal {:extra-deps {djblue/portal {#_#_:mvn/version "0.6.3"
-                                       :git/url "https://github.com/djblue/portal"
-                                       :sha "651334d50cba6b573a31260452c24c73068760b2"}
-                        org.clojure/clojurescript {:mvn/version "1.10.758"}}}
+ {:new
+  {:extra-deps {seancorfield/clj-new {:mvn/version "RELEASE"}}
+   :main-opts  ["-m" "clj-new.create"]}
+
+  :depot/check
+  {:extra-deps {Olical/depot {:mvn/version "RELEASE"}}
+   :main-opts  ["-m" "depot.outdated.main"]}
+
+  :depot
+  {:extra-deps {Olical/depot {:mvn/version "RELEASE"}}
+   :main-opts  ["-m" "depot.outdated.main" "--write" "--every"]}
+
+  :vulcan
+  {:extra-deps
+   {omnyway-labs/vulcan
+    {:mvn/version "RELEASE"}#_
+    {:git/url "https://github.com/omnyway-labs/vulcan.git",
+     :sha     "31b449b979a4263c6ecbd1e1ec1b065391e3dc92"
+     :tag     "master"}},
+   :main-opts ["-m" "vulcan.main"],
+   :jvm-opts
+   ["-client"
+    "-XX:+UseSerialGC"
+    "-XX:CICompilerCount=1"
+    "-XX:+TieredCompilation"
+    "-Xshare:off"
+    "-Xverify:none"
+    "-XX:TieredStopAtLevel=1"]}
+
+  :portal
+  {:extra-deps {djblue/portal {:mvn/version "RELEASE"}}}
+
+  :antq
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core"]}
+
+  :upgrade
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core" "--skip=pom" "--upgrade" "--force" "--download"]}
   }}

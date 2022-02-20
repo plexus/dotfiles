@@ -141,6 +141,7 @@ spaceship_perry() {
     spaceship::section "yellow" "[" "$perry_instances" "]"
 }
 
+SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws terraform exec_time line_sep battery jobs exit_code char)
 # SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
 
 export PATH=/home/arne/.rubies/ruby-3.0.3/bin:$PATH
@@ -148,3 +149,4 @@ export PATH=/home/arne/.rubies/ruby-3.0.3/bin:$PATH
 # fnm
 export PATH=/home/arne/.fnm:$PATH
 eval "`fnm env`"
+function termtitle() { echo -e "\033]0;$1\007"; }
