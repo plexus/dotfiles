@@ -53,6 +53,9 @@ function en {
     fi
 }
 
+function termtitle() {
+    echo -e "\033]0;$1\007"
+}
 
 ### Go to last opened directory when new terminal is opened ###
 function store-current-path() {
@@ -63,6 +66,7 @@ if [[ ! "$precmd_functions" == *store-current-path* ]]; then
 fi
 [[ -e /run/shm/current-path ]] && cd `cat /run/shm/current-path`
 ### /last opened directory ###
+
 
 ### SSH Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
@@ -97,6 +101,7 @@ if [[ -d "$HOME/opt/Andriod" ]]; then
 fi
 ### /Android Studio ###
 
+
 ### Chruby ###
 if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
     source /usr/local/share/chruby/chruby.sh
@@ -104,29 +109,10 @@ if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
 fi
 ### End Chruby ###
 
-### NVM ###
-nvm_on() {
-if [[ -f ~/.nvm/nvm.sh ]]; then
-    _PREFIX="$PREFIX"
-    unset PREFIX
-    source ~/.nvm/nvm.sh
-    nvm use --silent stable
-    export PREFIX="$_PREFIX"
-fi
-}
-### End NVM
-export PATH="$PATH:/home/arne/.nvm/versions/node/v14.2.0/bin"
-### alternative
 
 export RUNELEVEN_DIR=/home/arne/Eleven/runeleven
 
 export SPACESHIP_DIR_TRUNC_REPO=false
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/arne/.sdkman"
-[[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"
-# sdk use java 16.0.1.hs-adpt
-sdk use java 17-open
 
 spaceship_perry() {
     local 'perry_instances'
@@ -141,12 +127,12 @@ spaceship_perry() {
     spaceship::section "yellow" "[" "$perry_instances" "]"
 }
 
-SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws terraform exec_time line_sep battery jobs exit_code char)
-# SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
 
-export PATH=/home/arne/.rubies/ruby-3.0.3/bin:$PATH
-
-# fnm
 export PATH=/home/arne/.fnm:$PATH
 eval "`fnm env`"
-function termtitle() { echo -e "\033]0;$1\007"; }
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/arne/.sdkman"
+[[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"
+sdk use java 17-open
