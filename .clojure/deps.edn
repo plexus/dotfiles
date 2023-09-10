@@ -1,13 +1,14 @@
-{
+{:launchpad/main-opts ["--emacs"]
  ;; :paths []
 
  :mvn/repos
  {"cs-mvn" {:url "s3://cs-mvn/release"}
   "datomic-cloud" {:url "s3://datomic-releases-1fc2183a/maven/releases"}}
 
- :deps {com.lambdaisland/classpath {:local/root "/home/arne/github/lambdaisland/classpath"}
-        openjdk/openjdk-17-docs {:local/root "/usr/share/doc/openjdk-17-jre-headless/api"}
-        #_#_        com.github.jnr/jnr-posix {:mvn/version "3.1.14"}}
+ :deps {} #_{com.lambdaisland/classpath {:local/root "/home/arne/github/lambdaisland/classpath"}
+             openjdk/openjdk-17-docs {:local/root "/usr/share/doc/openjdk-17-jre-headless/api"}
+             vvvvalvalval/scope-capture {:mvn/version "0.3.2"}
+             #_#_        com.github.jnr/jnr-posix {:mvn/version "3.1.14"}}
 
  :aliases
  {:new
@@ -48,5 +49,43 @@
 
   :upgrade
   {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
-   :main-opts ["-m" "antq.core" "--skip=pom" "--upgrade" "--force" "--download"]}
+   :main-opts ["-m" "antq.core" "--skip=pom" "--skip=github-action" "--upgrade" "--force" "--download"]}
+
+  :upgrade-transit
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts
+   ["-m" "antq.core" "--skip=pom" "--skip=github-action" "--upgrade" "--force" "--download"
+    "--focus=kepler16/entity.cljc"
+    "--focus=kepler16/gx.cljc"
+    "--focus=kepler16/http"
+    "--focus=kepler16/token-vault.cljc"
+    "--focus=kepler16/twilio"
+    "--focus=transit-engineering/accounts"
+    "--focus=transit-engineering/api"
+    "--focus=transit-engineering/auth.clj"
+    "--focus=transit-engineering/bcode-issuer"
+    "--focus=transit-engineering/gx.contrib.cljc"
+    "--focus=transit-engineering/micro.clj"
+    "--focus=transit-engineering/network"
+    "--focus=transit-engineering/offer-engine"
+    "--focus=transit-engineering/telemetry.clj"
+    "--focus=transit-engineering/token-vault"
+    "--focus=transit-engineering/transactions"
+    "--focus=transit-engineering/utils.clj"
+    "--focus=transit-platform/anomaly.clj"
+    "--focus=transit-platform/customer-session.cljc"
+    "--focus=transit-platform/dev.clj"
+    "--focus=transit-engineering/dev.clj"
+    "--focus=transit-platform/did.clj"
+    "--focus=transit-platform/domain.clj"
+    "--focus=transit-platform/entity.clj"
+    "--focus=transit-platform/faker.clj"
+    "--focus=transit-platform/graphql.clj"
+    "--focus=transit-platform/k16.entity.cljc"
+    "--focus=transit-platform/kid.clj"
+    "--focus=transit-platform/platform.clj"
+    "--focus=transit-platform/storage.xtdb.clj"
+    "--focus=transit-platform/telemetry.clj"
+    "--focus=transit-platform/token-vault.clj"
+    ]}
   }}

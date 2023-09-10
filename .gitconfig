@@ -23,6 +23,7 @@
 
 [push]
 	default = simple        # Only push the current branch instead of all matching branches when doing a plain "git push"
+        autoSetupRemote = true
 
 [include]
 	path = .gitsecrets
@@ -53,3 +54,6 @@
 	defaultBranch = main
 [pull]
 	ff = only
+[safe]
+	directory = /github/workspace
+	directory = /github/workspace

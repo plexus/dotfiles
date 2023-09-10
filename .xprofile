@@ -11,3 +11,6 @@
 # export QT4_IM_MODULE=ibus
 # export QT_IM_MODULE=ibus
 # export XMODIFIERS=@im=ibus
+
+xrandr --output DisplayPort-0 --mode 3840x2160
+xrandr --output HDMI-A-0 --mode 3840x2160 --right-of DisplayPort-0 --primary

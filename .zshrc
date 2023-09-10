@@ -3,10 +3,6 @@ prepend_path () {if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" ; then PATH="$
 
 export PREFIX=/home/arne/opt
 
-prepend_path $HOME/bin
-prepend_path $HOME/opt/bin
-prepend_path $HOME/.cargo/bin
-
 # For XMonad + Java apps
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -127,12 +123,36 @@ spaceship_perry() {
     spaceship::section "yellow" "[" "$perry_instances" "]"
 }
 
-SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+#SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws kubecontext terraform exec_time line_sep battery jobs exit_code char)
 
 export PATH=/home/arne/.fnm:$PATH
 eval "`fnm env`"
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/tmp/google-cloud-sdk/completion.zsh.inc'; fi
+
+. ~/ITRevolution/itrevolution.env
+export CLOUDSDK_PYTHON=/usr/bin/python3.8
+
+# pnpm
+export PNPM_HOME="/home/arne/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
+. /usr/share/google-cloud-sdk/completion.zsh.inc
+
+fpath=("$HOME/github/zsh-completions/src" $fpath)
+
+prepend_path $HOME/.cargo/bin
+prepend_path $HOME/opt/bin
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/arne/.sdkman"
 [[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ]] && source "/home/arne/.sdkman/bin/sdkman-init.sh"
-sdk use java 17-open
+
+# Putting this last, we don't want anything to override what's in ~/bin
+prepend_path $HOME/bin

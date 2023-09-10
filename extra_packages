@@ -40,3 +40,74 @@ watchman
 wine32
 xclip
 xdotool
+openjdk-17-docs
+openjdk-17-doc
+libwebkit2gtk-4.0-dev
+eid-viewer
+eid-mw
+shellcheck
+peek
+ffmpeg
+libdrm2
+peek
+openjdk-17
+openjdk-17-jdk
+mainline
+gcc-11
+python3.8
+octave
+obs-studio obs-cli obs-websocket obs-plugins~
+obs-studio obs-cli obs-websocket obs-plugins
+makedeb
+just
+okra
+libxml2:i386 libcanberra-gtk-module:i386 gtk2-engines-murrine:i386 libatk-adaptor:i386 libgdk-pixbuf-xlib-2.0-0:i386
+kdenlive
+rclone
+libpcsclite-dev
+moonlight-qt
+vinagre
+vinagre
+7zip
+guvcview
+blastem
+dgen
+milkytracker mikmod
+libwxbase3.0-dev libwxgtk-media3.0-gtk3-dev libwxgtk3.0-gtk3-dev wx3.0-headers libsqlite3-dev libyaml-cpp-dev libtagc0-dev libtag1-dev libtagc0 libexif-dev libpango1.0-dev libsndfile1-dev libspdlog-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev
+libaubio-dev
+omnidb-server
+pgadmin4
+rename
+nfs-common
+sshpass
+tesseract-ocr
+csvkit
+mono-runtime
+mono-devel
+mono-xbuild
+dotnet-sdk-7.0
+msbuild
+barrier
+rofi
+wofi
+barrier
+slurp grim
+libtree-sitter0 libtree-sitter-dev
+fonts-manrope
+fonts-gidole
+fonts-inter
+fonts-overpa
+fonts-overpass
+fonts-roboto-fontface
+alice
+tree-sitter-cli
+python3-pip
+python3-pipx
+pipx
+libavahi-compat-libdnssd-dev
+pulseaudio-dlna
+elisa
+syslog-ng-core
+lua
+lua5.4
+tmate
