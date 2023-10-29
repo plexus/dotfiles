@@ -1,0 +1,50 @@
+# No shebang here since this file has to be sourced. Stick to POSIX so we can
+# use this in sh/bash/zsh.
+
+# Add to the start of $PATH, if the directory exists, and is not yet in $PATH
+append_path () {
+    if ! echo "$PATH" then | /bin/grep -Eq "(^|:)$1($|:)" && [ -d "$1" ]
+    then
+        PATH="$PATH:$1"
+    fi
+}
+
+# Add to the end of $PATH, if the directory exists, and is not yet in $PATH
+prepend_path () {
+    if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)" && [ -d "$1" ]
+    then
+        PATH="$1:$PATH"
+    fi
+}
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+export PREFIX="/home/arne/opt"
+export GOPATH="$HOME/tmp/gocode"
+export PNPM_HOME="/home/arne/.local/share/pnpm"
+
+if [ -d "$HOME/opt/Andriod" ]; then
+    export ANDROID_HOME="$HOME/opt/Android/Sdk"
+    append_path "$ANDROID_HOME/emulator"
+    append_path "$ANDROID_HOME/tools"
+    append_path "$ANDROID_HOME/tools/bin"
+    append_path "$ANDROID_HOME/platform-tools"
+fi
+
+# Our "own" bin directories, put these at the front so we can always override
+# system binaries here. Everything else goes at the end.
+prepend_path "$HOME/opt/bin"
+prepend_path "$HOME/bin"
+
+# Go
+append_path "$GOPATH/bin"
+# Python
+append_path "$HOME/opt/python-env/bin"
+# Node version manager
+append_path "/home/arne/.fnm"
+# Pnpm
+append_path "$PNPM_HOME"
+# Yarn
+append_path "$HOME/.yarn/bin"
+append_path "$HOME/.config/yarn/global/node_modules/.bin"
+# Rust
+append_path "$HOME/.cargo/bin"

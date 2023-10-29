@@ -22,8 +22,24 @@ print_recursing() {
     echo $'  \e[34m[\e[33m⇣\e[34m]\e[0m' "$@"
 }
 
-dotfiles() {
-    find `dotdir` -maxdepth 1 -name '.*' -not -name '.git' -printf '%f\n'
+export IGNORE="$(cat IGNORE)"
+
+ignore_p() {
+  echo "$IGNORE" | while read f ; do
+      if [[  "$1" =~ "$f" ]]; then
+          exit 1
+      fi
+  done
+  [[ $? -eq 1 ]] || false
+}
+
+export -f ignore_p
+
+scan_files() {
+    export path="$1"
+    find "$path" \
+         -exec bash -c 'for f; do f="${f#"$path"}" ; ignore_p "$f" || printf "$f\n"; done' \
+         find-sh {} \;
 }
 
 dotdir() {
@@ -37,7 +53,11 @@ create_symlink_if_possible() {
         print_problem "$dotfile : can't create symlink, regular file is in the way."
     else
         print_linking "$dotfile : creating symlink"
-        ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
+        if [[ "$ARG" = "--dry-run" ]]; then
+            echo ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
+        else
+            ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
+        fi
     fi
 }
 
@@ -76,11 +96,7 @@ handle_dotfile() {
 
 handle_directory() {
     local dir=$1;
-    print_recursing "recursing into " $dir
     mkdir -p "$HOME/$dir"
-    for file in $(find `dotdir`/$dir -maxdepth 1 -not -wholename `dotdir`/$dir -printf '%f\n'); do
-        handle "${dir}/${file}"
-    done
 }
 
 handle() {
@@ -93,6 +109,12 @@ handle() {
     fi
 }
 
-for dotfile in $(dotfiles) ; do
-    handle "${dotfile}"
-done
+main() {
+    for dotfile in $(scan_files `dotdir`) ; do
+        if [[ ! "${dotfile}" = "" ]]; then
+            handle "${dotfile}"
+        fi
+    done
+}
+
+main

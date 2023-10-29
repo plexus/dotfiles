@@ -23,7 +23,7 @@
 
 [push]
 	default = simple        # Only push the current branch instead of all matching branches when doing a plain "git push"
-        autoSetupRemote = true
+	autoSetupRemote = true
 
 [include]
 	path = .gitsecrets

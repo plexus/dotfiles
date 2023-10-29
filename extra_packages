@@ -111,3 +111,73 @@ syslog-ng-core
 lua
 lua5.4
 tmate
+fprint
+fprintd
+libpam-fprintd
+djvulibre
+djvu
+djvulibre-bin
+djview4
+texlive-extra-utils
+texlive-extra-utils
+libpodofo-utils
+plasma-workspace-wayland
+gdm
+gdm3
+wofi
+kde-spectacle
+gnome-screensaver
+amsynth
+qjackct
+qjackctl
+qjackctl
+cmake
+qtbase5-dev
+qt5svg
+qtsvg
+qt svg
+libqt5svg5-dev
+libpipewire-0.3-dev
+libjack-dev
+liblo-dev
+a2jmidid
+ams
+pipewire-jack
+pipewire-audio-client-libraries
+carla
+pipewire-audio-client-libraries libspa-0.2-bluetooth libspa-0.2-jack
+wireplumber pipewire-media-session-
+kwallet-pam
+libpam-kwallet5
+ksshaskpass
+gjacktransport
+gjacktransport
+catarina
+ardour
+qjackctl
+hydrogen
+pipewire-jack
+midisnoop
+supercollider-server
+supercollider-ide
+liboscpack-dev
+nextcloud-desktop dolphin-nextcloud
+inkscape
+certbot
+python3-certbot-dns-dnsimple
+libwlroots-dev libinput-dev
+wayland-protocols
+libwayland-server0
+python3.11-venv
+python3.11-venv
+jack-keyboard
+bemenu
+sway
+sway
+swaybar
+python3.12 python3.12-dev
+python3.12-venv
+waybar
+brightnessctl
+libncurses5-dev libncursesw5-dev libportmidi-dev
+libjack-jackd2-dev

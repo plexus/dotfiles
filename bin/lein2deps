@@ -1,0 +1,62 @@
+#!/usr/bin/env bb
+
+;; lein2deps | jet --pretty > deps.edn
+
+(require '[clojure.string :as str]
+         '[clojure.edn :as edn]
+         '[clojure.pprint :as pprint])
+
+(alter-var-root #'*print-namespace-maps* (constantly false))
+
+(defn read-project-clj []
+  (-> "project.clj"
+      slurp
+      (str/replace "#=" "")
+      (str/replace "~@" "")
+      (str/replace "~" "")
+      (str/replace "#\"" "\"")
+      (str/replace "\\." ".")
+      clojure.edn/read-string))
+
+(defn deps-map [dep-vecs]
+  (into {}
+        (for [[d v] dep-vecs]
+          [(if (simple-symbol? d)
+             (symbol (str d) (str d))
+             d)
+           {:mvn/version v}])))
+
+
+(pprint/pprint
+ (let [project-map (apply hash-map (drop 3 (read-project-clj)))
+       {:keys [dependencies source-paths source-path resource-paths test-paths profiles repositories]
+        :or {source-paths ["src"]
+             resource-paths ["resources"]
+             test-paths ["test"]}} project-map]
+   (cond-> {:paths (-> (or (when source-path [source-path]) source-paths)
+                       (into resource-paths)
+                       (into test-paths))
+            :deps (deps-map dependencies)
+            :aliases
+            (into {}
+                  (for [[alias {:keys [dependencies source-paths resource-paths test-paths]}] profiles
+                        :let [paths (-> source-paths
+                                        (into resource-paths)
+                                        (into test-paths)
+                                        vec)]
+                        :when (some seq [paths dependencies])]
+                    [alias
+                     (cond-> {}
+                       (seq paths)
+                       (assoc :extra-paths paths)
+                       (seq dependencies)
+                       (assoc :extra-deps (deps-map dependencies)))]))}
+     (seq repositories)
+     (assoc :mvn/repos (into {}
+                             (map (fn [[name url]]
+                                    [name {:url url}]))
+                             repositories)))))
+
+;; Local Variables:
+;; mode: clojure
+;; End:

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# CLASS=$(xprop -id `xdotool getwindowfocus` | grep WM_CLASS | sed 's/.*"\([^"]*\)".*/\1/')
+# maim -s ~/Screenshots/"$(date +%F_%H%M%S)_$CLASS.png" "$@"S
+
+exec spectacle -r -b -o ~/Screenshots/"$(date +%F_%H%M%S).png" "$@"
