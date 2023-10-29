@@ -1,4 +1,4 @@
-. ~/github/dotfiles/setup_path
+. ~/bin/setup_path
 
 # For XMonad + Java apps
 export _JAVA_AWT_WM_NONREPARENTING=1
