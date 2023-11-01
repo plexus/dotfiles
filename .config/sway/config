@@ -242,3 +242,5 @@ exec /usr/bin/nm-applet
 
 bindsym --locked XF86MonBrightnessUp exec /home/arne/bin/brightness up
 bindsym --locked XF86MonBrightnessDown exec /home/arne/bin/brightness down
+bindsym --locked XF86AudioRaiseVolume exec /home/arne/bin/volume up
+bindsym --locked XF86AudioLowerVolume exec /home/arne/bin/volume down

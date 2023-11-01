@@ -38,7 +38,7 @@ prepend_path "$HOME/bin"
 # Go
 append_path "$GOPATH/bin"
 # Python
-append_path "$HOME/opt/python-env/bin"
+# append_path "$HOME/opt/python-env/bin"
 # Node version manager
 append_path "/home/arne/.fnm"
 # Pnpm

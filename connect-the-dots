@@ -22,7 +22,11 @@ print_recursing() {
     echo $'  \e[34m[\e[33m⇣\e[34m]\e[0m' "$@"
 }
 
-export IGNORE="$(cat IGNORE)"
+dotdir() {
+    cd `dirname "${BASH_SOURCE[0]}"` && echo "`pwd`/$1"
+}
+
+export IGNORE="$(cat "`dotdir`/IGNORE")"
 
 ignore_p() {
   echo "$IGNORE" | while read f ; do
@@ -40,10 +44,6 @@ scan_files() {
     find "$path" \
          -exec bash -c 'for f; do f="${f#"$path"}" ; ignore_p "$f" || printf "$f\n"; done' \
          find-sh {} \;
-}
-
-dotdir() {
-    cd `dirname "${BASH_SOURCE[0]}"` && echo "`pwd`/$1"
 }
 
 create_symlink_if_possible() {
