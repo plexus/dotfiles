@@ -1,5 +1,8 @@
 . ~/bin/setup_path
 
+# Tramp - https://blog.karssen.org/2016/03/02/fixing-emacs-tramp-mode-when-using-zsh/
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # For XMonad + Java apps
 export _JAVA_AWT_WM_NONREPARENTING=1
 
