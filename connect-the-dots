@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
 
+# Script for creating symlinks under $HOME for any file in the current directory.
+#
+# (c) Arne Brasseur 2012-2023
+#
+# Use --dry-run to see what it would do without performing any actions.
+#
+# Generally this script is conservative, if an operation is destructive, for
+# instance because there's already a file or other symlink in place, then it
+# reports a warning and ignores that file.
+#
+# The only exception is if the file that's in the way is identical to the file
+# being linked, in that case the file under $HOME gets replaced by a symlink.
+#
+# Run with `-f` to force updating files/symlinks that are in the way. The
+# existing file will get renamed to have a `.bak` suffix.
+#
+# Files listed in the IGNORE file are ignored.
+
 ARG="$1"
 
 print_linking() {
@@ -46,18 +64,36 @@ scan_files() {
          find-sh {} \;
 }
 
+do_rm() {
+    if [[ "$ARG" = "--dry-run" ]]; then
+        echo rm "$1"
+    else
+        rm "$1"
+    fi
+}
+
+do_ln_s() {
+    if [[ "$ARG" = "--dry-run" ]]; then
+        echo ln -s "$1" "$2"
+    else
+        ln -s "$1" "$2"
+    fi
+}
+
 create_symlink_if_possible() {
     local dotfile=$1
 
     if [[ -e "$HOME/$dotfile" ]]; then
-        print_problem "$dotfile : can't create symlink, regular file is in the way."
+        if cmp --silent -- "`dotdir $dotfile`" "$HOME/$dotfile"; then
+            print_linking "$dotfile : identical file in the way, replacing with symlink"
+            do_rm "$HOME/$dotfile"
+            do_ln_s "`dotdir $dotfile`" "$HOME/$dotfile"
+        else
+            print_problem "$dotfile : can't create symlink, different file is in the way."
+        fi
     else
         print_linking "$dotfile : creating symlink"
-        if [[ "$ARG" = "--dry-run" ]]; then
-            echo ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
-        else
-            ln -s "`dotdir $dotfile`" "$HOME/$dotfile"
-        fi
+        do_ln_s "`dotdir $dotfile`" "$HOME/$dotfile"
     fi
 }
 

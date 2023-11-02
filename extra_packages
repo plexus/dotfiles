@@ -191,3 +191,7 @@ qt5-default qt5-qmake qttools5-dev qttools5-dev-tools qtwebengine5-dev libqt5svg
 qt5 qt5-qmake qttools5-dev qttools5-dev-tools qtwebengine5-dev libqt5svg5-dev libqt5websockets5-dev
 qt5-qmake qttools5-dev qttools5-dev-tools qtwebengine5-dev libqt5svg5-dev libqt5websockets5-dev
 qtbase5-dev qt5-qmake qttools5-dev qttools5-dev-tools qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev qtwebengine5-dev
+librust-gtk4-dev
+libadwaita-1-dev
+sway waybar
+bemenu

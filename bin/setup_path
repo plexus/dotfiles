@@ -1,6 +1,14 @@
 # No shebang here since this file has to be sourced. Stick to POSIX so we can
 # use this in sh/bash/zsh.
 
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+
+export PREFIX="$HOME/arne/opt"
+export GOPATH="$HOME/.local/share/gocode"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export RUSTUP_HOME="$HOME/.local/share/rustup"
+export CARGO_HOME="$HOME/.local/share/cargo"
+
 # Add to the start of $PATH, if the directory exists, and is not yet in $PATH
 append_path () {
     if ! echo "$PATH" then | /bin/grep -Eq "(^|:)$1($|:)" && [ -d "$1" ]
@@ -16,11 +24,6 @@ prepend_path () {
         PATH="$1:$PATH"
     fi
 }
-
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
-export PREFIX="/home/arne/opt"
-export GOPATH="$HOME/tmp/gocode"
-export PNPM_HOME="/home/arne/.local/share/pnpm"
 
 if [ -d "$HOME/opt/Andriod" ]; then
     export ANDROID_HOME="$HOME/opt/Android/Sdk"
@@ -47,4 +50,4 @@ append_path "$PNPM_HOME"
 append_path "$HOME/.yarn/bin"
 append_path "$HOME/.config/yarn/global/node_modules/.bin"
 # Rust
-append_path "$HOME/.cargo/bin"
+append_path "$CARGO_HOME/bin"
