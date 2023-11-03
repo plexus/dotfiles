@@ -195,3 +195,4 @@ librust-gtk4-dev
 libadwaita-1-dev
 sway waybar
 bemenu
+pipewire-jack
