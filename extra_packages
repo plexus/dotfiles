@@ -196,3 +196,5 @@ libadwaita-1-dev
 sway waybar
 bemenu
 pipewire-jack
+xdg-desktop-portal-wlr
+pipewire-libcamera
