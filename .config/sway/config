@@ -194,7 +194,7 @@ input type:keyboard {
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    swaybar_command waybar
+    swaybar_command /home/arne/bin/waybar
     # position bottom
 
     # # When the status_command prints a new line to stdout, swaybar updates.

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+WAYBAR_CONFIG="$HOME/.config/waybar/config.`hostname`"
+
+if [ -f "$WAYBAR_CONFIG" ]; then
+  exec /usr/bin/waybar -c "$WAYBAR_CONFIG"
+fi
+
+exec /usr/bin/waybar
