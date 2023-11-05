@@ -4,6 +4,9 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
+
 ### Variables
 
 # Logo key. Use Mod1 for Alt.
@@ -218,3 +221,5 @@ bindsym --locked XF86MonBrightnessUp exec /home/arne/bin/brightness up
 bindsym --locked XF86MonBrightnessDown exec /home/arne/bin/brightness down
 bindsym --locked XF86AudioRaiseVolume exec /home/arne/bin/volume up
 bindsym --locked XF86AudioLowerVolume exec /home/arne/bin/volume down
+
+bindsym --locked XF86Explorer exec sh -c 'echo toggle | jack_transport'

@@ -51,3 +51,5 @@ append_path "$HOME/.yarn/bin"
 append_path "$HOME/.config/yarn/global/node_modules/.bin"
 # Rust
 append_path "$CARGO_HOME/bin"
+
+systemctl --user import-environment PREFIX PATH

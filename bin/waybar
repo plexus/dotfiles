@@ -2,8 +2,14 @@
 
 WAYBAR_CONFIG="$HOME/.config/waybar/config.`hostname`"
 
-if [ -f "$WAYBAR_CONFIG" ]; then
-  exec /usr/bin/waybar -c "$WAYBAR_CONFIG"
+WAYBAR=/usr/bin/waybar
+
+if [ -f "/home/arne/github/Waybar/build/waybar" ]; then
+  WAYBAR=/home/arne/github/Waybar/build/waybar
 fi
 
-exec /usr/bin/waybar
+if [ -f "$WAYBAR_CONFIG" ]; then
+  exec "$WAYBAR" -c "$WAYBAR_CONFIG"
+fi
+
+exec "$WAYBAR"

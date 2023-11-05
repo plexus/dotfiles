@@ -198,3 +198,6 @@ bemenu
 pipewire-jack
 xdg-desktop-portal-wlr
 pipewire-libcamera
+libcamera-ipa
+sc3-plugins supercollider-server
+libgtkmm-3.0-dev
