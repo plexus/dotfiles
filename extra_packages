@@ -201,3 +201,7 @@ pipewire-libcamera
 libcamera-ipa
 sc3-plugins supercollider-server
 libgtkmm-3.0-dev
+qpwgraph
+sc3-plugins
+libscsynth1
+nextcloud-desktop
