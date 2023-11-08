@@ -216,6 +216,7 @@ include /etc/sway/config.d/*
 
 exec /usr/lib/x86_64-linux-gnu/libexec/org_kde_powerdevil
 exec /usr/bin/nm-applet
+exec_always sh -c 'sleep 5; /usr/bin/nextcloud --background' # wait for the tray
 
 bindsym --locked XF86MonBrightnessUp exec /home/arne/bin/brightness up
 bindsym --locked XF86MonBrightnessDown exec /home/arne/bin/brightness down
@@ -223,3 +224,5 @@ bindsym --locked XF86AudioRaiseVolume exec /home/arne/bin/volume up
 bindsym --locked XF86AudioLowerVolume exec /home/arne/bin/volume down
 
 bindsym --locked XF86Explorer exec sh -c 'echo toggle | jack_transport'
+
+bindsym --locked $mod+l exec sh -c 'systemctl suspend'

@@ -196,9 +196,7 @@ libadwaita-1-dev
 sway waybar
 bemenu
 pipewire-jack
-xdg-desktop-portal-wlr
-pipewire-libcamera
-libcamera-ipa
+xdg-desktop-portal-wlr pipewire-libcamera libcamera-ipa
 sc3-plugins supercollider-server
 libgtkmm-3.0-dev
 qpwgraph
@@ -207,3 +205,8 @@ libscsynth1
 nextcloud-desktop
 redshift-gtk
 gammastep
+xdg-desktop-portal-wlr
+xdg-desktop-portal-wlr
+pipewire-libcamera
+libcamera-ipa
+supercollider sc3-plugins
