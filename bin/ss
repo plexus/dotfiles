@@ -3,4 +3,11 @@
 # CLASS=$(xprop -id `xdotool getwindowfocus` | grep WM_CLASS | sed 's/.*"\([^"]*\)".*/\1/')
 # maim -s ~/Screenshots/"$(date +%F_%H%M%S)_$CLASS.png" "$@"S
 
-exec spectacle -r -b -o ~/Screenshots/"$(date +%F_%H%M%S).png" "$@"
+IMG_FILE="$HOME/Screenshots/$(date +%F_%H%M%S).png"
+
+if [ $DESKTOP_SESSION = "sway" ]; then
+    echo "SWAY"
+    slurp | grim -g - "$IMG_FILE" "$@"
+elif [ $DESKTOP_SESSINO = "plasma" ] ; then
+    exec spectacle -r -b -o "$IMG_FILE" "$@"
+fi
