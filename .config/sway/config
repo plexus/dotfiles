@@ -215,6 +215,7 @@ default_border none
 include /etc/sway/config.d/*
 
 exec /usr/lib/x86_64-linux-gnu/libexec/org_kde_powerdevil
+exec /usr/lib/x86_64-linux-gnu/libexec/kdeconnectd
 exec /usr/bin/nm-applet
 exec_always sh -c 'sleep 5; /usr/bin/nextcloud --background' # wait for the tray
 
