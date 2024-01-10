@@ -53,3 +53,4 @@ append_path "$HOME/.config/yarn/global/node_modules/.bin"
 append_path "$CARGO_HOME/bin"
 
 systemctl --user import-environment PREFIX PATH
+dbus-update-activation-environment --systemd PATH="$PATH"

@@ -6,6 +6,7 @@
 
 exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
 exec dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
+exec /home/arne/bin/setup_path
 
 ### Variables
 
@@ -78,7 +79,7 @@ bindsym $mod+q reload
 # Exit sway (logs you out of your Wayland session)
 # bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 bindsym $mod+Shift+q exec swaymsg exit
-bindsym Print exec /home/arne/bin/screenshot
+bindsym Print exec /home/arne/bin/ss
 
 #
 # Moving around:
