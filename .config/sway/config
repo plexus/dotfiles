@@ -15,7 +15,7 @@ set $mod Mod4
 set $term kitty
 
 # Your preferred application launcher
-set $menu bemenu-run
+set $menu /home/arne/bin/bemenu-run
 
 ### Output configuration
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)

@@ -2,4 +2,4 @@
 
 . ~/bin/setup_path
 
-exec bemenu-run "$@"
+exec /usr/bin/bemenu-run "$@"
