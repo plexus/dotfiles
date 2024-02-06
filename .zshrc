@@ -118,6 +118,7 @@ export CLOUDSDK_PYTHON=/usr/bin/python3.8
 
 fpath=("$HOME/github/zsh-completions/src" $fpath)
 
+export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/arne/.sdkman"

@@ -205,6 +205,7 @@ libscsynth1
 nextcloud-desktop
 redshift-gtk
 gammastep
+<<<<<<< HEAD
 xdg-desktop-portal-wlr
 xdg-desktop-portal-wlr
 pipewire-libcamera
@@ -228,3 +229,19 @@ brightnessctl
 ddcutil
 gcolor3
 bemenu
+sc3-plugins
+sc3-plugins-server
+sc3-plugins-language
+pipewire-alsa
+spek
+jaaa
+patchance
+python3-pyqt5.qtsvg
+rpi-imager
+f3
+gcolor3
+nautilus
+jack-mixer
+docker-compose
+mysql-client
+terraform
