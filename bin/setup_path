@@ -8,6 +8,7 @@ export GOPATH="$HOME/.local/share/gocode"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export RUSTUP_HOME="$HOME/.local/share/rustup"
 export CARGO_HOME="$HOME/.local/share/cargo"
+export FLYCTL_INSTALL="$HOME/.fly"
 
 # Add to the start of $PATH, if the directory exists, and is not yet in $PATH
 append_path () {
@@ -51,6 +52,8 @@ append_path "$HOME/.yarn/bin"
 append_path "$HOME/.config/yarn/global/node_modules/.bin"
 # Rust
 append_path "$CARGO_HOME/bin"
+# Fly.io
+append_path "$FLYCTL_INSTALL/bin"
 
 systemctl --user import-environment PREFIX PATH
 dbus-update-activation-environment --systemd PATH="$PATH"
