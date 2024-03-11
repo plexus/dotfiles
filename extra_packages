@@ -245,3 +245,13 @@ jack-mixer
 docker-compose
 mysql-client
 terraform
+libsecret-tools
+docker-compose-v2
+weasyprint
+fcitx5-pinyin fcitx5
+fcitx5-frontend-qt5 fcitx5-frontend-qt6 fcitx5-frontend-gtk
+fcitx5-frontend-qt5 fcitx5-frontend-qt6
+fcitx5-frontend-gtk2 fcitx5-frontend-gtk3 fcitx5-frontend-gtk4
+fcitx-libs-dev
+fcitx5 fcitx5-module-pinyinhelper fcitx5-pinyin fcitx5-pinyin-gui
+fcitx5-libs-dev

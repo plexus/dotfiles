@@ -5,6 +5,11 @@
 # Read `man 5 sway` for a complete reference.
 
 exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
+
+exec systemctl --user set-environment GTK_IM_MODULE=fcitx
+exec systemctl --user set-environment QT_IM_MODULE=fcitx
+exec systemctl --user set-environment XMODIFIERS=@im=fcitx
+
 exec dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
 exec /home/arne/bin/setup_path
 
