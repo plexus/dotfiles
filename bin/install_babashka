@@ -38,6 +38,8 @@ esac
 
 DOWNLOAD_URL="https://github.com/${ORGANIZATION}/${PROJECT}/releases/download/v${VERSION}/${PROJECT}-${VERSION}-${PLATFORM}-${ARCHITECTURE}.${EXT}"
 
+echo $DOWNLOAD_URL
+
 mkdir -p "${INSTALL_DIR}"
 TMPFILE=$(mktemp)
 

@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces"], //, "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": [], // "sway/window"
-    "modules-right": ["battery", "battery#bat2", "cpu", "memory", "jack", "tray", "clock"], //["mpd", "idle_inhibitor", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language"],
+    "modules-right": ["battery", "battery#bat2", "cpu", "memory", "jack", "bluetooth", "tray", "clock"], //["mpd", "idle_inhibitor", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -168,5 +168,15 @@
     },
     "jack": {
         "format": "{bar} | {beat} | {tick} [{xruns}]"
+    },
+    "bluetooth": {
+        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+        "format": " {status}",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": " {num_connections} connected",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "kcmshell5 kcm_bluetooth" 
     }
 }
