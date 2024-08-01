@@ -48,7 +48,7 @@ export IGNORE="$(cat "`dotdir`/IGNORE")"
 
 ignore_p() {
   echo "$IGNORE" | while read f ; do
-      if [[  "$1" =~ "$f" ]]; then
+      if [[  "$1" =~ ^$f($|/) ]]; then
           exit 1
       fi
   done
