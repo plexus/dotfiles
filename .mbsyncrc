@@ -1,0 +1,55 @@
+# https://www.seanh.cc/2021/08/22/backup-fastmail-and-gmail-with-isync/
+#
+# apt-get install isync pass
+
+CopyArrivalDate yes  # Don't mess up message timestamps when moving them between folders.
+Sync Pull            # Download changes only, don't sync local changes up to the server.
+Create Near          # Automatically create new folders in the local copy.
+Remove Near          # Automatically remove deleted folders from the local copy.
+Expunge Near         # Expunge deleted messages from the local copy.
+
+# arne@gaiwan.co
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+User arne@gaiwan.co
+PassCmd "kwalletcli -f mbsync -e fastmail"
+SSLType IMAPS
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path /media/arne/Backup/Mailboxes/arne@gaiwan.co/
+Inbox /media/arne/Backup/Mailboxes/arne@gaiwan.co/Inbox
+SubFolders Verbatim
+
+Channel fastmail
+Far :fastmail-remote:
+Near :fastmail-local:
+Patterns *
+SyncState *
+
+# arne.brasseur@gmail.com
+
+IMAPAccount gmail
+Host imap.gmail.com
+User arne.brasseur@gmail.com
+PassCmd "pass mbsync/gmail"
+SSLType IMAPS
+Pipelinedepth 1
+Timeout 60
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path /media/arne/Backup/Mailboxes/arne.brasseur@gmail.com/
+Inbox /media/arne/Backup/Mailboxes/arne.brasseur@gmail.com/Inbox
+SubFolders Verbatim
+
+Channel gmail
+Far :gmail-remote:
+Near :gmail-local:
+Patterns *
+SyncState *

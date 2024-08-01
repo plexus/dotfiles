@@ -10,6 +10,8 @@ exec systemctl --user set-environment GTK_IM_MODULE=fcitx
 exec systemctl --user set-environment QT_IM_MODULE=fcitx
 exec systemctl --user set-environment XMODIFIERS=@im=fcitx
 
+exec --no-startup-id /usr/lib/pam_kwallet_init
+
 exec dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
 exec /home/arne/bin/setup_path
 
