@@ -35,8 +35,8 @@ SyncState *
 IMAPAccount gmail
 Host imap.gmail.com
 User arne.brasseur@gmail.com
-PassCmd "pass mbsync/gmail"
-SSLType IMAPS
+PassCmd "kwalletcli -f mbsync -e gmail"
+#SSLType IMAPS
 Pipelinedepth 1
 Timeout 60
 
@@ -53,3 +53,26 @@ Far :gmail-remote:
 Near :gmail-local:
 Patterns *
 SyncState *
+
+# billing@gaiwan.co
+
+
+# IMAPAccount fastmail-billing
+# Host imap.fastmail.com
+# User billing@gaiwan.co
+# PassCmd "kwalletcli -f mbsync -e fastmail-billing"
+# SSLType IMAPS
+
+# IMAPStore fastmail-billing-remote
+# Account fastmail-billing
+
+# MaildirStore fastmail-billing-local
+# Path /media/arne/Backup/Mailboxes/billing@gaiwan.co/
+# Inbox /media/arne/Backup/Mailboxes/billing@gaiwan.co/Inbox
+# SubFolders Verbatim
+
+# Channel fastmail-billing
+# Far :fastmail-billing-remote:
+# Near :fastmail-billing-local:
+# Patterns *
+# SyncState *

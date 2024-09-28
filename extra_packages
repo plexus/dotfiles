@@ -279,3 +279,11 @@ maildir-utils
 pass
 kwalletcli
 kleopatra
+kleopatra
+scdaemon
+mu4e
+meson
+libgmime-3.0-dev
+kmail
+kdenlive
+lintian
