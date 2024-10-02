@@ -28,13 +28,14 @@
            "https://repo.clojars.org/" (str/replace artifact #"\." "/") "/maven-metadata.xml"))))))
 
 (defn version-sort-key [version]
+  ;; not ideal, but vectors have to be of the same length, so ignore anything
+  ;; beyond major.minor.teeny. Works in 97% of all cases.
   (subvec
    (mapv #(try (parse-long %) (catch Exception _ %))
          (str/split version #"[\.\-]"))
    0 3))
 
-(defn clojars-latest-versoin [artifact]
-  (prn (map version-sort-key (sort-by version-sort-key (clojars-artifact-versions artifact))))
+(defn clojars-latest-version [artifact]
   (last (sort-by version-sort-key (clojars-artifact-versions artifact))))
 
 (defn clojars-all-jars []
@@ -46,25 +47,40 @@
         "]")))
 
 (defn add-dep [{:keys [artifact]}]
+  (prn "add-dep" artifact (clojars-latest-version artifact))
   (spit "deps.edn"
         (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
                      [:deps (symbol artifact) :mvn/version]
-                     (clojars-latest-versoin artifact))))
+                     (clojars-latest-version artifact))))
 
 (defn add-bb-dep [{:keys [artifact]}]
   (spit "bb.edn"
-        (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
+        (re/assoc-in (re/parse-string (try (slurp "bb.edn") (catch Exception _ "{}")))
                      [:deps (symbol artifact) :mvn/version]
-                     (clojars-latest-versoin artifact))))
+                     (clojars-latest-version artifact))))
 
 
-(defn search-dep [{:keys [needle]}]
-  (doseq [artifact (distinct (map first (clojars-all-jars)))
-          :let [artifact (if (simple-symbol? artifact)
-                           (symbol (str artifact) (str artifact))
-                           artifact)]]
-    (when (.contains ^String (str artifact) needle)
-      (println artifact))))
+(defn search-dep* [{:keys [needle]}]
+  (for [artifact (distinct (map first (clojars-all-jars)))
+        :let [artifact (if (simple-symbol? artifact)
+                         (symbol (str artifact) (str artifact))
+                         artifact)]
+        :when (.contains ^String (str artifact) needle)]
+    artifact))
+
+(defn search-dep [opts]
+  (run! println (search-dep* opts)))
+
+(defn lucky-dep [opts]
+  (doseq [artifact (search-dep* opts)]
+    (println "Adding" artifact #'add-dep)
+    (add-dep {:artifact (str artifact)})
+    (println "ok")))
+
+(defn lucky-bb-dep [opts]
+  (doseq [artifact (search-dep* opts)]
+    (println "Adding" artifact)
+    (add-bb-dep {:artifact (str artifact)})))
 
 (defn bin-dev []
   ['(require '[lambdaisland.cli :as cli])
@@ -113,8 +129,13 @@
                      :command #'add-dep}
    "bb-dep <artifact>" {:doc "Add the latest version of the given dependency to bb.edn"
                         :command #'add-bb-dep}
+   "lucky <needle>" {:doc "Search + add latest artifact"
+                     :command #'lucky-dep}
+   "bb-lucky <needle>" {:doc "Search + add latest artifact"
+                     :command #'lucky-bb-dep}
    "search <needle>" {:doc "Find artifact names that match"
-                      :command #'search-dep}])
+                      :command #'search-dep}
+   "lucky <artifact>"])
 
 (cli/dispatch*
  {:name ",add"
