@@ -3,7 +3,7 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
-export PREFIX="$HOME/arne/opt"
+export PREFIX="$HOME/opt"
 export GOPATH="$HOME/.local/share/gocode"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export RUSTUP_HOME="$HOME/.local/share/rustup"

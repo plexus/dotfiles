@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=Firefox Nightly (local)
+Type=Application
+Exec=/home/arne/bin/firefox

@@ -1,8 +1,9 @@
 # bmo - laptop
-output DP-1 mode --custom 1920x1080
+# output DP-1 mode --custom 1920x1080
+# output HDMI-A-1 mode --custom 1920x1080
 # output eDP-1 pos 0 0
 # output HDMI-A-1 pos 1920 0
 #
 
 output HDMI-A-1 pos 0 0
-output eDP-1 pos 1920 0
+#output eDP-1 pos 1920 0

@@ -1,0 +1,138 @@
+#!/usr/bin/env bb
+
+(require '[babashka.deps :as deps])
+
+(deps/add-deps
+ '{:deps
+   {com.lambdaisland/cli        {:mvn/version "0.18.74"}
+    borkdude/rewrite-edn        {:mvn/version "0.4.8"}
+    org.clojure/data.xml        {:mvn/version "0.2.0-alpha9"}
+    com.lambdaisland/xml-select {:mvn/version "0.2.5"}}})
+
+(require
+ '[lambdaisland.cli :as cli]
+ '[borkdude.rewrite-edn :as re]
+ '[clojure.data.xml :as xml]
+ '[clojure.edn :as edn]
+ '[lambdaisland.xml-select :as xs]
+ '[clojure.java.shell :as sh]
+ '[clojure.pprint :as pprint])
+
+(defn clojars-artifact-versions [artifact]
+  (map (comp first :content)
+       (xs/select
+        [:metadata :versions :> :version]
+        (xml/parse-str
+         (slurp
+          (str
+           "https://repo.clojars.org/" (str/replace artifact #"\." "/") "/maven-metadata.xml"))))))
+
+(defn version-sort-key [version]
+  (subvec
+   (mapv #(try (parse-long %) (catch Exception _ %))
+         (str/split version #"[\.\-]"))
+   0 3))
+
+(defn clojars-latest-versoin [artifact]
+  (prn (map version-sort-key (sort-by version-sort-key (clojars-artifact-versions artifact))))
+  (last (sort-by version-sort-key (clojars-artifact-versions artifact))))
+
+(defn clojars-all-jars []
+  (edn/read-string
+   (str "["
+        (str/replace (slurp "https://repo.clojars.org/all-jars.clj")
+                     ;; there's an artifact in there that's not a valid symbol, boooo
+                     #"trident\/1\.1" "trident/v1.1")
+        "]")))
+
+(defn add-dep [{:keys [artifact]}]
+  (spit "deps.edn"
+        (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
+                     [:deps (symbol artifact) :mvn/version]
+                     (clojars-latest-versoin artifact))))
+
+(defn add-bb-dep [{:keys [artifact]}]
+  (spit "bb.edn"
+        (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
+                     [:deps (symbol artifact) :mvn/version]
+                     (clojars-latest-versoin artifact))))
+
+
+(defn search-dep [{:keys [needle]}]
+  (doseq [artifact (distinct (map first (clojars-all-jars)))
+          :let [artifact (if (simple-symbol? artifact)
+                           (symbol (str artifact) (str artifact))
+                           artifact)]]
+    (when (.contains ^String (str artifact) needle)
+      (println artifact))))
+
+(defn bin-dev []
+  ['(require '[lambdaisland.cli :as cli])
+   '(def init {})
+   '(defn initialize-local-files
+      "Create local files which are not checked in"
+      [_]
+      (spit "deps.local.edn" "{:launchpad/aliases [:dev]}"))
+   '(def commands ["init" (var initialize-local-files)])
+   '(def flags ["-v, --verbose" "Increase verbosity"
+                "-h, --help" "Show help text for a (sub-)command"])
+   '(cli/dispatch*
+     {:name "bin/dev"
+      :init init
+      :flags flags
+      :commands commands})])
+
+(defn bin-launchpad []
+  ['(require '[lambdaisland.launchpad :as launchpad])
+   '(launchpad/main {:java-args ["-Dclojure.main.report=stderr"]})])
+
+(defn pprint-str [o]
+  (binding [*print-namespace-maps* false]
+    (with-out-str (pprint/pprint o))))
+
+(defn add-bin-dev [_]
+  (add-bb-dep {:artifact "com.lambdaisland/cli"})
+  (sh/sh "mkdir" "-p" "bin")
+  (spit "bin/dev" (str "#!/usr/bin/env bb\n\n"
+                       (str/join "\n" (map pprint-str (bin-dev)))
+                       "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
+  (sh/sh "chmod" "+x" "bin/dev"))
+
+(defn add-bin-launchpad [_]
+  (add-bb-dep {:artifact "com.lambdaisland/launchpad"})
+  (sh/sh "mkdir" "-p" "bin")
+  (spit "bin/launchpad" (str "#!/usr/bin/env bb\n\n"
+                             (str/join "\n" (map pprint-str (bin-launchpad)))
+                             "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
+  (sh/sh "chmod" "+x" "bin/launchpad"))
+
+(def commands
+  ["bin/dev" {:command #'add-bin-dev}
+   "bin/launchpad" {:command #'add-bin-launchpad}
+   "dep <artifact>" {:doc "Add the latest version of the given dependency to deps.edn"
+                     :command #'add-dep}
+   "bb-dep <artifact>" {:doc "Add the latest version of the given dependency to bb.edn"
+                        :command #'add-bb-dep}
+   "search <needle>" {:doc "Find artifact names that match"
+                      :command #'search-dep}])
+
+(cli/dispatch*
+ {:name ",add"
+  :commands commands
+  })
+
+
+
+;; (select1 [:version] '{:tag :version, :attrs {}, :content ("0.1.6-alpha")} )
+
+;; (def root
+;;   (xml/parse-str (slurp "https://compass.heartofclojure.eu/profile"#_"https://repo.clojars.org/com/lambdaisland/cli/maven-metadata.xml")))
+
+;; (mapcat (partial select1 [:version]) (xml-seq root))
+
+;; (select [:metadata :versions :> :version] root)
+;; (select [:head {:charset any?}] root)
+
+;; Local Variables:
+;; mode:clojure
+;; End:
