@@ -69,7 +69,12 @@ fi
 export GIT_ASKPASS='/usr/bin/ksshaskpass'
 export SSH_ASKPASS='/usr/bin/ksshaskpass'
 export SSH_ASKPASS_REQUIRE=prefer
-eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
+if [ -f "$HOME/.ssh/id_rsa" ]; then
+    eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
+fi
+if [ -f "$HOME/.ssh/id_ed25519" ]; then
+    eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_ed25519)
+fi
 ### /SSH Keychain ###
 
 ### Spaceship ZSH prompt ###
@@ -106,8 +111,6 @@ spaceship_perry() {
 #SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
 SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws terraform exec_time line_sep battery jobs exit_code char)
 
-eval "`fnm env`"
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -116,11 +119,11 @@ if [ -f '/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/tmp/google-cloud-
 
 export CLOUDSDK_PYTHON=/usr/bin/python3.8
 
-. /usr/share/google-cloud-sdk/completion.zsh.inc
+if [ -f /usr/share/google-cloud-sdk/completion.zsh.inc ]; then . /usr/share/google-cloud-sdk/completion.zsh.inc ; fi
 
 fpath=("$HOME/github/zsh-completions/src" $fpath)
 
-export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
+# export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/arne/.sdkman"
@@ -143,3 +146,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 export CLOUDSDK_PYTHON=$HOME/opt/gcloud-venv/bin/python
+
+# fnm
+FNM_PATH="/home/arne/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/arne/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
