@@ -36,7 +36,7 @@ alias nnn='ruby -e "puts ARGV.pop.codepoints.inject(:+)%97"'
 alias bx='bundle exec'
 
 function ai {
-    echo "$@" >> ~/github/dotfiles/extra_packages
+    echo "$@" >> ~/reposdotfiles/extra_packages
     sudo apt-get install "$@"
 }
 
@@ -100,7 +100,7 @@ spaceship_perry() {
 
     perry_instances="$(cat /tmp/perry.instances)"
     {
-        cd /home/arne/github/lambdaisland/perry
+        cd /home/arne/lambdaisland/perry
         bin/perry summary > /tmp/perry.instances &
     } 2>&1 > /dev/null
 
@@ -121,7 +121,9 @@ export CLOUDSDK_PYTHON=/usr/bin/python3.8
 
 if [ -f /usr/share/google-cloud-sdk/completion.zsh.inc ]; then . /usr/share/google-cloud-sdk/completion.zsh.inc ; fi
 
-fpath=("$HOME/github/zsh-completions/src" $fpath)
+if [ -d "$HOME/repos/zsh-completions" ]; then
+    fpath=("$HOME/repos/zsh-completions/src" $fpath)
+fi
 
 # export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
 
