@@ -132,27 +132,15 @@
    "lucky <needle>" {:doc "Search + add latest artifact"
                      :command #'lucky-dep}
    "bb-lucky <needle>" {:doc "Search + add latest artifact"
-                     :command #'lucky-bb-dep}
+                        :command #'lucky-bb-dep}
    "search <needle>" {:doc "Find artifact names that match"
                       :command #'search-dep}
    "lucky <artifact>"])
 
 (cli/dispatch*
  {:name ",add"
-  :commands commands
-  })
+  :commands commands})
 
-
-
-;; (select1 [:version] '{:tag :version, :attrs {}, :content ("0.1.6-alpha")} )
-
-;; (def root
-;;   (xml/parse-str (slurp "https://compass.heartofclojure.eu/profile"#_"https://repo.clojars.org/com/lambdaisland/cli/maven-metadata.xml")))
-
-;; (mapcat (partial select1 [:version]) (xml-seq root))
-
-;; (select [:metadata :versions :> :version] root)
-;; (select [:head {:charset any?}] root)
 
 ;; Local Variables:
 ;; mode:clojure

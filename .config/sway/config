@@ -234,4 +234,6 @@ bindsym --locked XF86AudioLowerVolume exec /home/arne/bin/volume down
 
 bindsym --locked XF86Explorer exec sh -c 'echo toggle | jack_transport'
 
-bindsym --locked $mod+l exec sh -c 'systemctl suspend'
+bindsym --locked $mod+l exec swaylock
+
+exec --no-startup-id /usr/lib/xdg-desktop-portal -r
