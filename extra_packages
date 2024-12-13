@@ -299,3 +299,52 @@ swaylock
 swaylock
 swaylock
 lxpolkit
+nextcloud-desktop
+pdftk-java
+calibre
+calibre
+postgresql-client-16
+python3-pip
+python3-pip
+python3.12-venv
+jmtpfs
+xboxdrv
+bmenu
+waybar
+waybar
+bemenu
+bemenu
+nm-applet
+nm-tray
+xdg-desktop-portal-wlr
+slurp
+nwg-bar
+hwinfo
+libgtk-layer-shell0
+gtk-layer-shell
+libgtk-layer-shell-dev
+libplayerctl-dev
+python3-i3ipc
+brightnessctl
+python3-dasbus
+sway-notification-center
+wpagui
+network-manager-gnome
+kdeconnect
+grim
+grim
+ruby
+thonny
+python3-pygame python3-pgzero
+btop
+okular
+qml6-module-qt-labs-folderlistmodel
+libappindicator3-dev
+python3-dasbus
+libdbusmenu-gtk3-dev
+gnome-tweaks
+eid-mw eid-viewer
+eid-mw eid-viewer
+libpcsclite-dev python3-tk
+
+libpcsclite-dev python3-pyscard python3-tk

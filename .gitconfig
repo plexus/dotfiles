@@ -36,7 +36,7 @@
 	autosetupmerge = true   # When branching off a remote branch, automatically let the local branch track the remote branch.
 
 [rerere]
-	enabled = false          # Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+	enabled = true
 
 [merge]
 	stat = true             # Always show a diffstat at the end of a merge

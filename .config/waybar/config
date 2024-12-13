@@ -1,13 +1,13 @@
 {
     // "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 50, // Waybar height (to be removed for auto height)
+    // "height": 50, // Waybar height (to be removed for auto height)
     // "width": 30, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["sway/workspaces"], //, "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": [], // "sway/window"
-    "modules-right": ["battery", "battery#bat2", "cpu", "memory", "bluetooth", "tray", "clock"], //["mpd", "idle_inhibitor", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language"],
+    "modules-right": ["battery", "battery#bat2", "cpu", "memory", "tray", "clock"], //["mpd", "idle_inhibitor", "network", "cpu", "memory", "bluetooth","temperature", "backlight", "keyboard-state", "sway/language"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -114,7 +114,7 @@
         //     "warning": 30,
         //     "critical": 15
         // },
-        // "format": "{capacity}% {icon}",
+        // "format": "{capacity}%",
         // "format-charging": "{capacity}% ",
         // "format-plugged": "{capacity}% ",
         // "format-alt": "{time} {icon}",
@@ -174,7 +174,6 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "kcmshell5 kcm_bluetooth" 
+        "on-click": "kcmshell5 kcm_bluetooth"
     }
 }
-

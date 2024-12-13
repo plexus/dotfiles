@@ -2,7 +2,7 @@
 
 steps=40
 
-cd /sys/class/backlight/intel_backlight
+cd /sys/class/backlight/*
 read max < max_brightness
 read cur < brightness
 

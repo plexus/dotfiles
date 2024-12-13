@@ -30,10 +30,9 @@
 (defn version-sort-key [version]
   ;; not ideal, but vectors have to be of the same length, so ignore anything
   ;; beyond major.minor.teeny. Works in 97% of all cases.
-  (subvec
-   (mapv #(try (parse-long %) (catch Exception _ %))
-         (str/split version #"[\.\-]"))
-   0 3))
+  (let [[a i t] (map #(try (parse-long %) (catch Exception _ %))
+                     (str/split version #"[\.\-]"))]
+    [(or a 0) (or i 0) (or t 0)]))
 
 (defn clojars-latest-version [artifact]
   (last (sort-by version-sort-key (clojars-artifact-versions artifact))))
@@ -122,6 +121,22 @@
                              "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
   (sh/sh "chmod" "+x" "bin/launchpad"))
 
+(defn bump [{:keys [file]}]
+  (let [contents  (slurp file)
+        deps (edn/read-string contents)
+        re-deps (re/parse-string contents)]
+    (spit file
+          (reduce (fn [re-deps [artifact _]]
+                    (println "Bumping" artifact)
+                    (try
+                      (re/assoc-in re-deps [:deps artifact] {:mvn/version (clojars-latest-version artifact)})
+                      (catch Exception e
+                        (println "Couldn't bump" artifact)
+                        re-deps)))
+                  re-deps
+                  (get deps :deps)))
+    ))
+
 (def commands
   ["bin/dev" {:command #'add-bin-dev}
    "bin/launchpad" {:command #'add-bin-launchpad}
@@ -135,6 +150,8 @@
                         :command #'lucky-bb-dep}
    "search <needle>" {:doc "Find artifact names that match"
                       :command #'search-dep}
+   "bump <file>" {:doc "Upgrade all artifacts in file (deps.edn, bb.edn, etc)"
+                  :command #'bump}
    "lucky <artifact>"])
 
 (cli/dispatch*

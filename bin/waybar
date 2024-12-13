@@ -1,15 +1,5 @@
 #!/bin/sh
 
-WAYBAR_CONFIG="$HOME/.config/waybar/config.`hostname`"
+. ~/bin/setup_path
 
-WAYBAR=/usr/bin/waybar
-
-if [ -f "/home/arne/github/Waybar/build/waybar" ]; then
-  WAYBAR=/home/arne/github/Waybar/build/waybar
-fi
-
-if [ -f "$WAYBAR_CONFIG" ]; then
-  exec "$WAYBAR" -c "$WAYBAR_CONFIG"
-fi
-
-exec "$WAYBAR"
+exec /usr/bin/waybar "$@"

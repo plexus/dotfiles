@@ -1,3 +1,6 @@
 [screencast]
-chooser_type=dmenu
-chooser_cmd=bemenu-run
+# chooser_type=dmenu
+# chooser_cmd=bemenu
+
+chooser_type=simple
+chooser_cmd=slurp -f %o -or

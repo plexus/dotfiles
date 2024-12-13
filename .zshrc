@@ -36,7 +36,7 @@ alias nnn='ruby -e "puts ARGV.pop.codepoints.inject(:+)%97"'
 alias bx='bundle exec'
 
 function ai {
-    echo "$@" >> ~/reposdotfiles/extra_packages
+    echo "$@" >> ~/repos/dotfiles/extra_packages
     sudo apt-get install "$@"
 }
 
@@ -117,7 +117,7 @@ if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/pa
 # The next line enables shell command completion for gcloud.
 if [ -f '/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/tmp/google-cloud-sdk/completion.zsh.inc'; fi
 
-export CLOUDSDK_PYTHON=/usr/bin/python3.8
+# export CLOUDSDK_PYTHON=/usr/bin/python3.8
 
 if [ -f /usr/share/google-cloud-sdk/completion.zsh.inc ]; then . /usr/share/google-cloud-sdk/completion.zsh.inc ; fi
 
@@ -125,7 +125,8 @@ if [ -d "$HOME/repos/zsh-completions" ]; then
     fpath=("$HOME/repos/zsh-completions/src" $fpath)
 fi
 
-# export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
+# Make pipewire act as a jack server
+export LD_LIBRARY_PATH='/usr/${LIB}/pipewire-0.3/jack'"${LD_LIBRARY_PATH+":$LD_LIBRARY_PATH"}"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/arne/.sdkman"
@@ -146,8 +147,8 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export CLOUDSDK_PYTHON_SITEPACKAGES=1
-export CLOUDSDK_PYTHON=$HOME/opt/gcloud-venv/bin/python
+# export CLOUDSDK_PYTHON_SITEPACKAGES=1
+# export CLOUDSDK_PYTHON=$HOME/opt/gcloud-venv/bin/python
 
 # fnm
 FNM_PATH="/home/arne/.local/share/fnm"
