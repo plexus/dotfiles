@@ -1,0 +1,3 @@
+#!/bin/sh
+
+curl -sL https://github.com/clojure/brew-install/releases/latest/download/linux-install.sh | sudo bash

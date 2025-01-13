@@ -1,0 +1,15 @@
+set $mod Mod4
+set $term kitty
+set $menu $HOME/bin/bemenu-run
+set $lock_cmd swaylock
+set $suspend_cmd 'systemctl suspend' 
+
+default_border none
+
+include "input_devices.sway"
+include "bindings.sway"
+
+exec swayidle -w before-sleep 'swaylock -f -c 000000'
+
+exec_always nwg-panel
+exec_always /usr/bin/nm-applet --indicator

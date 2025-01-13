@@ -1,0 +1,18 @@
+# -*- mode: conf-space -*-
+
+input type:keyboard {
+    xkb_options ctrl:nocaps,compose:ralt
+}
+
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    middle_emulation enabled
+}
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal

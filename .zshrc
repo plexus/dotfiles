@@ -66,19 +66,28 @@ fi
 
 ### SSH Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
-export GIT_ASKPASS='/usr/bin/ksshaskpass'
-export SSH_ASKPASS='/usr/bin/ksshaskpass'
-export SSH_ASKPASS_REQUIRE=prefer
-if [ -f "$HOME/.ssh/id_rsa" ]; then
-    eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
+if [ -x '/usr/bin/ksshaskpass' ]; then
+    export GIT_ASKPASS='/usr/bin/ksshaskpass'
+    export SSH_ASKPASS='/usr/bin/ksshaskpass'
+    export SSH_ASKPASS_REQUIRE=prefer
 fi
-if [ -f "$HOME/.ssh/id_ed25519" ]; then
-    eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_ed25519)
+if [ -x "/usr/bin/keychain" ]; then
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
+    fi
+    if [ -f "$HOME/.ssh/id_ed25519" ]; then
+        eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_ed25519)
+    fi
 fi
 ### /SSH Keychain ###
 
 ### Spaceship ZSH prompt ###
-source "$HOME/.zsh/spaceship/spaceship.zsh"
+if [ -f "$HOME/repos/spaceship-prompt/spaceship.zsh" ]; then
+    source "$HOME/repos/spaceship-prompt/spaceship.zsh"
+    export SPACESHIP_DIR_TRUNC_REPO=false
+    #SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+    SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws terraform exec_time line_sep battery jobs exit_code char)
+fi
 ### /Spaceship ZSH prompt ###
 
 ### Chruby ###
@@ -92,24 +101,6 @@ if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
 fi
 
 export RUNELEVEN_DIR=/home/arne/Eleven/runeleven
-
-export SPACESHIP_DIR_TRUNC_REPO=false
-
-spaceship_perry() {
-    local 'perry_instances'
-
-    perry_instances="$(cat /tmp/perry.instances)"
-    {
-        cd /home/arne/lambdaisland/perry
-        bin/perry summary > /tmp/perry.instances &
-    } 2>&1 > /dev/null
-
-    [[ -z "$perry_instances" ]] && return
-    spaceship::section "yellow" "[" "$perry_instances" "]"
-}
-
-#SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
-SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws terraform exec_time line_sep battery jobs exit_code char)
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/path.zsh.inc'; fi
