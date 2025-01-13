@@ -348,3 +348,5 @@ eid-mw eid-viewer
 libpcsclite-dev python3-tk
 
 libpcsclite-dev python3-pyscard python3-tk
+brightnessctl
+brightnessctl
