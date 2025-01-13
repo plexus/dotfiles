@@ -50,7 +50,7 @@
 [hub]
 	protocol = ssh
 [init]
-	templateDir = /home/arne/github/dotfiles/git/template
+	templateDir = /home/arne/repos/dotfiles/git/template
 	defaultBranch = main
 [pull]
 	ff = only

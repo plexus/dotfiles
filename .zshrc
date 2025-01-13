@@ -74,8 +74,7 @@ fi
 if [ -x "/usr/bin/keychain" ]; then
     if [ -f "$HOME/.ssh/id_rsa" ]; then
         eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
-    fi
-    if [ -f "$HOME/.ssh/id_ed25519" ]; then
+    elif [ -f "$HOME/.ssh/id_ed25519" ]; then
         eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_ed25519)
     fi
 fi

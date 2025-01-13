@@ -372,3 +372,5 @@ d-feet
 libdbus-1-dev
 rlwrap
 netcat-openbsd
+libsecret-1-dev
+keychain
