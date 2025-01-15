@@ -23,9 +23,11 @@
    "https://repo.maven.apache.org/maven2/"])
 
 (defn maven-artifact-versions [artifact]
-  (let [doc (some #(try
-                     (slurp (str % (str/replace artifact #"\." "/") "/maven-metadata.xml"))
-                     (catch Exception e))
+  (let [[group artifact-id] (str/split artifact #"/")
+        doc (some #(try
+                     (slurp (str % (str/replace group #"\." "/") "/" artifact-id "/maven-metadata.xml"))
+                     (catch Exception e
+                       (prn e)))
                   repos)]
     (when doc
       (map (comp first :content)
@@ -40,8 +42,8 @@
                      (str/split version #"[\.\-]"))]
     [(or a 0) (or i 0) (or t 0)]))
 
-(defn clojars-latest-version [artifact]
-  (let [versions(sort-by version-sort-key (clojars-artifact-versions artifact))]
+(defn maven-latest-version [artifact]
+  (let [versions(sort-by version-sort-key (maven-artifact-versions artifact))]
     (or
      (last (remove #(re-find #"-(SNAPSHOT|alpha|beta)" %) versions))
      (last versions))))
