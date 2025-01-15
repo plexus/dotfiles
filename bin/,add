@@ -26,8 +26,7 @@
   (let [[group artifact-id] (str/split artifact #"/")
         doc (some #(try
                      (slurp (str % (str/replace group #"\." "/") "/" artifact-id "/maven-metadata.xml"))
-                     (catch Exception e
-                       (prn e)))
+                     (catch Exception e))
                   repos)]
     (when doc
       (map (comp first :content)
