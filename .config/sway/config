@@ -1,9 +1,5 @@
-
-exec /home/arne/bin/setup_path
-
 include /etc/sway/config.d/*
-
+include config.d/*
 include "config.$(cat /etc/hostname)"
 
-exec --no-startup-id /usr/lib/xdg-desktop-portal -r
 

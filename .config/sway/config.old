@@ -12,6 +12,8 @@ exec systemctl --user set-environment XMODIFIERS=@im=fcitx
 
 exec --no-startup-id /usr/lib/pam_kwallet_init
 
+
+exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
 exec dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
 exec /home/arne/bin/setup_path
 

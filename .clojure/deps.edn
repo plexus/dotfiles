@@ -1,7 +1,7 @@
 {;; :paths []
  :launchpad/options {:emacs true :portal true}
 
- :mvn/repos
+ #_#_:mvn/repos
  {"cs-mvn" {:url "s3://cs-mvn/release"}
   "datomic-cloud" {:url "s3://datomic-releases-1fc2183a/maven/releases"}}
 

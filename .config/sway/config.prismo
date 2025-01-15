@@ -1,18 +1,18 @@
-# prisom - Thinkpad T14
-
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-# output DP-1 mode --custom 1920x1080
-# output HDMI-A-1 mode --custom 1920x1080
-
-output DP-2 scale 1.75
-output HDMI-A-1 scale 1.75
-output eDP-1 scale 1
-
-output DP-2 pos 0 0 
-output HDMI-A-1 pos 2194 0
-output eDP-1 pos 4388 0
+# prismo - Thinkpad T14 AMD gen 3
 
 
-# swaymsg output HDMI-A-1 scale 1
-# swaymsg output HDMI-A-1 pos 0 0
-# swaymsg output eDP-1 pos 1920 0
+set $mod Mod4
+set $term kitty
+set $menu $HOME/bin/bemenu-run
+set $lock_cmd swaylock
+set $suspend_cmd 'systemctl suspend' 
+
+default_border none
+
+include "input_devices.conf"
+include "office_monitors.conf"
+
+exec swayidle -w before-sleep 'swaylock -f -c 000000'
+
+exec_always nwg-panel
+exec_always /usr/bin/nm-applet --indicator

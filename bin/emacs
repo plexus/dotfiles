@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. ~/bin/setup_path
+
+if [ -x "/usr/bin/keychain" ]; then
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+        eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_rsa)
+    elif [ -f "$HOME/.ssh/id_ed25519" ]; then
+        eval $(/usr/bin/keychain --quiet --quick --eval $HOME/.ssh/id_ed25519)
+    fi
+fi
+
+export SDKMAN_DIR="/home/arne/.sdkman"
+[ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ] && . "/home/arne/.sdkman/bin/sdkman-init.sh"
+
+/usr/local/bin/emacs

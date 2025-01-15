@@ -1,3 +1,5 @@
+# Thinkpad T14 gen 5 AMD 64GB
+
 set $mod Mod4
 set $term kitty
 set $menu $HOME/bin/bemenu-run
@@ -6,9 +8,8 @@ set $suspend_cmd 'systemctl suspend'
 
 default_border none
 
-include "input_devices.sway"
-include "bindings.sway"
-include "office_monitors.sway"
+include "input_devices.conf"
+include "office_monitors.conf"
 
 exec swayidle -w before-sleep 'swaylock -f -c 000000'
 

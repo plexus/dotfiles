@@ -374,3 +374,10 @@ rlwrap
 netcat-openbsd
 libsecret-1-dev
 keychain
+slurp grim
+pavucontrol
+inkscape
+evince
+xdg-desktop-portal-wlr
+pipewire-libcamera
+xdg-desktop-portal-wlr pipewire-libcamera libcamera-ipa
