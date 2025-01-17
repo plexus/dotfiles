@@ -37,7 +37,7 @@ alias bx='bundle exec'
 
 function ai {
     echo "$@" >> ~/repos/dotfiles/extra_packages
-    sudo apt-get install "$@"
+    sudo apt-get install -y --auto-remove "$@"
 }
 
 function en {

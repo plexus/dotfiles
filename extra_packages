@@ -383,3 +383,9 @@ pipewire-libcamera
 xdg-desktop-portal-wlr pipewire-libcamera libcamera-ipa
 powertop
 powertop
+docker-compose-v2
+docker-compose-v2
+docker-compose-v2 -y
+docker-compose-v2
+docker-compose-v2
+tree

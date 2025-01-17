@@ -10,13 +10,14 @@
     com.lambdaisland/xml-select {:mvn/version "0.2.5"}}})
 
 (require
- '[lambdaisland.cli :as cli]
  '[borkdude.rewrite-edn :as re]
  '[clojure.data.xml :as xml]
  '[clojure.edn :as edn]
- '[lambdaisland.xml-select :as xs]
+ '[clojure.java.io :as io]
  '[clojure.java.shell :as sh]
- '[clojure.pprint :as pprint])
+ '[clojure.pprint :as pprint]
+ '[lambdaisland.cli :as cli]
+ '[lambdaisland.xml-select :as xs])
 
 (def repos
   ["https://repo.clojars.org/"
@@ -42,7 +43,7 @@
     [(or a 0) (or i 0) (or t 0)]))
 
 (defn maven-latest-version [artifact]
-  (let [versions(sort-by version-sort-key (maven-artifact-versions artifact))]
+  (let [versions (sort-by version-sort-key (doto (maven-artifact-versions artifact) prn))]
     (or
      (last (remove #(re-find #"-(SNAPSHOT|alpha|beta)" %) versions))
      (last versions))))
@@ -141,7 +142,11 @@
           (reduce (fn [re-deps [artifact _]]
                     (println "Bumping" artifact)
                     (try
-                      (re/assoc-in re-deps [:deps artifact] {:mvn/version (maven-latest-version artifact)})
+                      (if-let [v (maven-latest-version artifact)]
+                        (re/assoc-in re-deps [:deps artifact] {:mvn/version v})
+                        (do
+                          (println "Latest version for" artifact "not found")
+                          re-deps))
                       (catch Exception e
                         (println "Couldn't bump" artifact)
                         (println e)
@@ -150,7 +155,56 @@
                   (get deps :deps)))
     ))
 
-(defn add-shadow-cljs []
+(defn add-shadow-cljs [opts]
+  )
+
+(def new-project-files
+  {"deps.edn" "{}"
+   "bb.edn" "{}"
+   "deps.local.edn" "{}"
+   ".gitignore" ".cpcache
+.nrepl-port
+.shadow-cljs
+target
+out
+node_modules/
+.DS_Store
+.store
+.#*
+*.lock
+*.local
+*.local.*
+   "})
+
+(defn init-project
+  {:flags ["--main-ns <main-ns>" "Main namespace, if not derived from project-name"
+           "--dir-name <dir-name>" "Directory to create project in, if not derived from project name."]}
+  [{:keys [artifact-name
+           dir-name
+           main-ns]}]
+  (assert (= 1 (count (filter #{\/} artifact-name)))
+          "Project name must contain exactly one slash")
+  (let [[group-id project-name] (str/split artifact-name #"/")]
+    (assert (some #{\.} group-id)
+            "Group id must include a period (reverse domain name)")
+    (let [dir-name (or dir-name project-name)
+          main-ns (or main-ns (str/replace artifact-name #"/" "."))]
+      (sh/sh "mkdir" dir-name)
+      (doseq [[f c] new-project-files]
+        (spit (io/file dir-name f) c))
+      (let [main-file (io/file dir-name (str (str/replace main-ns #"\." "/") ".clj"))]
+        (sh/sh "mkdir" "-p" (str (.getParent main-file)))
+        (spit main-file (pr-str (list 'ns (symbol main-ns)))))
+      (spit (io/file dir-name "LICENSE.txt") (slurp "https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt"))
+      (sh/sh "mkdir" (str (io/file dir-name ".config")))
+      (spit (io/file dir-name ".config/project.edn")
+            (with-out-str
+              (clojure.pprint/pprint
+               {:artifact-id (symbol artifact-name)
+                :main-ns (symbol main-ns)
+                :created (java.util.Date.)})))
+      (sh/sh "git" "init" dir-name)
+      ))
   )
 
 (def commands
@@ -168,7 +222,8 @@
                       :command #'search-dep}
    "bump <file>" {:doc "Upgrade all artifacts in file (deps.edn, bb.edn, etc)"
                   :command #'bump}
-
+   "init <artifact-name>" {:doc "Initialize new project"
+                           :command #'init-project}
    "shadow-cljs" {:doc "Set up shadow-cljs"
                   :command #'add-shadow-cljs}])
 

@@ -41,6 +41,7 @@ zsh
 rlwrap
 netcat-openbsd
 powertop
+tree
 ```
 
 Applications:
@@ -74,4 +75,12 @@ Manual
 ```
 frp
 pnpm
+fnm
+```
+
+Extra dev tooling:
+
+```
+docker.io
+docker-compose-v2
 ```
