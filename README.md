@@ -40,7 +40,7 @@ zip
 zsh
 rlwrap
 netcat-openbsd
-
+powertop
 ```
 
 Applications:
@@ -67,4 +67,11 @@ python3-dasbus
 python3-gi-cairo
 python3-i3ipc
 python3-psutil
+```
+
+Manual
+
+```
+frp
+pnpm
 ```

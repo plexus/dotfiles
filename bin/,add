@@ -23,7 +23,7 @@
    "https://repo.maven.apache.org/maven2/"])
 
 (defn maven-artifact-versions [artifact]
-  (let [[group artifact-id] (str/split artifact #"/")
+  (let [[group artifact-id] (str/split (str artifact) #"/")
         doc (some #(try
                      (slurp (str % (str/replace group #"\." "/") "/" artifact-id "/maven-metadata.xml"))
                      (catch Exception e))
@@ -144,10 +144,14 @@
                       (re/assoc-in re-deps [:deps artifact] {:mvn/version (maven-latest-version artifact)})
                       (catch Exception e
                         (println "Couldn't bump" artifact)
+                        (println e)
                         re-deps)))
                   re-deps
                   (get deps :deps)))
     ))
+
+(defn add-shadow-cljs []
+  )
 
 (def commands
   ["bin/dev" {:command #'add-bin-dev}
@@ -164,7 +168,9 @@
                       :command #'search-dep}
    "bump <file>" {:doc "Upgrade all artifacts in file (deps.edn, bb.edn, etc)"
                   :command #'bump}
-   "lucky <artifact>"])
+
+   "shadow-cljs" {:doc "Set up shadow-cljs"
+                  :command #'add-shadow-cljs}])
 
 (cli/dispatch*
  {:name ",add"

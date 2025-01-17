@@ -381,3 +381,5 @@ evince
 xdg-desktop-portal-wlr
 pipewire-libcamera
 xdg-desktop-portal-wlr pipewire-libcamera libcamera-ipa
+powertop
+powertop
