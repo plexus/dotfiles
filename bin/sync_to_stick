@@ -1,0 +1,5 @@
+#!/bin/sh -x
+
+gio mount -d /dev/sdc1
+
+➜ /usr/bin/time rsync -aPvt  --exclude '.local' --exclude '.cache' --exclude 'snap' --exclude 'Dropbox' --exclude 'ObsRecordings' --exclude LambdaIsland/clojurians-log --exclude repos/clojurians-log --exclude .npm --exclude ROMS --exclude '.mozilla/firefox' --exclude '.config/Nextcloud/logs' --exclude tmp --exclude .m2 --exclude .overtone --exclude .sdkman ~/ /media/arne/Marceline\ Backup/`hostname`
