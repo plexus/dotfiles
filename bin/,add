@@ -43,7 +43,7 @@
     [(or a 0) (or i 0) (or t 0)]))
 
 (defn maven-latest-version [artifact]
-  (let [versions (sort-by version-sort-key (doto (maven-artifact-versions artifact) prn))]
+  (let [versions (sort-by version-sort-key (maven-artifact-versions artifact))]
     (or
      (last (remove #(re-find #"-(SNAPSHOT|alpha|beta)" %) versions))
      (last versions))))

@@ -84,3 +84,8 @@ Extra dev tooling:
 docker.io
 docker-compose-v2
 ```
+
+```
+sudo usermod -aG docker $USER
+newgrp docker
+```
