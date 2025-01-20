@@ -1,13 +1,18 @@
-# marceline
+# marceline - desktop
 
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+set $mod Mod4
+set $term kitty
+set $menu $HOME/bin/bemenu-run
+set $lock_cmd swaylock
+set $suspend_cmd 'systemctl suspend' 
 
-output HDMI-A-1 mode 3840x2160 pos 0 0
-output DP-1 mode 3840x2160 pos 3840 0               
+default_border none
 
-exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' 
+include "config.d/input_devices.conf"
+include "config.d/office_monitors.conf"
+include "config.d/bindings.conf"
 
-exec swaync
+exec swayidle -w before-sleep 'swaylock -f -c 000000'
 
-# Toggle control center
-bindsym $mod+Shift+n exec swaync-client -t -sw
+exec_always nwg-panel
+exec_always /usr/bin/nm-applet --indicator

@@ -1,5 +1,4 @@
-include /etc/sway/config.d/*
-include config.d/*
+include "/etc/sway/config.d/*"
 include "config.$(cat /etc/hostname)"
-
-
+include "config.d/setup_path.conf"
+include "config.d/xdg_desktop_portal.conf"
