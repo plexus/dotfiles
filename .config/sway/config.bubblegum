@@ -5,6 +5,11 @@ set $term kitty
 set $menu $HOME/bin/bemenu-run
 set $lock_cmd swaylock
 set $suspend_cmd 'systemctl suspend' 
+set $brightness_up 'brightnessctl s 5%+'
+set $brightness_down 'brightnessctl s 5%-'
+set $volume_up 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
+set $volume_down 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
+set $toggle_mute 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
 default_border none
 

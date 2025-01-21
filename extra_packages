@@ -393,3 +393,5 @@ openssh-server
 libqt5core5t64
 qml6-module-qtcore
 mysql-client-core-8.0
+postgresql-client-16
+pulseaudio-utils

@@ -6,6 +6,15 @@ See `.config/sway`
   - requires: libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus
 - bemenu
 
+Brightness: add to video/input groups for brightness-udev to work.
+
+```
+sudo usermod -aG video $USER
+sudo usermod -aG input $USER
+newgrp video
+newgrp input
+```
+
 # packages
 
 Sway setup:
@@ -22,6 +31,7 @@ grim
 slurp
 nm-applet (nm-tray?)
 xdg-desktop-portal-wlr
+pulseaudio-utils (pactl -> control sound volume)
 ```
 
 System tools:
