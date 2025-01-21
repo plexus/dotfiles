@@ -134,23 +134,25 @@
                              "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
   (sh/sh "chmod" "+x" "bin/launchpad"))
 
-(defn bump [{:keys [file]}]
+(defn bump [{:keys [file only]}]
   (let [contents (slurp file)
         deps     (edn/read-string contents)
         re-deps  (re/parse-string contents)]
     (spit file
           (reduce (fn [re-deps [artifact _]]
-                    (println "Bumping" artifact)
-                    (try
-                      (if-let [v (maven-latest-version artifact)]
-                        (re/assoc-in re-deps [:deps artifact] {:mvn/version v})
-                        (do
-                          (println "Latest version for" artifact "not found")
-                          re-deps))
-                      (catch Exception e
-                        (println "Couldn't bump" artifact)
-                        (println e)
-                        re-deps)))
+                    (if (and only (not (str/includes? (str artifact) only)))
+                      re-deps
+                      (try
+                        (println "Bumping" artifact)
+                        (if-let [v (maven-latest-version artifact)]
+                          (re/assoc-in re-deps [:deps artifact] {:mvn/version v})
+                          (do
+                            (println "Latest version for" artifact "not found")
+                            re-deps))
+                        (catch Exception e
+                          (println "Couldn't bump" artifact)
+                          (println e)
+                          re-deps))))
                   re-deps
                   (get deps :deps)))
     ))

@@ -55,6 +55,7 @@ kitty
 pavucontrol
 inkscape
 evince
+kdeconnect
 ```
 
 nwg-panel:
@@ -88,4 +89,10 @@ docker-compose-v2
 ```
 sudo usermod -aG docker $USER
 newgrp docker
+```
+
+additionally need for kde connect:
+
+```
+qml6-module-qtcore
 ```
