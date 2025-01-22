@@ -101,12 +101,6 @@ fi
 
 export RUNELEVEN_DIR=/home/arne/Eleven/runeleven
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/tmp/google-cloud-sdk/completion.zsh.inc'; fi
-
 # export CLOUDSDK_PYTHON=/usr/bin/python3.8
 
 if [ -f /usr/share/google-cloud-sdk/completion.zsh.inc ]; then . /usr/share/google-cloud-sdk/completion.zsh.inc ; fi
@@ -146,3 +140,9 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/home/arne/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/arne/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/arne/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/arne/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/arne/opt/google-cloud-sdk/completion.zsh.inc'; fi
