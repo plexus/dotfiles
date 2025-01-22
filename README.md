@@ -108,3 +108,4 @@ additionally need for kde connect:
 ```
 qml6-module-qtcore
 ```
+

@@ -38,3 +38,9 @@ curl -o "${TMPFILE}" -sL "${DOWNLOAD_URL}"
 tar -xvf "${TMPFILE}" -C "${INSTALL_DIR}"
 rm "${TMPFILE}"
 "$INSTALL_DIR/google-cloud-sdk/install.sh" --quiet
+
+GCLOUD="$INSTALL_DIR/google-cloud-sdk/bin/gcloud"
+"$GCLOUD" auth login
+"$GCLOUD" auth application-default login
+"$GCLOUD" config set project gaiwan-infrastructure
+"$GCLOUD" config configurations list
