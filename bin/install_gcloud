@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+set -x
+
+INSTALL_DIR="$1"
+if [ -z "${INSTALL_DIR}" ]; then
+  INSTALL_DIR="${HOME}/opt"
+fi
+
+current_platform() {
+    case "$(uname -s)" in
+        Linux*)  echo linux;;
+        Darwin*) echo darwin;;
+    esac
+}
+
+current_architecture() {
+    case "$(uname -m)" in
+        i386) echo x86;;
+        i686) echo x86;;
+        x86_64) echo x86_64;;
+        arm*) echo arm;;
+    esac
+}
+
+PLATFORM=$(current_platform)
+ARCHITECTURE=$(current_architecture)
+EXT="tar.gz"
+DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${PLATFORM}-${ARCHITECTURE}.${EXT}"
+
+echo $DOWNLOAD_URL
+
+mkdir -p "${INSTALL_DIR}"
+TMPFILE=$(mktemp)
+
+curl -o "${TMPFILE}" -sL "${DOWNLOAD_URL}"
+tar -xvf "${TMPFILE}" -C "${INSTALL_DIR}"
+rm "${TMPFILE}"

@@ -88,6 +88,7 @@ Manual
 frp
 pnpm
 fnm
+gcloud
 ```
 
 Extra dev tooling:
