@@ -32,6 +32,7 @@ slurp
 nm-applet (nm-tray?)
 xdg-desktop-portal-wlr
 pulseaudio-utils (pactl -> control sound volume)
+wdisplays
 ```
 
 System tools:
