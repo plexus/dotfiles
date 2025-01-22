@@ -37,3 +37,4 @@ TMPFILE=$(mktemp)
 curl -o "${TMPFILE}" -sL "${DOWNLOAD_URL}"
 tar -xvf "${TMPFILE}" -C "${INSTALL_DIR}"
 rm "${TMPFILE}"
+"$INSTALL_DIR/google-cloud-sdk/install.sh" --quiet
