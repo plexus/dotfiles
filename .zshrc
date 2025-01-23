@@ -60,7 +60,7 @@ function store-current-path() {
 if [[ ! "$precmd_functions" == *store-current-path* ]]; then
     precmd_functions+=("store-current-path")
 fi
-[[ -e /run/shm/current-path ]] && cd `cat /run/shm/current-path`
+[[ -e /run/shm/current-path ]] && cd "$(cat /run/shm/current-path)"
 ### /last opened directory ###
 
 
