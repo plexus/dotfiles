@@ -82,13 +82,22 @@ python3-i3ipc
 python3-psutil
 ```
 
-Manual
+Manual - see install scripts
 
 ```
+sdkman
 frp
 pnpm
 fnm
 gcloud
+jet
+```
+
+JVM tools (via sdkman):
+
+```
+java
+maven
 ```
 
 Extra dev tooling:

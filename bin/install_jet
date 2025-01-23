@@ -1,0 +1,59 @@
+#!/bin/sh
+
+set -e
+# set -x
+
+INSTALL_DIR="$1"
+if [ -z "${INSTALL_DIR}" ]; then
+  INSTALL_DIR="${HOME}/bin"
+fi
+
+ORGANIZATION=borkdude
+PROJECT=jet
+ARCHITECTURE=amd64
+
+# https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
+gh_latest_release() {
+  LATEST_RELEASE_URL="https://api.github.com/repos/${ORGANIZATION}/${PROJECT}/releases/latest"
+  curl --silent "$LATEST_RELEASE_URL" | # Get latest release from GitHub api
+    grep '"tag_name":'                | # Get tag line
+    sed -E 's/.*"v([^"]+)".*/\1/'       # Pluck JSON value
+}
+
+current_platform() {
+    case "$(uname -s)" in
+        Linux*)  echo linux;;
+        Darwin*) echo macos;;
+        MINGW64*) echo windows;;
+    esac
+}
+
+VERSION=$(gh_latest_release)
+PLATFORM=$(current_platform)
+case $PLATFORM in
+  linux) EXT=tar.gz ;;
+  macos) EXT=tar.gz ;;
+  windows) EXT=zip ;;
+esac
+
+DOWNLOAD_URL="https://github.com/${ORGANIZATION}/${PROJECT}/releases/download/v${VERSION}/${PROJECT}-${VERSION}-${PLATFORM}-${ARCHITECTURE}.${EXT}"
+
+echo $DOWNLOAD_URL
+
+mkdir -p "${INSTALL_DIR}"
+TMPFILE=$(mktemp)
+
+if [ "$PLATFORM" = "windows" ]; then
+    # Do redirect manually to work around the fact that on Windows you might have an
+    # older cURL which doesn't honor redirects.
+    LOCATION="$(curl -sI "${DOWNLOAD_URL}" | grep -i '^location' | sed -e 's/location: //i' -e 's/[\r\n]//g')"
+    curl -o "${TMPFILE}" -sL "${LOCATION}"
+else
+    curl -o "${TMPFILE}" -sL "${DOWNLOAD_URL}"
+fi
+
+case "${EXT}" in
+  zip) unzip -qqo "${TMPFILE}" -d "${INSTALL_DIR}" ;;
+  tar.gz) tar -xvf "${TMPFILE}" -C "${INSTALL_DIR}" ;;
+esac
+rm "${TMPFILE}"

@@ -2,6 +2,8 @@
 
 (require '[babashka.deps :as deps])
 
+(alter-var-root #'*print-namespace-maps* (constantly nil))
+
 (deps/add-deps
  '{:deps
    {com.lambdaisland/cli        {:mvn/version "0.18.74"}
@@ -16,6 +18,8 @@
  '[clojure.java.io :as io]
  '[clojure.java.shell :as sh]
  '[clojure.pprint :as pprint]
+ '[clojure.tools.gitlibs :as gl]
+ '[clojure.tools.gitlibs.impl :as gli]
  '[lambdaisland.cli :as cli]
  '[lambdaisland.xml-select :as xs])
 
@@ -139,20 +143,38 @@
         deps     (edn/read-string contents)
         re-deps  (re/parse-string contents)]
     (spit file
-          (reduce (fn [re-deps [artifact _]]
-                    (if (and only (not (str/includes? (str artifact) only)))
-                      re-deps
-                      (try
-                        (println "Bumping" artifact)
+          (reduce (fn [re-deps [artifact version-spec]]
+                    (try
+                      (cond
+                        (and only (not (str/includes? (str artifact) only)))
+                        re-deps
+
+                        (:mvn/version version-spec)
                         (if-let [v (maven-latest-version artifact)]
-                          (re/assoc-in re-deps [:deps artifact] {:mvn/version v})
+                          (do
+                            (prn artifact {:mvn/version [(:mvn/version version-spec) '-> v]})
+                            (re/assoc-in re-deps [:deps artifact :mvn/version] v))
                           (do
                             (println "Latest version for" artifact "not found")
                             re-deps))
-                        (catch Exception e
-                          (println "Couldn't bump" artifact)
-                          (println e)
-                          re-deps))))
+
+                        (:git/url version-spec)
+                        (let [git-dir (gli/ensure-git-dir (:git/url version-spec))
+                              _ (gli/git-fetch (io/file git-dir))
+                              old-sha (:git/sha version-spec)
+                              sha (gli/git-rev-parse git-dir "HEAD")]
+                          (if (= sha old-sha)
+                            re-deps
+                            (do
+                              (prn artifact {:git/sha [ '-> sha]})
+                              (re/assoc-in re-deps [:deps artifact :git/sha] sha))))
+
+                        :else
+                        re-deps)
+                      (catch Exception e
+                        (println "Couldn't bump" artifact)
+                        (println e)
+                        re-deps)))
                   re-deps
                   (get deps :deps)))
     ))
