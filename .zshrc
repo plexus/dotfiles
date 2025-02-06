@@ -90,11 +90,12 @@ fi
 ### /Spaceship ZSH prompt ###
 
 ### Chruby ###
-# if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-#     source /usr/local/share/chruby/chruby.sh
-#     chruby $(chruby | tail -1 | sed 's/.* //')
-# fi
+if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
+    source /usr/local/share/chruby/chruby.sh
+    chruby $(chruby | tail -1 | sed 's/.* //')
+fi
 ### End Chruby ###
+
 if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
 . "$HOME/.asdf/asdf.sh"
 fi

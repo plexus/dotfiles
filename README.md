@@ -53,9 +53,10 @@ rlwrap
 netcat-openbsd
 powertop
 tree
+rclone
 ```
 
-Applications:
+Desktop Applications:
 
 ```
 thunar
@@ -67,6 +68,8 @@ pavucontrol
 inkscape
 evince
 kdeconnect
+libreoffice
+eog
 ```
 
 nwg-panel:
@@ -100,17 +103,25 @@ java
 maven
 ```
 
-Extra dev tooling:
+Docker:
 
 ```
 docker.io
 docker-compose-v2
 ```
 
+Docker additional setup:
+
 ```
 sudo usermod -aG docker $USER
 newgrp docker
 ```
+
+Ruby:
+
+- https://github.com/postmodern/chruby
+- https://github.com/postmodern/ruby-install
+
 
 additionally need for kde connect:
 
@@ -118,3 +129,8 @@ additionally need for kde connect:
 qml6-module-qtcore
 ```
 
+Bun:
+
+```
+curl -fsSL https://bun.sh/install | bash
+```

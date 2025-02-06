@@ -6,10 +6,11 @@
 
 (deps/add-deps
  '{:deps
-   {com.lambdaisland/cli        {:mvn/version "0.18.74"}
-    borkdude/rewrite-edn        {:mvn/version "0.4.8"}
+   {borkdude/rewrite-edn        {:mvn/version "0.4.8"}
+    com.lambdaisland/cli        {:mvn/version "0.18.74"}
+    com.lambdaisland/xml-select {:mvn/version "0.2.5"}
     org.clojure/data.xml        {:mvn/version "0.2.0-alpha9"}
-    com.lambdaisland/xml-select {:mvn/version "0.2.5"}}})
+    org.clojure/tools.gitlibs   {:mvn/version "2.6.206"}}})
 
 (require
  '[borkdude.rewrite-edn :as re]
@@ -138,45 +139,54 @@
                              "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
   (sh/sh "chmod" "+x" "bin/launchpad"))
 
+(defn bump-deps [deps re-deps path only]
+  (reduce (fn [re-deps [artifact version-spec]]
+            (try
+              (cond
+                (and only (not (str/includes? (str artifact) only)))
+                re-deps
+
+                (:mvn/version version-spec)
+                (if-let [v (maven-latest-version artifact)]
+                  (do
+                    (when (not= v (:mvn/version version-spec))
+                      (prn (assoc-in {} path {artifact {:mvn/version [(:mvn/version version-spec) '-> v]}})))
+                    (re/assoc-in re-deps (into path [artifact :mvn/version]) v))
+                  (do
+                    (println "Latest version for" artifact "not found")
+                    re-deps))
+
+                (:git/url version-spec)
+                (let [git-dir (gli/ensure-git-dir (:git/url version-spec))
+                      _ (gli/git-fetch (io/file git-dir))
+                      old-sha (or (:sha version-spec) (:git/sha version-spec))
+                      sha (gli/git-rev-parse git-dir (:git/ref version-spec "HEAD"))]
+                  (if (= sha old-sha)
+                    re-deps
+                    (do
+                      (prn (assoc-in {} path {artifact {:git/sha [ '-> sha]}}))
+                      (-> re-deps
+                          (re/update-in (conj path artifact) re/dissoc :sha)
+                          (re/assoc-in (into path [artifact :git/sha]) sha)))))
+
+                :else
+                re-deps)
+              (catch Exception e
+                (println "Couldn't bump" artifact)
+                (println e)
+                re-deps)))
+          re-deps
+          (get-in deps path)))
+
 (defn bump [{:keys [file only]}]
   (let [contents (slurp file)
         deps     (edn/read-string contents)
         re-deps  (re/parse-string contents)]
     (spit file
-          (reduce (fn [re-deps [artifact version-spec]]
-                    (try
-                      (cond
-                        (and only (not (str/includes? (str artifact) only)))
-                        re-deps
-
-                        (:mvn/version version-spec)
-                        (if-let [v (maven-latest-version artifact)]
-                          (do
-                            (prn artifact {:mvn/version [(:mvn/version version-spec) '-> v]})
-                            (re/assoc-in re-deps [:deps artifact :mvn/version] v))
-                          (do
-                            (println "Latest version for" artifact "not found")
-                            re-deps))
-
-                        (:git/url version-spec)
-                        (let [git-dir (gli/ensure-git-dir (:git/url version-spec))
-                              _ (gli/git-fetch (io/file git-dir))
-                              old-sha (:git/sha version-spec)
-                              sha (gli/git-rev-parse git-dir "HEAD")]
-                          (if (= sha old-sha)
-                            re-deps
-                            (do
-                              (prn artifact {:git/sha [ '-> sha]})
-                              (re/assoc-in re-deps [:deps artifact :git/sha] sha))))
-
-                        :else
-                        re-deps)
-                      (catch Exception e
-                        (println "Couldn't bump" artifact)
-                        (println e)
-                        re-deps)))
-                  re-deps
-                  (get deps :deps)))
+          (reduce (fn [re-deps alias]
+                    (bump-deps deps re-deps [:aliases alias :extra-deps] only))
+                  (bump-deps deps re-deps [:deps] only)
+                  (keys (:aliases deps))))
     ))
 
 (defn add-shadow-cljs [opts]
@@ -216,7 +226,7 @@ node_modules/
       (sh/sh "mkdir" dir-name)
       (doseq [[f c] new-project-files]
         (spit (io/file dir-name f) c))
-      (let [main-file (io/file dir-name (str (str/replace main-ns #"\." "/") ".clj"))]
+      (let [main-file (io/file dir-name "src" (str (str/replace main-ns #"\." "/") ".clj"))]
         (sh/sh "mkdir" "-p" (str (.getParent main-file)))
         (spit main-file (pr-str (list 'ns (symbol main-ns)))))
       (spit (io/file dir-name "LICENSE.txt") (slurp "https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt"))
