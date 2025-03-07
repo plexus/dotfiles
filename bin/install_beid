@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Install eid software + dependencies for connective-plugin-linux
+
+cd /tmp
+curl -O https://eid.belgium.be/sites/default/files/software/eid-archive_latest.deb
+sudo dpkg -i eid-archive_latest.deb
+sudo apt-get update
+sudo apt-get install -y eid-mw eid-viewer libpcsclite-dev python3-tk python3-venv python3-pyscard 
+
+# Python venv so ubuntu doesn't complain if we `pip install`
+
+mkdir ~/opt
+cd ~/opt
+python3 -m venv ~/opt/venv
+. ~/opt/venv/bin/activate
+
+# Get connective-plugin-linux, set up dependencies
+
+git clone https://github.com/roelderickx/connective-plugin-linux
+cd connective-plugin-linux
+pip3 install -r ./requirements.txt 
+pip3 install -r ./optional-requirements.txt 
+
+# Download connective plugin
+
+python3 get_connective_plugin.py
+
+# Add to firefox
+
+firefox connective-downloads/*.xpi
+nativemessaging-ng install firefox

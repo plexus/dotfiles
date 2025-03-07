@@ -7,7 +7,7 @@
 (deps/add-deps
  '{:deps
    {borkdude/rewrite-edn        {:mvn/version "0.4.8"}
-    com.lambdaisland/cli        {:mvn/version "0.18.74"}
+    com.lambdaisland/cli        {:mvn/version "0.22.87"}
     com.lambdaisland/xml-select {:mvn/version "0.2.5"}
     org.clojure/data.xml        {:mvn/version "0.2.0-alpha9"}
     org.clojure/tools.gitlibs   {:mvn/version "2.6.206"}}})
@@ -164,7 +164,7 @@
                   (if (= sha old-sha)
                     re-deps
                     (do
-                      (prn (assoc-in {} path {artifact {:git/sha [ '-> sha]}}))
+                      (prn (assoc-in {} path {artifact {:git/sha [old-sha '-> sha]}}))
                       (-> re-deps
                           (re/update-in (conj path artifact) re/dissoc :sha)
                           (re/assoc-in (into path [artifact :git/sha]) sha)))))

@@ -33,9 +33,10 @@ nm-applet (nm-tray?)
 xdg-desktop-portal-wlr
 pulseaudio-utils (pactl -> control sound volume)
 wdisplays
+lxpolkit (seems to just be needed for some things like partitionmanager)
 ```
 
-System tools:
+System/terminal tools:
 
 ```
 apt-file
@@ -54,9 +55,10 @@ netcat-openbsd
 powertop
 tree
 rclone
+mplayer
 ```
 
-Desktop Applications:
+GUI/Desktop Applications:
 
 ```
 thunar
@@ -70,6 +72,10 @@ evince
 kdeconnect
 libreoffice
 eog
+partitionmanager
+print-manager
+supercollider
+sc3-plugins
 ```
 
 nwg-panel:
@@ -127,6 +133,7 @@ additionally need for kde connect:
 
 ```
 qml6-module-qtcore
+qml6-module-qt-labs-folderlistmodel
 ```
 
 Bun:
@@ -134,3 +141,20 @@ Bun:
 ```
 curl -fsSL https://bun.sh/install | bash
 ```
+
+Cargo/Rustup (building a rust thing):
+
+```
+sudo apt-get install rustup
+rustup default stable
+cargo build --release
+```
+
+## Belgian eID / itsme
+
+```
+bin/install_beid
+```
+
+- [Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/)
+- [connective-plugin-linux](https://github.com/roelderickx/connective-plugin-linux)

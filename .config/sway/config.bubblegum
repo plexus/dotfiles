@@ -24,3 +24,5 @@ exec swayidle -w before-sleep 'swaylock -f -c 000000'
 
 exec_always nwg-panel
 exec_always /usr/bin/nm-applet --indicator
+exec lxpolkit
+exec kdeconnectd

@@ -403,3 +403,25 @@ python3-venv
 libreoffice
 rclone
 eog
+gimp3
+gimp
+qml6-module-qt-labs-folderlistmodel
+python3-dev
+python3-pip python3.12-venv python3-dev
+gparted
+lxpolkit
+partitionmanager
+chromium-browser
+chromium-browser
+mixxx
+mplayer
+system-config-printer
+cups-client
+foomatic-db cups-filters cups-filters-core-drivers foomatic-db-compressed-ppds
+foomatic-db cups-filters cups-filters-core-drivers
+print-manager
+thonny
+rustup
+supercollider sc3-plugins
+docker-build-x
+docker-buildx
