@@ -26,12 +26,14 @@ prepend_path () {
     fi
 }
 
-if [ -d "$HOME/opt/Andriod" ]; then
+if [ -d "$HOME/opt/Android" ]; then
     export ANDROID_HOME="$HOME/opt/Android/Sdk"
     append_path "$ANDROID_HOME/emulator"
+    append_path "$ANDROID_HOME/platform-tools"
+    append_path "$ANDROID_HOME/cmdline-tools/latest/bin"
+    # no longer used?
     append_path "$ANDROID_HOME/tools"
     append_path "$ANDROID_HOME/tools/bin"
-    append_path "$ANDROID_HOME/platform-tools"
 fi
 
 # Our "own" bin directories, put these at the front so we can always override
@@ -54,6 +56,8 @@ append_path "$HOME/.config/yarn/global/node_modules/.bin"
 append_path "$CARGO_HOME/bin"
 # Fly.io
 append_path "$FLYCTL_INSTALL/bin"
+# Flutter
+append_path "$HOME/opt/flutter/bin"
 
 systemctl --user import-environment PREFIX PATH
 dbus-update-activation-environment --systemd PATH="$PATH"

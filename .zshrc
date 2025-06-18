@@ -26,7 +26,7 @@ alias top=htop
 alias l='ls -1 --color'
 alias ls='ls --color'
 alias acs='apt-cache search'
-alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude TAGS --color=auto'
+alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude-dir node_modules --exclude TAGS --color=auto'
 alias ed="rlwrap ed -p'> '"
 
 alias churby=chruby
@@ -147,3 +147,7 @@ if [ -f '/home/arne/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/arne/opt
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/arne/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/arne/opt/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [ -x '/usr/bin/vim.gtk3' ]; then
+    alias vim=vim.gtk3
+fi

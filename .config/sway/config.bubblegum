@@ -13,6 +13,7 @@ set $toggle_mute 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 set $toggle_mic_mute 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
 set $display_config wdisplays
 set $screenshot '$HOME/bin/ss'
+set $background_color '#74ccaf'
 
 default_border none
 
@@ -20,9 +21,14 @@ include "config.d/input_devices.conf"
 include "config.d/office_monitors.conf"
 include "config.d/bindings.conf"
 
-exec swayidle -w before-sleep 'swaylock -f -c 000000'
+exec swayidle -w before-sleep 'swaylock -f -c 74ccaf'
 
 exec_always nwg-panel
 exec_always /usr/bin/nm-applet --indicator
 exec lxpolkit
 exec kdeconnectd
+
+# for minecraft, disable "disable-while-typing" for touchpad
+input type:touchpad {
+    dwt disabled
+}

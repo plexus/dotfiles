@@ -47,11 +47,15 @@
                      (str/split version #"[\.\-]"))]
     [(or a 0) (or i 0) (or t 0)]))
 
-(defn maven-latest-version [artifact]
-  (let [versions (sort-by version-sort-key (maven-artifact-versions artifact))]
-    (or
-     (last (remove #(re-find #"-(SNAPSHOT|alpha|beta)" %) versions))
-     (last versions))))
+(defn maven-latest-version
+  ([artifact]
+   (maven-latest-version artifact nil))
+  ([artifact {:keys [include-alpha]}]
+   (let [versions (sort-by version-sort-key (maven-artifact-versions artifact))]
+     (or
+      (when-not include-alpha
+        (last (remove #(re-find #"-(SNAPSHOT|alpha|beta)" %) versions)))
+      (last versions)))))
 
 (defn maven-all-jars []
   (edn/read-string
@@ -63,18 +67,28 @@
             (str/replace #"3x-ui-java-wrapper" "x3x-ui-java-wrapper"))
         "]")))
 
-(defn add-dep [{:keys [artifact]}]
-  (prn "add-dep" artifact (maven-latest-version artifact))
-  (spit "deps.edn"
-        (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
-                     [:deps (symbol artifact) :mvn/version]
-                     (maven-latest-version artifact))))
+(defn add-dep
+  [{:keys [artifact include-alpha] :as opts}]
+  (let [version (maven-latest-version artifact opts)]
+    (if-not version
+      (println "Not found:" artifact)
+      (do
+        (prn "add-dep" artifact (maven-latest-version artifact opts))
+        (spit "deps.edn"
+              (re/assoc-in (re/parse-string (try (slurp "deps.edn") (catch Exception _ "{}")))
+                           [:deps (symbol artifact) :mvn/version]
+                           version))))))
 
-(defn add-bb-dep [{:keys [artifact]}]
-  (spit "bb.edn"
-        (re/assoc-in (re/parse-string (try (slurp "bb.edn") (catch Exception _ "{}")))
-                     [:deps (symbol artifact) :mvn/version]
-                     (maven-latest-version artifact))))
+(defn add-bb-dep [{:keys [artifact] :as opts}]
+  (let [version (maven-latest-version artifact opts)]
+    (if-not version
+      (println "Not found:" artifact)
+      (do
+        (prn "add-dep" artifact (maven-latest-version artifact opts))
+        (spit "bb.edn"
+              (re/assoc-in (re/parse-string (try (slurp "bb.edn") (catch Exception _ "{}")))
+                           [:deps (symbol artifact) :mvn/version]
+                           version))))))
 
 
 (defn search-dep* [{:keys [needle]}]
@@ -139,7 +153,7 @@
                              "\n;; Local Variables:\n;; mode:clojure\n;; End:\n"))
   (sh/sh "chmod" "+x" "bin/launchpad"))
 
-(defn bump-deps [deps re-deps path only]
+(defn bump-deps [deps re-deps path only opts]
   (reduce (fn [re-deps [artifact version-spec]]
             (try
               (cond
@@ -147,7 +161,7 @@
                 re-deps
 
                 (:mvn/version version-spec)
-                (if-let [v (maven-latest-version artifact)]
+                (if-let [v (maven-latest-version artifact opts)]
                   (do
                     (when (not= v (:mvn/version version-spec))
                       (prn (assoc-in {} path {artifact {:mvn/version [(:mvn/version version-spec) '-> v]}})))
@@ -178,14 +192,14 @@
           re-deps
           (get-in deps path)))
 
-(defn bump [{:keys [file only]}]
+(defn bump [{:keys [file only] :as opts}]
   (let [contents (slurp file)
         deps     (edn/read-string contents)
         re-deps  (re/parse-string contents)]
     (spit file
           (reduce (fn [re-deps alias]
-                    (bump-deps deps re-deps [:aliases alias :extra-deps] only))
-                  (bump-deps deps re-deps [:deps] only)
+                    (bump-deps deps re-deps [:aliases alias :extra-deps] only opts))
+                  (bump-deps deps re-deps [:deps] only opts)
                   (keys (:aliases deps))))
     ))
 
@@ -261,9 +275,13 @@ node_modules/
    "shadow-cljs" {:doc "Set up shadow-cljs"
                   :command #'add-shadow-cljs}])
 
+(def flags
+  ["--[no-]include-alpha" "Also allow alpha/beta/SNAPSHOT versions"])
+
 (cli/dispatch*
  {:name ",add"
-  :commands commands})
+  :commands commands
+  :flags flags})
 
 
 ;; Local Variables:

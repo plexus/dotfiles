@@ -425,3 +425,16 @@ rustup
 supercollider sc3-plugins
 docker-build-x
 docker-buildx
+podman
+calibre
+supercat
+grc
+vimx
+gvim
+vim-gtk3
+silversearcher-ag
+autossh
+fonts-noto-color-emoji
+nextcloud-desktop
+pdftk-java
+gitg
