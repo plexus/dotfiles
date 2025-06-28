@@ -20,6 +20,7 @@ newgrp input
 Sway setup:
 
 ```
+xwayland
 sddm
 sway
 swayidle
@@ -56,6 +57,7 @@ powertop
 tree
 rclone
 mplayer
+net-tools #ifconfig
 ```
 
 GUI/Desktop Applications:
