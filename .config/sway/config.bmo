@@ -1,12 +1,27 @@
-# bmo - laptop
+# bubblegum Thinkpad T14 Gen 5
 
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+set $mod Mod4
+set $term kitty
+set $menu $HOME/bin/bemenu-run
+set $lock_cmd swaylock
+set $suspend_cmd 'systemctl suspend' 
+set $brightness_up 'brightnessctl s 1%+'
+set $brightness_down 'brightnessctl s 1%-'
+set $volume_up 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
+set $volume_down 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
+set $toggle_mute 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+set $toggle_mic_mute 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
+set $display_config wdisplays
+set $screenshot '$HOME/bin/ss'
+set $background_color '#74ccaf'
 
-# output DP-1 mode --custom 1920x1080
-# output HDMI-A-1 mode --custom 1920x1080
-# output eDP-1 pos 0 0
-# output HDMI-A-1 pos 1920 0
-#
+default_border none
 
-output HDMI-A-1 pos 0 0
-#output eDP-1 pos 1920 0
+include "config.d/input_devices.conf"
+include "config.d/bindings.conf"
+
+exec swayidle -w before-sleep 'swaylock -f -c 74ccaf'
+
+exec_always nwg-panel
+exec lxpolkit
+

@@ -81,12 +81,14 @@ fi
 ### /SSH Keychain ###
 
 ### Spaceship ZSH prompt ###
-if [ -f "$HOME/repos/spaceship-prompt/spaceship.zsh" ]; then
-    source "$HOME/repos/spaceship-prompt/spaceship.zsh"
-    export SPACESHIP_DIR_TRUNC_REPO=false
-    #SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
-    SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws terraform exec_time line_sep battery jobs exit_code char)
+if [ ! -f "$HOME/repos/spaceship-prompt/spaceship.zsh" ]; then
+	mkdir -p "$HOME/repos"
+	git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/repos/spaceship-prompt"
 fi
+source "$HOME/repos/spaceship-prompt/spaceship.zsh"
+export SPACESHIP_DIR_TRUNC_REPO=false
+#SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby docker aws kubecontext terraform exec_time perry line_sep battery jobs exit_code char)
+SPACESHIP_PROMPT_ORDER=(time user dir host git hg package node ruby aws terraform exec_time line_sep battery jobs exit_code char)
 ### /Spaceship ZSH prompt ###
 
 ### Chruby ###
