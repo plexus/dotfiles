@@ -35,7 +35,10 @@ xdg-desktop-portal-wlr
 pulseaudio-utils (pactl -> control sound volume)
 wdisplays
 lxpolkit (seems to just be needed for some things like partitionmanager)
+sway-notification-center
+poweralertd
 ```
+
 
 System/terminal tools:
 
@@ -160,3 +163,22 @@ bin/install_beid
 
 - [Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/)
 - [connective-plugin-linux](https://github.com/roelderickx/connective-plugin-linux)
+
+## Power notifications
+
+Currently trying if simply installing these, and starting the first, does what I
+want.
+
+```
+sway-notification-center
+poweralertd
+```
+
+Seems like UPower is a daemon that's installed by default
+- https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/power_management_guide/upower
+
+Git repo for poweralertd: https://git.sr.ht/~kennylevinsen/poweralertd
+
+Thread on r/swaywm https://www.reddit.com/r/swaywm/comments/rhrj9e/deleted_by_user/
+
+Thread on r/voidlinux https://www.reddit.com/r/voidlinux/comments/10uggwg/reasonable_way_to_setup_battery_notifications/
