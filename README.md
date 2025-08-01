@@ -3,7 +3,7 @@
 See `.config/sway`
 
 - nwg-panel (installed from repo)
-  - requires: libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus
+  - requires: libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus python3-gi-cairo
 - bemenu
 
 Brightness: add to video/input groups for brightness-udev to work.

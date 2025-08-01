@@ -443,3 +443,8 @@ bookworm arianna
 pdflatex
 sway-notification-center
 poweralertd
+python3.13-venv
+python-gi-cairo
+python3-gi-cairo
+libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus
+mysql-client-core
