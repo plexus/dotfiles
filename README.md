@@ -30,7 +30,7 @@ brightness-udev
 brightnessctl
 grim
 slurp
-nm-applet (nm-tray?)
+network-manager-applet (nm-tray?)
 xdg-desktop-portal-wlr
 pulseaudio-utils (pactl -> control sound volume)
 wdisplays
@@ -182,3 +182,43 @@ Git repo for poweralertd: https://git.sr.ht/~kennylevinsen/poweralertd
 Thread on r/swaywm https://www.reddit.com/r/swaywm/comments/rhrj9e/deleted_by_user/
 
 Thread on r/voidlinux https://www.reddit.com/r/voidlinux/comments/10uggwg/reasonable_way_to_setup_battery_notifications/
+
+## Greetd
+
+```
+greetd
+wlgreet
+```
+
+/etc/greetd/config.toml
+
+```
+command = "sway --config /etc/greetd/sway-config"
+```
+
+with `sway-config` (bundled by Ubuntu)
+
+```
+exec "/usr/sbin/wlgreet; swaymsg exit"
+
+bindsym Mod4+shift+e exec swaynag \
+        -t warning \
+        -m 'What do you want to do?' \
+        -b 'Poweroff' 'systemctl poweroff -i' \
+        -b 'Reboot' 'systemctl reboot -i'
+
+output * bg #333333 solid_color
+
+include /etc/sway/config.d/*
+include /etc/greetd/sway-config.d/*
+```
+
+## logind
+
+/etc/systemd/logind.conf
+```
+[login]
+# ...
+HandlePowerKey=suspend
+# ...
+```

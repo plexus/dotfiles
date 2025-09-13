@@ -28,6 +28,7 @@ alias ls='ls --color'
 alias acs='apt-cache search'
 alias grep='grep --exclude-dir .svn --exclude-dir .git --exclude tags --exclude-dir node_modules --exclude TAGS --color=auto'
 alias ed="rlwrap ed -p'> '"
+alias ducks='while read -r line;do du -sh "$line";done < <(ls --color=never -1A) | sort -rh | head -n11'
 
 alias churby=chruby
 alias gerp=grep

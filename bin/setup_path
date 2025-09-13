@@ -58,6 +58,10 @@ append_path "$CARGO_HOME/bin"
 append_path "$FLYCTL_INSTALL/bin"
 # Flutter
 append_path "$HOME/opt/flutter/bin"
+# Ollama
+append_path "$HOME/opt/ollama/bin"
+# Asdf
+append_path "$HOME/.asdf/shims"
 
 systemctl --user import-environment PREFIX PATH
 dbus-update-activation-environment --systemd PATH="$PATH"

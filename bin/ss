@@ -5,8 +5,9 @@
 
 IMG_FILE="$HOME/Screenshots/$(date +%F_%H%M%S).png"
 
-if [ $DESKTOP_SESSION = "sway" ]; then
-    slurp | grim -g - "$IMG_FILE" "$@"
-elif [ $DESKTOP_SESSINO = "plasma" ] ; then
-    exec spectacle -r -b -o "$IMG_FILE" "$@"
-fi
+slurp | grim -g - "$IMG_FILE" "$@"
+# if [ "$DESKTOP_SESSION" = "sway" ]; then
+#     slurp | grim -g - "$IMG_FILE" "$@"
+# elif [ "$DESKTOP_SESSION" = "plasma" ] ; then
+#     exec spectacle -r -b -o "$IMG_FILE" "$@"
+# fi
