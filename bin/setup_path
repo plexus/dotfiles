@@ -1,6 +1,7 @@
 # No shebang here since this file has to be sourced. Stick to POSIX so we can
 # use this in sh/bash/zsh.
 
+
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 export PREFIX="$HOME/opt"
@@ -26,15 +27,28 @@ prepend_path () {
     fi
 }
 
-if [ -d "$HOME/opt/Android" ]; then
-    export ANDROID_HOME="$HOME/opt/Android/Sdk"
-    append_path "$ANDROID_HOME/emulator"
-    append_path "$ANDROID_HOME/platform-tools"
+# if [ -d "$HOME/opt/Android" ]; then
+#     export ANDROID_HOME="$HOME/opt/Android/Sdk"
+#     append_path "$ANDROID_HOME/emulator"
+#     append_path "$ANDROID_HOME/platform-tools"
+#     append_path "$ANDROID_HOME/cmdline-tools/latest/bin"
+#     # no longer used?
+#     append_path "$ANDROID_HOME/tools"
+#     append_path "$ANDROID_HOME/tools/bin"
+# fi
+
+if [ -d "$HOME/opt/android-sdk" ]; then
+    export ANDROID_HOME=$HOME/opt/android-sdk
+    export ANDROID_SDK_ROOT=$HOME/opt/android-sdk
     append_path "$ANDROID_HOME/cmdline-tools/latest/bin"
-    # no longer used?
-    append_path "$ANDROID_HOME/tools"
-    append_path "$ANDROID_HOME/tools/bin"
+    append_path "$ANDROID_HOME/platform-tools"
+    append_path "$ANDROID_HOME/emulator"
+    append_path "$ANDROID_HOME/build-tools/36.0.0"
 fi
+
+# NIX...
+prepend_path /home/arne/.nix-profile/bin
+prepend_path /nix/var/nix/profiles/default/bin
 
 # Our "own" bin directories, put these at the front so we can always override
 # system binaries here. Everything else goes at the end.

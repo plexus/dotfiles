@@ -35,6 +35,7 @@ alias gerp=grep
 alias nnn='ruby -e "puts ARGV.pop.codepoints.inject(:+)%97"'
 
 alias bx='bundle exec'
+alias apt-full-upgrade='sudo apt-get update && sudo apt-get dist-upgrade -y --autoremove'
 
 function ai {
     echo "$@" >> ~/repos/dotfiles/extra_packages
@@ -153,4 +154,17 @@ if [ -f '/home/arne/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ar
 
 if [ -x '/usr/bin/vim.gtk3' ]; then
     alias vim=vim.gtk3
+fi
+
+
+# lambdaisland.cli completions
+fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit
+compinit
+compdef _licli /tmp/test/bin/dev '*/dev' dev
+compdef _licli /home/arne/Gaiwan/Oak/bin/oakadm '*/oakadm' oakadm
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi

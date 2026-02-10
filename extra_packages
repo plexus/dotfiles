@@ -467,3 +467,77 @@ leiningen
 openjdk-25-source
 fonts-inter
 fonts-open-sans
+lua-lpeg
+podman
+systemd-container
+systemd-nspawn
+fonts-manrope
+links lynx
+exiftool
+thrift-compiler
+podman-compose
+tpm2-tools
+tpm2-abrmd
+go-bindata
+podman-compose
+libcurl-dev
+libcurl4-openssl-dev
+lex
+flex
+redis-tools
+s6
+wdutch
+shellcheck
+aha
+dosbox
+webcamoid
+kdenlive
+kdenlive
+pikopixel.app
+gnome-font-viewer
+font-manager
+fontmatrix
+blueman
+mkcert
+brotli
+pipewire-jack
+libgtk2.0-dev
+fonts-ocr-a
+libjack-dev libjack-jack2-dev
+libjack-dev libjack-jackd2-dev
+libjack-dev
+qpwgraph
+qml6-module-qtcore qml6-module-qtqml qml6-module-qtqml-workerscript qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-dialogs qml6-module-qtquick-layouts qml6-module-qtquick-templates qml6-module-qtquick-window
+qml6-module-qtcore qml6-module-qtqml qml6-module-qtqml-workerscript qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-dialogs qml6-module-qtquick-layouts qml6-module-qtquick-templates qml6-module-qtquick-window build-essential cmake pkg-config ninja-build qt6-base-dev qt6-declarative-dev qt6-tools-dev librtmidi-dev librtaudio-dev libsndfile-dev
+milkytracker
+tutka
+qmake
+qmake6
+midisnoop
+chicken-bin
+libsdl2-dev
+sbcl libportmidi-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+freecad
+schism
+carla-lv2 carla
+raysession
+helvum
+x42-plugins
+lsp-plugins calf-plugins dpf-plugins mda-lv2
+drumgizmo
+helm
+gmidimonitor
+wine
+wine
+wine32
+libwine
+winetricks
+qemu
+qemu-system-x86
+virt-viewer
+qemu-system-gui virt-manager
+samba
+genisoimage
+alsa-utils
+a2jmidid
+nix-bin

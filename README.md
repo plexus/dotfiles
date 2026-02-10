@@ -164,6 +164,11 @@ bin/install_beid
 - [Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/)
 - [connective-plugin-linux](https://github.com/roelderickx/connective-plugin-linux)
 
+## Bluetooth
+
+Blueman? -> python errors
+Overskride? -> no package..., only flatpak
+
 ## Power notifications
 
 Currently trying if simply installing these, and starting the first, does what I
