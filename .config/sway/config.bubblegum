@@ -20,6 +20,7 @@ default_border none
 include "config.d/input_devices.conf"
 include "config.d/office_monitors.conf"
 include "config.d/bindings.conf"
+include "config.d/fcitx.conf"
 
 exec swayidle -w before-sleep 'swaylock -f -c 74ccaf'
 

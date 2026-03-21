@@ -541,3 +541,23 @@ genisoimage
 alsa-utils
 a2jmidid
 nix-bin
+gmanedit
+perl-doc
+gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu gcc-multilib
+gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu gcc-multilib
+gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu
+libasound2-dev:armhf libasound2-dev:arm64
+libasound2-dev:armhf libasound2-dev
+libasound2-dev
+fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk3 fcitx5-frontend-qt5 fcitx5-config-qt
+fcitx5-rime
+libjsm-dev
+libjsmn-dev
+zstd
+qgis
+osmium-tool
+gdal-bin
+linux-tools-generic
+linux-cloud-tools-generic
+linux-tools-6.17.7-061707-generic linux-cloud-tools-6.17.7-061707-generic
+lm-sensors

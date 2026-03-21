@@ -22,7 +22,6 @@ export WORDCHARS="*?_-.[]~&;!#$%^(){}<>"
 
 export ANSIBLE_NOCOWS=1
 
-alias top=htop
 alias l='ls -1 --color'
 alias ls='ls --color'
 alias acs='apt-cache search'
@@ -168,3 +167,6 @@ compdef _licli /home/arne/Gaiwan/Oak/bin/oakadm '*/oakadm' oakadm
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
+
+# opencode
+export PATH=/home/arne/.opencode/bin:$PATH
