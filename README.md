@@ -37,6 +37,7 @@ wdisplays
 lxpolkit (seems to just be needed for some things like partitionmanager)
 sway-notification-center
 poweralertd
+blueman-applet
 ```
 
 

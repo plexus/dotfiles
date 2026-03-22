@@ -561,3 +561,7 @@ linux-tools-generic
 linux-cloud-tools-generic
 linux-tools-6.17.7-061707-generic linux-cloud-tools-6.17.7-061707-generic
 lm-sensors
+mixxx
+blueman
+qpwgraph
+libportaudio2
