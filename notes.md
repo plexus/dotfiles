@@ -260,3 +260,11 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier'
 - tiling / xmonad style keys
 - compose key
 - dual screen
+
+# 2024 new Thinkpad
+
+https://www.reddit.com/r/swaywm/comments/1hd7f9z/share_your_sway_setup/
+
+brightnessctl brightnessctl-udev
+
+thunar dolphin spacefm pcmanfm-qt

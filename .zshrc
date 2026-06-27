@@ -170,3 +170,7 @@ fi
 
 # opencode
 export PATH=/home/arne/.opencode/bin:$PATH
+
+compdef _licli /home/arne/repos/conf-talks/2026-licli/bin/starship8 '*/starship8' starship8
+compdef _licli /home/arne/repos/conf-talks/2026-licli/bin/starship10 '*/starship10' starship10
+compdef _licli /home/arne/repos/conf-talks/2026-licli/bin/starship10 '*/starship10' starship10

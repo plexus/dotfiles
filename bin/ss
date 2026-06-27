@@ -6,6 +6,7 @@
 IMG_FILE="$HOME/Screenshots/$(date +%F_%H%M%S).png"
 
 slurp | grim -g - "$IMG_FILE" "$@"
+wl-copy -t 'image/png' < "$IMG_FILE"
 # if [ "$DESKTOP_SESSION" = "sway" ]; then
 #     slurp | grim -g - "$IMG_FILE" "$@"
 # elif [ "$DESKTOP_SESSION" = "plasma" ] ; then

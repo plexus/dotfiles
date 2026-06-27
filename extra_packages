@@ -561,3 +561,10 @@ linux-tools-generic
 linux-cloud-tools-generic
 linux-tools-6.17.7-061707-generic linux-cloud-tools-6.17.7-061707-generic
 lm-sensors
+goldendict-ng
+sysbench
+nextcloud-desktop
+wl-clipboard
+colordiff
+stardict
+glibc-tools systemd-coredump

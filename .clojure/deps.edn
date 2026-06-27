@@ -18,6 +18,9 @@
   {:extra-deps {seancorfield/clj-new {:mvn/version "RELEASE"}}
    :main-opts  ["-m" "clj-new.create"]}
 
+  :neil {:deps {io.github.babashka/neil {:git/sha "f2b74b61c94fa668ab4517d4be3930cf64ebb446"}}
+         :main-opts ["-m" "babashka.neil"]}
+
   :depot/check
   {:extra-deps {Olical/depot {:mvn/version "RELEASE"}}
    :main-opts  ["-m" "depot.outdated.main"]}
