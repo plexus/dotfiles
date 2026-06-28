@@ -573,3 +573,5 @@ blueman
 qpwgraph
 libportaudio2
 fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk3 fcitx5-frontend-qt5 fcitx5-config-qt fcitx5-rime
+libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus python3-gi-cairo
+python3-dasbus
