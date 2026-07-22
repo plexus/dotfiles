@@ -1,0 +1,232 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [OPTIONS] PROJECT
+
+Install a Clojure CLI tool from its GitHub releases.
+
+PROJECT:
+  bb       babashka
+  joltc    jolt
+  lg       let-go
+  glj      glojure
+  joker    joker
+
+OPTIONS:
+  --install-dir DIR   Installation directory (default: auto-detected)
+  --arch ARCH         Force architecture (auto-detected by default)
+  --version VERSION   Install specific version (default: latest)
+  --list              List available release versions
+  --help              Show this help
+
+Default install directory:
+  \$PREFIX/bin         if \$PREFIX is set
+  /usr/local/bin      if running as root
+  \$HOME/bin           otherwise
+EOF
+}
+
+current_platform() {
+  case "$(uname -s)" in
+    Linux*)  echo linux;;
+    Darwin*) echo macos;;
+    MINGW64*) echo windows;;
+    *) echo "Unsupported platform: $(uname -s)" >&2; exit 1 ;;
+  esac
+}
+
+gh_latest_release() {
+  curl --silent "https://api.github.com/repos/${ORGANIZATION}/${PROJECT}/releases/latest" | \
+    grep '"tag_name":' | \
+    sed -E 's/.*"v([^"]+)".*/\1/'
+}
+
+list_versions() {
+  curl --silent "https://api.github.com/repos/${ORGANIZATION}/${PROJECT}/releases" | \
+    grep '"tag_name":' | \
+    sed -E 's/.*"([^"]+)".*/\1/'
+}
+
+#-----------------------------------------------------------
+# getopt handling
+
+LIST=0
+INSTALL_DIR=""
+ARCH_OVERRIDE=""
+VERSION=""
+
+OPTS=$(getopt -o h -l help,list,install-dir:,arch:,version: -- "$@") || { usage >&2; exit 1; }
+eval set -- "$OPTS"
+while true; do
+  case "$1" in
+    --help|-h)      usage; exit 0 ;;
+    --list)         LIST=1; shift ;;
+    --install-dir)  INSTALL_DIR="$2"; shift 2 ;;
+    --arch)         ARCH_OVERRIDE="$2"; shift 2 ;;
+    --version)      VERSION="$2"; shift 2 ;;
+    --)             shift; break ;;
+  esac
+done
+
+PROJECT_NAME="$1"
+if [ -z "${PROJECT_NAME}" ]; then
+  usage >&2
+  exit 1
+fi
+
+PLATFORM=$(current_platform)
+case $PLATFORM in
+  linux)   EXT=tar.gz ;;
+  macos)   EXT=tar.gz ;;
+  windows) EXT=zip ;;
+esac
+
+#------------------------------------------------------------
+# per-project config
+
+case "$PROJECT_NAME" in
+  bb)
+    ORGANIZATION="babashka"
+    PROJECT="babashka"
+    FILES="bb"
+    DL_PLATFORM="$PLATFORM"
+    FORMAT='${PROJECT}-${VERSION}-${DL_PLATFORM}-${ARCHITECTURE}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="amd64" ;;
+      aarch64) ARCHITECTURE="aarch64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  joltc)
+    ORGANIZATION="jolt-lang"
+    PROJECT="jolt"
+    FILES="joltc"
+    DL_PLATFORM="$PLATFORM"
+    FORMAT='joltc-v${VERSION}-${ARCHITECTURE}-${DL_PLATFORM}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="x86_64" ;;
+      aarch64) ARCHITECTURE="aarch64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  lg)
+    ORGANIZATION="nooga"
+    PROJECT="let-go"
+    FILES="lg"
+    case "$PLATFORM" in
+      macos) DL_PLATFORM="darwin" ;;
+      *)     DL_PLATFORM="$PLATFORM" ;;
+    esac
+    FORMAT='let-go_${VERSION}_${DL_PLATFORM}_${ARCHITECTURE}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="amd64" ;;
+      aarch64) ARCHITECTURE="arm64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  glj)
+    ORGANIZATION="glojurelang"
+    PROJECT="glojure"
+    FILES="glj"
+    case "$PLATFORM" in
+      macos) DL_PLATFORM="darwin" ;;
+      *)     DL_PLATFORM="$PLATFORM" ;;
+    esac
+    FORMAT='glj-${VERSION}-${DL_PLATFORM}_${ARCHITECTURE}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="amd64" ;;
+      aarch64) ARCHITECTURE="arm64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  joker)
+    ORGANIZATION="candid82"
+    PROJECT="joker"
+    FILES="joker"
+    EXT="zip"
+    case "$PLATFORM" in
+      macos)   DL_PLATFORM="mac" ;;
+      windows) DL_PLATFORM="win" ;;
+      *)       DL_PLATFORM="$PLATFORM" ;;
+    esac
+    FORMAT='joker-${DL_PLATFORM}-${ARCHITECTURE}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="amd64" ;;
+      aarch64) ARCHITECTURE="arm64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  *)
+    echo "Unknown project: ${PROJECT_NAME}" >&2
+    usage >&2
+    exit 1
+    ;;
+esac
+
+[ -n "${ARCH_OVERRIDE}" ] && ARCHITECTURE="${ARCH_OVERRIDE}"
+[ -n "${VERSION}" ]       || VERSION=$(gh_latest_release)
+
+#------------------------------------------------------------
+# list versions
+
+if [ "$LIST" = 1 ]; then
+  list_versions
+  exit 0
+fi
+
+#------------------------------------------------------------
+# install dir
+
+if [ -z "${INSTALL_DIR}" ]; then
+  if [ -n "${PREFIX}" ]; then
+    INSTALL_DIR="${PREFIX}/bin"
+  elif [ "$(id -u)" -eq 0 ]; then
+    INSTALL_DIR="/usr/local/bin"
+  else
+    INSTALL_DIR="${HOME}/bin"
+  fi
+fi
+
+#------------------------------------------------------------
+# download
+
+DOWNLOAD_URL="https://github.com/${ORGANIZATION}/${PROJECT}/releases/download/v${VERSION}/$(eval echo "\"$FORMAT\"")"
+
+echo "Downloading ${DOWNLOAD_URL}"
+
+TMPDIR=$(mktemp -d)
+TMPFILE="${TMPDIR}/archive.${EXT}"
+
+if [ "$PLATFORM" = "windows" ]; then
+  LOCATION="$(curl -sI "${DOWNLOAD_URL}" | grep -i '^location' | sed -e 's/location: //i' -e 's/[\r\n]//g')"
+  curl -o "${TMPFILE}" -sL "${LOCATION}"
+else
+  curl -o "${TMPFILE}" -sL "${DOWNLOAD_URL}"
+fi
+
+#------------------------------------------------------------
+# extract & install
+
+mkdir -p "${INSTALL_DIR}"
+
+case "${EXT}" in
+  zip)   unzip -qqo "${TMPFILE}" -d "${TMPDIR}" ;;
+  tar.gz) tar -xzf "${TMPFILE}" -C "${TMPDIR}" ;;
+esac
+
+for f in $FILES; do
+  found=$(find "${TMPDIR}" -name "$f" -type f)
+  if [ -z "$found" ]; then
+    echo "Error: file '$f' not found in archive" >&2
+    rm -rf "${TMPDIR}"
+    exit 1
+  fi
+  cp "$found" "${INSTALL_DIR}/$f"
+  chmod +x "${INSTALL_DIR}/$f"
+  echo "Installed ${INSTALL_DIR}/$f"
+done
+
+rm -rf "${TMPDIR}"

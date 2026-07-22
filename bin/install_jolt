@@ -8,9 +8,11 @@ if [ -z "${INSTALL_DIR}" ]; then
   INSTALL_DIR="${HOME}/bin"
 fi
 
-ORGANIZATION=${ORGANIZATION:-"babashka"}
-PROJECT=${PROJECT:-"babashka"}
-ARCHITECTURE=${ARCHITECTURE:-"amd64"}
+ORGANIZATION=${ORGANIZATION:-"jolt-lang"}
+PROJECT=${PROJECT:-"jolt"}
+ARTIFACT=${ARTIFACT:-"joltc"}
+ARCHITECTURE=${ARCHITECTURE:-"x86_64"}
+FORMAT=${FORMAT:-'${ARTIFACT}-v${VERSION}-${ARCHITECTURE}-${PLATFORM}.${EXT}'}
 
 # https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
 gh_latest_release() {
@@ -36,7 +38,7 @@ case $PLATFORM in
   windows) EXT=zip ;;
 esac
 
-DOWNLOAD_URL="https://github.com/${ORGANIZATION}/${PROJECT}/releases/download/v${VERSION}/${PROJECT}-${VERSION}-${PLATFORM}-${ARCHITECTURE}.${EXT}"
+DOWNLOAD_URL="https://github.com/${ORGANIZATION}/${PROJECT}/releases/download/v${VERSION}/$(eval echo $FORMAT)"
 
 echo $DOWNLOAD_URL
 
@@ -53,7 +55,7 @@ else
 fi
 
 case "${EXT}" in
-  zip) unzip -qqo "${TMPFILE}" -d "${INSTALL_DIR}" ;;
-  tar.gz) tar -xvf "${TMPFILE}" -C "${INSTALL_DIR}" ;;
+  zip) unzip -jqqo "${TMPFILE}" -d "${INSTALL_DIR}" ;;
+  tar.gz) tar -xvf "${TMPFILE}" --strip-component=1 -C "${INSTALL_DIR}" ;;
 esac
 rm "${TMPFILE}"

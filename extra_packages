@@ -575,3 +575,8 @@ libportaudio2
 fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk3 fcitx5-frontend-qt5 fcitx5-config-qt fcitx5-rime
 libgtk-layer-shell-dev libplayerctl-dev python3-i3ipc brightnessctl python3-dasbus python3-gi-cairo
 python3-dasbus
+libenchant-2-dev
+libgucharmap-2-90-dev
+fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy fonts-noto-cjk fonts-lxgw-wenkai
+entr
+apache2-utils
