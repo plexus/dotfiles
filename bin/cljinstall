@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Install Clojure CLI tools from their GitHub releases
+#
+# Copyright © Arne Brasseur 2024-2026
+# Released under the MIT license (https://mit-license.org/license.txt)
+
 set -e
 
 usage() {
