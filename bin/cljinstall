@@ -10,6 +10,7 @@ Install a Clojure CLI tool from its GitHub releases.
 
 PROJECT:
   bb       babashka
+  jet      jet
   joltc    jolt
   lg       let-go
   glj      glojure
@@ -92,6 +93,18 @@ case "$PROJECT_NAME" in
     ORGANIZATION="babashka"
     PROJECT="babashka"
     FILES="bb"
+    DL_PLATFORM="$PLATFORM"
+    FORMAT='${PROJECT}-${VERSION}-${DL_PLATFORM}-${ARCHITECTURE}.${EXT}'
+    case $(uname -m) in
+      x86_64)  ARCHITECTURE="amd64" ;;
+      aarch64) ARCHITECTURE="aarch64" ;;
+      *)       echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    ;;
+  jet)
+    ORGANIZATION="borkdude"
+    PROJECT="jet"
+    FILES="jet"
     DL_PLATFORM="$PLATFORM"
     FORMAT='${PROJECT}-${VERSION}-${DL_PLATFORM}-${ARCHITECTURE}.${EXT}'
     case $(uname -m) in
