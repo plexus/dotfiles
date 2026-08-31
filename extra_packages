@@ -587,3 +587,8 @@ bat
 debootstrap
 wl-mirror wl-present
 wdisplays
+borgbackup
+borgmatic
+nd
+davfs2
+socat

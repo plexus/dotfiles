@@ -1,0 +1,96 @@
+#!/usr/bin/env bb
+
+(require '[babashka.deps :as deps])
+(deps/add-deps
+ '{:deps
+   {lambdaisland/uri {:mvn/version "RELEASE"}
+    com.lambdaisland/cli {:mvn/version "RELEASE"}}})
+
+(ns gfontdl
+  (:require
+   [babashka.http-client :as http]
+   [cheshire.core :as json]
+   [clojure.java.io :as io]
+   [clojure.java.shell :as sh]
+   [clojure.string :as str]
+   [lambdaisland.cli :as cli]
+   [lambdaisland.uri :as uri]))
+
+(def HOME (System/getProperty "user.home"))
+(def URL "https://www.googleapis.com/webfonts/v1/webfonts")
+
+(def api-key
+  (-> (io/file HOME ".config/gfontdl.edn") slurp read-string :key))
+
+(def cache-file (io/file HOME ".cache/gfontdl/fonts.edn"))
+
+(.mkdirs (io/file (.getParent cache-file)))
+
+(defn fetch-font-list []
+  (json/parse-string
+   (:body
+    (http/get
+     (str URL "?key=" api-key)))))
+
+(defn fetch-webfont [family]
+  (get
+   (json/parse-string
+    (:body
+     (http/get
+      (str (uri/assoc-query
+            URL
+            :key api-key
+            :family family
+            :capability "WOFF2")))))
+   "items"))
+
+(def all-fonts (get (if (.exists cache-file)
+                      (read-string (slurp cache-file))
+                      (let [fonts (fetch-font-list)]
+                        (spit cache-file (pr-str fonts))
+                        fonts))
+                    "items"))
+
+(defn search-cmd
+  "Search for a font by name"
+  [{:keys [needle]}]
+  (doseq [{:strs [family files]} all-fonts]
+    (when (str/includes? (str/lower-case family) (str/lower-case needle))
+      (println family (str "(" (str/join "," (keys files)) ")")))))
+
+(defn install-cmd
+  [{:keys [needle]}]
+  (doseq [{:strs [family files]} all-fonts
+          :when (str/includes? (str/lower-case family) (str/lower-case needle))
+          [variant file] (sort-by key files)]
+    (assert (str/ends-with? file ".ttf"))
+    (let [file-name (str/replace (str family "-" variant "" ".ttf") #" " "")]
+      (println file-name)
+      (io/copy
+       (:body (http/get file {:as :stream}))
+       (io/file HOME ".fonts" file-name)))
+    (sh/sh "fc-cache" "-f")))
+
+(defn download-cmd
+  [{:keys [family]}]
+  (doseq [font  (fetch-webfont family)
+          [variant file] (sort-by key (get font "files"))]
+    (assert (str/ends-with? file ".woff2"))
+    (let [file-name (str/replace (str family "-" variant "" ".woff2") #" " "")]
+      (io/copy
+       (:body (http/get file {:as :stream}))
+       (io/file file-name))
+      (println
+       (-> "@font-face {\n  font-display: swap;\n  font-family: '{family}';\n  font-style: {style};\n  font-weight: {weight};\n  src: url('{url}') format('woff2');\n}"
+           (str/replace #"\{family\}" family)
+           (str/replace #"\{style\}" (if (str/includes? variant "italic") "italic" "normal"))
+           (str/replace #"\{weight\}" (if-let [w (re-find #"\d+" variant)] w "400"))
+           (str/replace #"\{url\}" file-name))))))
+
+(cli/dispatch*
+ {:name "gfontdl"
+  :commands
+  ["search <needle>" #'search-cmd
+   "install <needle>" #'install-cmd
+   "download <family>" #'download-cmd]
+  })
