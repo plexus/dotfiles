@@ -13,4 +13,4 @@ fi
 export SDKMAN_DIR="/home/arne/.sdkman"
 [ -s "/home/arne/.sdkman/bin/sdkman-init.sh" ] && . "/home/arne/.sdkman/bin/sdkman-init.sh"
 
-/usr/local/bin/emacs
+/usr/local/bin/emacs "$@"

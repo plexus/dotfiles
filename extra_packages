@@ -593,3 +593,9 @@ nd
 davfs2
 socat
 davfs2
+swaylock
+swayidle
+thunderbird
+davfs2
+fcitx fcitx-pinyin fcitx-sunpinyin fcitx-googlepinyin fcitx-anthy fcitx-mozc fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4
+fcitx fcitx-pinyin fcitx-sunpinyin fcitx-googlepinyin fcitx-anthy fcitx-mozc fcitx-frontend-gtk2 fcitx-frontend-gtk3

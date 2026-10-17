@@ -22,7 +22,7 @@ include "config.d/office_monitors.conf"
 include "config.d/bindings.conf"
 include "config.d/fcitx.conf"
 
-exec swayidle -w before-sleep 'swaylock -f -c 000000'
+exec_always swayidle before-sleep 'swaylock -f'
 
 exec_always nwg-panel
 exec_always /usr/bin/nm-applet --indicator
